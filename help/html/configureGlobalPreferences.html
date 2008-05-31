@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Configuring Global Preferences</title>
+</head>
+
+<body>
+<h1>Configuring Global Preferences</h1>
+
+<h2>The preferences</h2>
+<p>
+There are 2 global preferences:
+
+	<ul>
+		<li>Remote Facade URL</li>
+		<li>Your web root</li>
+	</ul>
+</p>
+
+<h2>Why</h2>
+<p>
+This plugin works by making soap (i.e. webservice) calls to a URL. By default, that URL is to a RemoteFacade.cfc that comes bundled with the MXUnit framework. When you first installed the plugin, it made a reasonable attempt at guessing the location of this Remote URL, but more than likely it guessed wrong... so you'll need to set it up correctly. </p>
+<p>In addition, in order for the plugin to correctly determine the CFC notation for your components, you'll need to specify the location of your web root. 
+</p>
+
+<h2>How</h2>
+
+<p>
+<ol>
+	<li>Window -- Preferences -- MXUnit</li>
+	<li>Check and correct the URL if necessary. For example, maybe it currently reads "http://localhost/mxunit/framework/RemoteFacade.cfc" but your CF installation is at localhost:8501. Change the URL accordingly
+	<li>Check and correct your webroot if necessary. For example, maybe your webroot is c:\cfusionmx\wwwroot instead of c:\inetpub\wwwroot.
+</ol>
+</p>
+
+<h2>Overriding these preferences for special cases</h2>
+<p>
+There are times when these preferences won't suit your needs:
+<ul>
+	<li>You need custom remote functionality. For example, you need the RemoteFacade.cfc to include a custom Application.cfm file for every test</li>
+	<li>Your test components are not underneath your webroot but are instead accessed by means of a CF mapping</li>
+</ul>
+In these cases, you'll need to <a href="configureProjectProperties.html">override certain properties at the project level</a>.
+</p>
+
+</body>
+</html>

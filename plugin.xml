@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="MXUnit"
+            id="org.mxunit.eclipseplugin">
+      </category>
+      <view
+            allowMultiple="false"
+            category="org.mxunit.eclipseplugin"
+            class="org.mxunit.eclipseplugin.views.MXUnitView"
+            icon="icons/mxunit.png"
+            id="org.mxunit.eclipseplugin.views.MXUnitView"
+            name="MXUnit">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="org.mxunit.eclipseplugin.views.MXUnitView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.mxunit.eclipseplugin.preferences.MXUnitPreferencePage"
+            id="org.mxunit.eclipseplugin.preferences.MXUnitPreferencePage"
+            name="MXUnit"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.mxunit.eclipseplugin.preferences.MXUnitPreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            adaptable="false"
+            class="org.mxunit.eclipseplugin.properties.MXUnitPropertyPage"
+            icon="icons/mxunit.png"
+            id="org.mxunit.eclipseplugin.MXUnitPropertyPage"
+            name="MXUnit Properties"
+            objectClass="org.eclipse.core.resources.IResource"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.mxunit.eclipseplugin.workbenchActionSet"
+            label="MXUnit ActionSet"
+            visible="true">
+         <action
+               class="org.mxunit.eclipseplugin.actions.OpenMXUnitViewActionDelegate"
+               icon="icons/mxunit.png"
+               id="org.mxunit.eclipseplugin.openMXUnitView"
+               label="Open MXUnit View"
+               style="push"
+               toolbarPath="normal/additions"
+               tooltip="Open the MXUnit view"
+               helpContextId="mxunit_view"/>
+      </actionSet>
+   </extension>
+   
+   
+   <extension point = "org.eclipse.ui.popupMenus">
+  
+     <objectContribution
+        id="org.mxunit.eclipseplugin.MXUnitRunner"
+        objectClass="org.eclipse.core.resources.IFile"
+	    nameFilter="*.cfc"
+	       adaptable="true">
+	    <action id="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction"
+	       label="Run MXUnit Test"
+	       icon="icons/mxunit.png"
+	       menubarPath="additions"
+	       class="org.mxunit.eclipseplugin.actions.RunSelectedResourceActionDelegate"	
+           definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction"
+	       enablesFor="1">
+	    </action>
+	 </objectContribution>	
+	 
+	 <objectContribution
+        id="org.mxunit.eclipseplugin.MXUnitRunner2"
+        objectClass="org.eclipse.core.resources.IFolder"
+	  
+	       adaptable="true">
+	    <action id="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction2"
+	       label="Run MXUnit Tests"
+	       icon="icons/mxunit.png"
+	       menubarPath="additions"
+	       class="org.mxunit.eclipseplugin.actions.RunSelectedResourceActionDelegate"	
+           definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction2"
+	       enablesFor="1">
+	    </action>
+	 </objectContribution>
+	 
+   </extension>
+   
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml">
+      </toc>
+      <toc
+            file="toc_main.xml"
+            primary="true">
+      </toc>
+   </extension>
+   
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml"
+            plugin="org.mxunit.eclipseplugin">
+      </contexts>
+   </extension>
+
+</plugin>

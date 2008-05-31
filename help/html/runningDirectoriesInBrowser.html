@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Running Directories of Tests</title>
+</head>
+
+<body>
+<h1>Running Directories of Tests</h1>
+
+<h2>How</h2>
+<p>With MXUnit, it's easy to set up a single file that runs all your tests
+
+	<ul>
+		<li>In your editor, create a new file called "run.cfm" (or whatever) in the top-level directory where your components live</li>
+		<li>Open the /mxunit/tests/run.cfm file and copy the contents</li>
+		<li>Paste those contents into your new run.cfm file</li>
+		<li>Modify the "excludes" and "componentPath" attributes to their appropriate values</li>
+		<li>Open that file in your web browser</li>
+		<li><b>NOTE:</b> you can pass &output=[html|extjs] and &debug=[true|false] as URL parameters</li>
+	</ul>
+
+</p>
+
+<h2>Example</h2>
+<p>Your tests live at c:\inetpub\wwwroot\MyApp\cfc\test</p>
+<p>Create c:\inetpub\wwwroot\MyApp\cfc\test\run.cfm</p>
+<p>Copy/Paste the contents from /mxunit/tests/run.cfm into your run.cfm file</p>
+<p>Change excludes to exludes=""</p>
+<p>change componentPath to componentPath="myapp.cfc.test"</p>
+<p>Open the file in your browser</p>
+</body>
+</html>

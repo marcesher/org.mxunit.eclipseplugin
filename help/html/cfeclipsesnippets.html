@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Using MXUnit Eclipse Snippets</title>
+</head>
+
+<body>
+<h1>Using MXUnit Eclipse Snippets</h1>
+
+<p>CFEclipse gives you the same snippet functionality you know and love from ColdFusion Studio. And now it goes a step further: SnipEx servers. This means you can get snippets from other folks simply by pointing to a snipex URL. </p>
+<p>MXUnit uses the <a href="http://cfsnippets.org">CFSnippets.org</a> snipex server created by <a href="http://cfsilence.com/blog/client/index.cfm">Todd Sharp</a>. </p>
+<p>This set of instructions assumes you know how to use snippets in CFEclipse (it does not assume you know how to use snipex). <a href="http://trac.cfeclipse.org/cfeclipse/wiki/CFSnippets">Please read about snippets first</a> if you don't know what they are. If you're interested in learning more about snipex, <a href="http://trac.cfeclipse.org/cfeclipse/wiki/SnipEx">please read that</a>, too. It's quick and short and good. </p>
+<h3>Step 1: Clear your snippet cache</h3>
+<p><b>NOTE:</b> you can skip this step if you've never set up the cfsnippets.org snipex server </p>
+<p> (From Ray Camden's <a class="ext-link" href="http://www.coldfusionjedi.com/index.cfm/2007/7/16/Clearing-your-SnipEx-Cache--and-CFLib-SnipEx-Update"><span class="icon">blog post</span></a>) </p>
+<ol>
+  <li>Change to your Eclipse workspace. Mine was at /Users/ray/Documents/workspace </li>
+  <li>Change to .metadata/.plugins/org.cfeclipse.cfml/snipex </li>
+  <li>Delete all XML files </li>
+  <li>Restart Eclipse </li>
+</ol>
+<h3>Step 2: Add the cfsnippets.org snipex server</h3>
+<ol>
+  <li>Open the Snip Tree View</li>
+  <li>Click the little white upside down triangle to the far right</li>
+  <li>Select &quot;Edit SnipEx Servers&quot;</li>
+  <li>Add http://cfsnippets.org/model/snippets/snipEx/snipEx.cfc into the first open URL box</li>
+  <li>Click Apply</li>
+  <li>Restart Eclipse    </li>
+</ol>
+<h3>Step 3: Try it out </h3>
+<ol>
+  <li>Open any existing test case or create a new one. Or just pop open the scribble pad.</li>
+  <li>Open the snip tree view</li>
+  <li>You'll now see &quot;CFSnippets.org&quot; as a new entry in the tree</li>
+  <li>Expand the tree. Look in the tree for &quot;MXUnit&quot;. Expand it.</li>
+  <li>You'll see all available snippets for MXUnit in there. </li>
+  <li>To insert a snippet, just double click it!  </li>
+</ol>
+
+
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<contexts>
+
+	<context id="mxunit_view">
+		<description>This view runs MXUnit Tests</description>
+		<topic label="Introduction to MXUnit" href="help/html/intro.html" />
+		<topic label="Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
+		<topic label="Configure project properties" href="help/html/configureProjectProperties.html"/>
+		<topic label="Running the Demo Tests" href="help/html/runningDemoTests.html" />
+		<topic label="Keyboard Shortcuts" href="help/html/keyboardshortcuts.html" />
+		<topic label="MXUnit ANT Integration" href="http://mxunit.org/mxunit-ant-doc.html" />
+		
+		<topic label="Generating and Running Tests (non-plugin)"  href="help/html/runningTestsInBrowser.html"/>
+			
+	</context>
+	
+</contexts>

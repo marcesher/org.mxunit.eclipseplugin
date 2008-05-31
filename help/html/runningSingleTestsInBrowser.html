@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Running Single Tests in the Browser</title>
+</head>
+
+<body>
+<h1>Running Single Tests in the Browser</h1>
+
+<p>You can run individual test cases directly in the browser. In addition, you can execute single methods in that test case. There are several URL parameters you can pass to change the behavior and appearance when running tests:
+	<ul>
+		<li>TestMethod: <b>&TestMethod=testSomething</b></li>
+		<li>debug: <b>&debug=true</b></li>
+		<li>output: <b>&output=extjs</b></li>
+	</ul>
+</p>
+
+
+<p>Using <b>mxunit/PluginDemoTests/HodgePodgeTest.cfc</b> as the example
+	<ol>
+		<li>In the browser, run http://localhost/mxunit/PluginDemoTests/HodgePodgeTest.cfc?<b>method=RunTestRemote</b></li>
+		<li>This will run all tests in that file</li>
+		<li>To run a single test:</li>
+			<ul>
+				<li>http://localhost/mxunit/PluginDemoTests/HodgePodgeTest.cfc?method=RunTestRemote&<b>TestMethod=testNotEquals</b></li>
+			</ul>
+		<li>To see the raw dump of the test results:</li>
+			<ul>
+				<li>http://localhost/mxunit/PluginDemoTests/HodgePodgeTest.cfc?method=RunTestRemote&TestMethod=testNotEquals<b>&debug=true</b></li>
+			</ul>
+		<li>To view the results in a nice Grid:</li>
+			<ul>
+				<li>http://localhost/mxunit/PluginDemoTests/HodgePodgeTest.cfc?method=RunTestRemote&TestMethod=testNotEquals<b>&output=extjs</b></li>
+			</ul>
+	</ol>
+</p>
+
+<p><b>Next:</b> <a href="runningDirectoriesInBrowser.html">Running directories of tests</a></p>
+
+</body>
+</html>

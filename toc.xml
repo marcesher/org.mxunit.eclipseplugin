@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="MXUnit Table of Contents">
+	<topic label="Using the MXUnit Plugin"> 
+		<topic label="Introduction to MXUnit" href="help/html/intro.html" />
+		<topic label="Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
+		<topic label="Configure project properties" href="help/html/configureProjectProperties.html"/>
+		<topic label="Running Demo Tests" href="help/html/runningDemoTests.html" />
+		<topic label="Keyboard Shortcuts" href="help/html/keyboardshortcuts.html" />
+		<topic label="Using MXUnit Eclipse Snippets" href="help/html/cfeclipsesnippets.html" />
+	</topic>
+	<topic label="Non-Plugin Test Generation and Execution">
+		<topic label="Generating Tests for existing components (non-plugin)" href="help/html/generatingTests.html" />
+		<topic label="Running tests outside of the plugin">
+			<topic label="Running single tests" href="help/html/runningSingleTestsInBrowser.html"/>
+			<topic label="Running directories of tests" href="help/html/runningDirectoriesInBrowser.html"/>
+		</topic>
+		<topic label="MXUnit ANT Integration" href="http://mxunit.org/mxunit-ant-doc.html" />
+	</topic>
+	
+
+	<topic label="Resources">
+		<topic label="MXUnit Website" href="http://www.mxunit.org" />
+		<topic label="Submit a bug" href="http://code.google.com/p/mxunit/issues/entry" />
+	</topic>
+</toc>

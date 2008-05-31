@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Configuring Project Properties</title>
+</head>
+
+<body>
+<h1>Configuring Project Properties</h1>
+
+<h2>Why</h2>
+
+<p>
+Some projects are special cases. Maybe by default your test components all live in directories under your webroot, but for one project your test files live outside the webroot, maybe in c:\cfusionmx\extensions\cfc.
+
+
+Or maybe a specific project requires that all tests include some custom behavior before the test is run, but you don't want to pollute your test code itself.</p>
+
+<p>Project Properties to the rescue!</p>
+
+<h2>The properties</h2>
+You can set these properties at the project level
+<ul>
+	<li>Remote Facade URL: custom remote URL for this project</li>
+	<li>Component root: the CFC notation path to stick in front of all unit test files in this project</li>
+	<li>Username and password: credentials to use if the Remote Facade URL is protected by an authentication mechanism</li>
+</ul>
+
+<h2>How</h2>
+<ol>
+	<li>Right click on the project name in the Navigator or Project Explorer
+	<li>Select "Properties"
+	<li>Select "MXUnit Properties"
+	<li>Add a custom remote URL, a component root for the project, or both
+	<li>Enter credentials if required</li>
+</ol>
+
+<h2>Examples</h2>
+
+<h3>Custom Remote URL</h3>
+
+<p>
+<ul>
+	<li>You have a set of unit tests that require something special at every test run
+	<li>You don't want to include that thing in the test itself (i.e. in the constructor or setUp() method)
+</ul>
+<b>What to do: </b> 
+<ol>
+	<li>Create a New CFC. Put it wherever. Name it whatever.
+	<li>Set the "extends" attribute of the component tag to "mxunit.Framework.RemoteFacade"
+	<li>Add a function named actOnTestCase. It takes an argument named TestCase. This is a TestCase object
+	<li>Implement your functionality in that method
+	<li>In the MXUnit properties for this project, add the URL to your new CFC
+</ol>
+</p>
+
+<p>
+<b>Sample Custom Remote URL</b>
+</p>
+<p>MyRemoteFacade.cfc
+
+<br><br>
+<div style="color:blue">
+<xmp>
+<cfcomponent extends="mxunit.framework.RemoteFacade">
+
+	<cffunction name="actOnTestCase">
+		<cfargument name="TestCase">
+		
+		<cfif findNoCase("TestManager.Retail",GetMetadata(TestCase).name)>
+			<cfinclude template="retail/Application.cfm">		
+		<cfelse>
+			<cfinclude template="enrollment/Application.cfm">
+		</cfif>
+	</cffunction>
+	
+
+</cfcomponent>
+</xmp>
+</div>
+</p>
+
+<h3>Component Root</h3>
+<p>
+
+<ul>
+	<li>Your unit tests live at c:\nonwebrootcomponents.
+	<li>You have a CF mapping for this directory (in CFAdmin) named "components".
+	<li>Thus, CF sees c:\nonwebrootcomponents\test\MyBusinessObjectTest.cfc as components.test.MyBusinessObjectTest
+</ul>
+  
+<b>What to do:</b> specify "components" as the component root for this project.
+</p>
+
+<h3>Username and password</h3>
+<p>If the remote url is protected by basic, digest, or NTLM authentication, enter the username and password in these fields. For NTLM authentication, you must enter the username as domain\username, e.g. MyDomain\BobbySue. </p>
+<p>We suggest NOT using authentication for the remote facade URL. Best practice for unit testing is that testing happens locally, not on a shared dev server.<p> 
+<p>If you must use a shared server, then we additionally suggest using a custom URL for just the projects that require authentication. This is simple: </p>
+
+<ol>
+	<li>Create a file named "RemoteFacade.cfc" in your protected directory</li>
+	<li>In the MXUnit properties for this project, point the Test runner URL for just this project to your new file. For example, if your new file is at WEBROOT/SomeProtectedApp/unittests/RemoteFacade.cfc, set the URL to http://DEVSERVER/SomeProtectedApp/unittests/RemoteFacade.cfc</li>
+	<li>Populate the RemoteFacade.cfc with the following code:</li>
+</ol>
+
+<div style="color:blue">
+<xmp>
+<cfcomponent extends="mxunit.framework.RemoteFacade">
+
+</cfcomponent>
+</xmp>
+</div>
+
+<p><b>Next:</b> <a href="runningDemoTests.html">Running the Demo Tests</a></p>
+
+
+</body>
+</html>
