@@ -263,8 +263,8 @@ public class RunTestsAction extends Action {
      * @param tagContextItem
      */
     private void formatTagContextMap(Map tagContextItem){
-    	Double d = (Double)tagContextItem.get("LINE");    
-        tagContextItem.put("LINE", d.intValue());      
+    	Number num = (Number)tagContextItem.get("LINE");
+        tagContextItem.put("LINE", num.intValue());      
     }
 
 }
