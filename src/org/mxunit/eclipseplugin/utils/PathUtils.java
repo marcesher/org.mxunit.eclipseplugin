@@ -33,7 +33,7 @@ public final class PathUtils {
 	 * @return String representing coldfusion cfc path for this component
 	 */
 	public static String deriveComponentPath(String webroot, String component, String pathSeparator){
-		
+		webroot = webroot.trim();
 		//ensure the root ends with a slash
 		if(!webroot.endsWith(pathSeparator)){
 			webroot += pathSeparator;

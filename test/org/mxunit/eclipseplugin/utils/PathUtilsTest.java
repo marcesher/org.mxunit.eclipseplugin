@@ -46,6 +46,34 @@ public class PathUtilsTest extends TestCase {
 		
 	}
 	
+	public void testFredLeeBugChoppingOffT(){
+		/*
+		 * Sure was. I've re-arranged my folder structure to be:
+
+		/users/fredlee/projects/wwwroot/waythrough
+		/users/fredlee/projects/wwwroot/mxunit
+		/users/fredlee/projects/wwwroot/tests
+		
+		(Apache re-configured to point at the new wwwroot location)
+		
+		Mxunit preferences: (both resolve ok)
+		
+		http://localhost/mxunit/framework/RemoteFacade.cfc
+		/Users/fredleefarr/projects/wwwroot
+		
+		Project preferences:
+		
+		Path: /WTF
+		Type: Project
+		Location: /users/frelee/projects/wwwroot/tests
+		 */
+		String webroot = "/Users/fredlee/projects/wwwroot ";
+		String component = "/Users/fredlee/projects/wwwroot/tests/MyTest.cfc";
+		String componentPath = PathUtils.deriveComponentPath(webroot, component,"/");
+		System.out.println(componentPath);
+		assertEquals("","tests.MyTest",componentPath);
+	}
+	
 	public void testDeriveComponentPathWithCFCInDirectory(){
 		String root = "c:\\cfusionmx7\\wwwroot";
 		String component = "C:\\cfusionmx7\\WWWroot\\sandbox\\cfc\\TestMyCFC.cfc";
