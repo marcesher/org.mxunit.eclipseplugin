@@ -67,10 +67,9 @@ public class PathUtilsTest extends TestCase {
 		Type: Project
 		Location: /users/frelee/projects/wwwroot/tests
 		 */
-		String webroot = "/Users/fredlee/projects/wwwroot ";
+		String webroot = " /Users/fredlee/projects/wwwroot    ";
 		String component = "/Users/fredlee/projects/wwwroot/tests/MyTest.cfc";
 		String componentPath = PathUtils.deriveComponentPath(webroot, component,"/");
-		System.out.println(componentPath);
 		assertEquals("","tests.MyTest",componentPath);
 	}
 	
