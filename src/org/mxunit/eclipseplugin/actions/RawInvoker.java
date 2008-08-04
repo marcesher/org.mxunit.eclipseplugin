@@ -47,8 +47,8 @@ public class RawInvoker {
     public void runPing(){
         try {        
             initializeCall();
-            call.setOperationName(new QName(qn, "ping"));
-            
+            call.setOperationName(new QName(qn, "PING"));
+           
            Object results = call.invoke(new Object[0]);
             System.out.println(results);
         } catch (IOException e) {            

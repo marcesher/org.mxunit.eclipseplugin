@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -41,6 +42,7 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.part.ViewPart;
 import org.mxunit.eclipseplugin.actions.BrowserAction;
 import org.mxunit.eclipseplugin.actions.ComponentSearchAction;
+import org.mxunit.eclipseplugin.actions.FilterFailuresAction;
 import org.mxunit.eclipseplugin.actions.LoadMethodsAction;
 import org.mxunit.eclipseplugin.actions.OpenInEditorAction;
 import org.mxunit.eclipseplugin.actions.RunFailuresOnlyAction;
@@ -83,8 +85,10 @@ public class MXUnitView extends ViewPart {
 	private SelectAllInTreeAction selectAllAction;
 	private OpenInEditorAction openInEditorAction;
 	private SpoofChangeModelAction spoofChangeModelAction;
+	private Action filterFailuresAction;
 	private Action stopAction;
 	private Action helpAction;
+	private Action selectTestHistoryAction;
 	
 	private MessageConsole console;
 	private boolean consoleActivated = false;
@@ -394,14 +398,28 @@ public class MXUnitView extends ViewPart {
 		);
 		
 		selectAllAction = new SelectAllInTreeAction(this);
-		selectAllAction.setText("Select all Tests (Ctrl-A)" +
-				"");
+		selectAllAction.setText("Select all Tests (Ctrl-A)");
 		
 		openInEditorAction = new OpenInEditorAction(this);
 		openInEditorAction.setText("Open file");
 		
 		spoofChangeModelAction = new SpoofChangeModelAction(testsViewer.getTree());
 		spoofChangeModelAction.setText("Spoof");
+		
+		final FilterFailuresAction ffa = new FilterFailuresAction(this);
+		filterFailuresAction = new Action("Show Failures Only", IAction.AS_CHECK_BOX){
+			public void run(){
+				ffa.run();
+			}
+		};		
+		filterFailuresAction.setToolTipText("Show Failures Only");
+		
+		selectTestHistoryAction = new Action("Test Run History...",IAction.AS_DROP_DOWN_MENU){
+			public void run(){
+				System.out.println("inside selectTestHistoryAction");
+			}
+		};
+		
 		
 		stopAction = new Action() {
             public void run() {
@@ -424,6 +442,8 @@ public class MXUnitView extends ViewPart {
         helpAction.setImageDescriptor(
                 ResourceManager.getImageDescriptor(ResourceManager.HELP)
         );
+        
+        
 	}
 	
 	private void setHelpContextIDs(){
@@ -461,6 +481,8 @@ public class MXUnitView extends ViewPart {
 	 *            the toolbar manager
 	 */
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(filterFailuresAction);
+		manager.add(new Separator());
 		manager.add(componentSearchAction);
 		manager.add(new Separator());
         manager.add(loadMethodsAction);
@@ -468,6 +490,7 @@ public class MXUnitView extends ViewPart {
 		manager.add(runFailuresOnlyAction);
 		manager.add(stopAction);
 		manager.add(toggleTreeItemsAction);
+		manager.add(selectTestHistoryAction);
 		
 		//manager.add(spoofChangeModelAction);
 		manager.add(new Separator());
