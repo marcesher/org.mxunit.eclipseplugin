@@ -33,9 +33,11 @@ You can set these properties at the project level
 	<li>Right click on the project name in the Navigator or Project Explorer
 	<li>Select "Properties"
 	<li>Select "MXUnit Properties"
-	<li>Add a custom remote URL, a component root for the project, or both
+	<li>Add a custom remote URL, a component root for the project, or both. 
+		<ul><li>NOTE: if you're just using this to point to an mxunit install on a different port, then you can skip the "/mxunit/framework/RemoteFacade.cfc" part of the URL. Just use http://localhost:8888, for example. In that case, the plugin will suffix your url with "mxunit/framework/RemoteFacade.cfc"</li></ul>
 	<li>Enter credentials if required</li>
 </ol>
+
 
 <h2>Examples</h2>
 

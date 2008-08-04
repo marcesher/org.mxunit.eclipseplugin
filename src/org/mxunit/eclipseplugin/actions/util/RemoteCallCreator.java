@@ -129,9 +129,17 @@ public class RemoteCallCreator {
 		if (projectFacadeURL != null && projectFacadeURL.length() > 0) {
 			urlToUse = projectFacadeURL;
 		}
-		if (urlToUse.toLowerCase().endsWith(".cfc")) {
+		
+		//tiny little helper; see http://www.barneyb.com/barneyblog/2008/07/18/mx-unit-is-slick/ for the genesis of this little change
+		urlToUse = urlToUse.trim().toLowerCase();
+		if(!urlToUse.endsWith(".cfc") && !urlToUse.endsWith("wsdl")){
+			urlToUse += "/mxunit/framework/RemoteFacade.cfc";
+		}
+		
+		if (urlToUse.endsWith(".cfc")) {
 			urlToUse += "?wsdl";
 		}
+		
 		MXUnitPluginLog.logInfo("Determined facadeURL to be " + urlToUse);
 		
 		return urlToUse;

@@ -73,6 +73,9 @@ public class MXUnitPropertyManager {
 	}
 
 	public void setURLPropertyValue(IResource resource, String url) {
+		if(url.endsWith("/")){
+			url = url.substring(0, url.length()-1);
+		}
 		setProp(resource,urlQName,url);		
 	}
 

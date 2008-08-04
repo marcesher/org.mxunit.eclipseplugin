@@ -115,7 +115,7 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		facadeURLField.setStringValue( propManager.getURLPropertyValue( (IResource)getElement().getAdapter(IResource.class) ) );
 		
 		addBlankLabel(group);
-		addDescriptionLabel(group,"Use this field to override the facade URL preference for\nthis project only");
+		addDescriptionLabel(group,"Use this field to override the facade URL preference for\nthis project only.\n\nIf you're simply pointing to mxunit on a different port, you can\nend the URL at the port (http://localhost:8888, for example)");
 		
 	}
 	

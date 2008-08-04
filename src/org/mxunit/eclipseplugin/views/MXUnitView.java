@@ -415,7 +415,7 @@ public class MXUnitView extends ViewPart {
 		);
 		filterFailuresAction.setChecked(false);//makes this a toggle-able button
 		
-		
+		//http://kickjava.com/src/org/eclipse/jdt/internal/ui/viewsupport/HistoryDropDownAction.java.htm
 		selectTestHistoryAction = new Action("Test Run History...",IAction.AS_DROP_DOWN_MENU){
 			public void run(){
 				System.out.println("inside selectTestHistoryAction");
