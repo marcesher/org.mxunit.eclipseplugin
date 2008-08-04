@@ -29,6 +29,8 @@ public final class ResourceManager {
 	public final static String CIRCLE_FAIL = "fail_circle.png";
 	public final static String CIRCLE_ERROR = "error_circle.png";
 	public final static String HELP = "help.png";
+	public final static String TOGGLE_FAILURES = "mxunit_toggleErrorFailIcon.png";
+	public final static String HISTORY = "mxunit_history.png";
 	
 	public static Image getImage(String image){
 		String url = PATH + image;

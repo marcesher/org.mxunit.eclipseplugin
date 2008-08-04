@@ -148,6 +148,8 @@ public class RunTestsAction extends Action {
             runTestMethod(testItem, viewRunID, testRunKey);            
         }
         endTestRun(testRunKey);
+        FilterFailuresAction filter = new FilterFailuresAction(view);
+        filter.run();
         view.enableActions();
     }
     

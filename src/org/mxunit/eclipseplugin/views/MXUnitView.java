@@ -85,7 +85,7 @@ public class MXUnitView extends ViewPart {
 	private SelectAllInTreeAction selectAllAction;
 	private OpenInEditorAction openInEditorAction;
 	private SpoofChangeModelAction spoofChangeModelAction;
-	private Action filterFailuresAction;
+	private FilterFailuresAction filterFailuresAction;
 	private Action stopAction;
 	private Action helpAction;
 	private Action selectTestHistoryAction;
@@ -405,21 +405,25 @@ public class MXUnitView extends ViewPart {
 		
 		spoofChangeModelAction = new SpoofChangeModelAction(testsViewer.getTree());
 		spoofChangeModelAction.setText("Spoof");
+
 		
-		final FilterFailuresAction ffa = new FilterFailuresAction(this);
-		filterFailuresAction = new Action("Show Failures Only", IAction.AS_CHECK_BOX){
-			public void run(){
-				ffa.run();
-			}
-		};		
+		filterFailuresAction = new FilterFailuresAction(this);
+		filterFailuresAction.setText("Show Failures Only");
 		filterFailuresAction.setToolTipText("Show Failures Only");
+		filterFailuresAction.setImageDescriptor(
+				ResourceManager.getImageDescriptor(ResourceManager.TOGGLE_FAILURES)
+		);
+		filterFailuresAction.setChecked(false);//makes this a toggle-able button
+		
 		
 		selectTestHistoryAction = new Action("Test Run History...",IAction.AS_DROP_DOWN_MENU){
 			public void run(){
 				System.out.println("inside selectTestHistoryAction");
 			}
 		};
-		
+		selectTestHistoryAction.setImageDescriptor(
+				ResourceManager.getImageDescriptor(ResourceManager.HISTORY)
+		);
 		
 		stopAction = new Action() {
             public void run() {
@@ -490,7 +494,7 @@ public class MXUnitView extends ViewPart {
 		manager.add(runFailuresOnlyAction);
 		manager.add(stopAction);
 		manager.add(toggleTreeItemsAction);
-		manager.add(selectTestHistoryAction);
+		//manager.add(selectTestHistoryAction);
 		
 		//manager.add(spoofChangeModelAction);
 		manager.add(new Separator());
