@@ -240,7 +240,6 @@ public class MXUnitView extends ViewPart {
 		testsPanel.setLayout(new FillLayout());
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 1;
-		gridData.minimumHeight = 200;
 		
 		testsPanel.setLayoutData(gridData);
 
@@ -277,8 +276,6 @@ public class MXUnitView extends ViewPart {
 		Composite detailsPanel = new Composite(parent, SWT.BORDER);
 		detailsPanel.setLayout(new FillLayout());
 		GridData detailsData = new GridData(GridData.FILL_BOTH);
-		//detailsData.grabExcessVerticalSpace = false;
-		detailsData.minimumHeight=300;
 		detailsPanel.setLayoutData(detailsData);
 		detailsViewer = new Table(detailsPanel, SWT.SINGLE | SWT.FULL_SELECTION);
 	}
