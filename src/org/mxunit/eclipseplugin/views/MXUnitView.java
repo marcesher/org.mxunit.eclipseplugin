@@ -43,6 +43,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.mxunit.eclipseplugin.actions.BrowserAction;
 import org.mxunit.eclipseplugin.actions.ComponentSearchAction;
 import org.mxunit.eclipseplugin.actions.FilterFailuresAction;
+import org.mxunit.eclipseplugin.actions.HistoryDropdownAction;
 import org.mxunit.eclipseplugin.actions.LoadMethodsAction;
 import org.mxunit.eclipseplugin.actions.OpenInEditorAction;
 import org.mxunit.eclipseplugin.actions.RunFailuresOnlyAction;
@@ -52,6 +53,7 @@ import org.mxunit.eclipseplugin.actions.SpoofChangeModelAction;
 import org.mxunit.eclipseplugin.actions.ToggleTreeItemsAction;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestElementType;
+import org.mxunit.eclipseplugin.model.TestHistory;
 import org.mxunit.eclipseplugin.model.TestMethod;
 import org.mxunit.eclipseplugin.model.TestStatus;
 
@@ -75,6 +77,7 @@ public class MXUnitView extends ViewPart {
 	private long viewRunID = 0;
 	
 	private JUnitProgressBar progressBar;
+	private TestHistory history;
 
     private LoadMethodsAction loadMethodsAction;
 	private RunTestsAction runTestsAction;
@@ -86,9 +89,9 @@ public class MXUnitView extends ViewPart {
 	private OpenInEditorAction openInEditorAction;
 	private SpoofChangeModelAction spoofChangeModelAction;
 	private FilterFailuresAction filterFailuresAction;
+	private HistoryDropdownAction historyDropdownAction;
 	private Action stopAction;
 	private Action helpAction;
-	private Action selectTestHistoryAction;
 	
 	private MessageConsole console;
 	private boolean consoleActivated = false;
@@ -100,6 +103,7 @@ public class MXUnitView extends ViewPart {
 	 */
 	public MXUnitView() {	   
 	    initializeConsole();
+	    history = new TestHistory();
     }
 	
 	/**
@@ -413,14 +417,11 @@ public class MXUnitView extends ViewPart {
 		filterFailuresAction.setChecked(false);//makes this a toggle-able button
 		
 		//http://kickjava.com/src/org/eclipse/jdt/internal/ui/viewsupport/HistoryDropDownAction.java.htm
-		selectTestHistoryAction = new Action("Test Run History...",IAction.AS_DROP_DOWN_MENU){
-			public void run(){
-				System.out.println("inside selectTestHistoryAction");
-			}
-		};
-		selectTestHistoryAction.setImageDescriptor(
+		historyDropdownAction = new HistoryDropdownAction(this,history);
+		historyDropdownAction.setImageDescriptor(
 				ResourceManager.getImageDescriptor(ResourceManager.HISTORY)
 		);
+		
 		
 		stopAction = new Action() {
             public void run() {
@@ -491,7 +492,7 @@ public class MXUnitView extends ViewPart {
 		manager.add(runFailuresOnlyAction);
 		manager.add(stopAction);
 		manager.add(toggleTreeItemsAction);
-		manager.add(selectTestHistoryAction);
+		manager.add(historyDropdownAction);
 		
 		//manager.add(spoofChangeModelAction);
 		manager.add(new Separator());
@@ -655,6 +656,14 @@ public class MXUnitView extends ViewPart {
 	public Table getDetailsViewer(){
 	    return detailsViewer;
 	}
+	
+	/**
+	 * make it easy to get the history objecxt
+	 * @return
+	 */
+	public TestHistory getTestHistory(){
+		return history;
+	}
 
 	/**
 	 * convenience for adding rows to the details table
@@ -686,7 +695,7 @@ public class MXUnitView extends ViewPart {
 		errorCount = 0;
 		failureCount = 0;
 		currentCount = 0;
-		progressBar.getDisplay().asyncExec(
+		progressBar.getDisplay().syncExec(
 			new Runnable(){
 				public void run() {
 					progressBar.reset();
@@ -723,11 +732,13 @@ public class MXUnitView extends ViewPart {
 		runTestsAction.setEnabled(false);
 		loadMethodsAction.setEnabled(false);
 		runFailuresOnlyAction.setEnabled(false);
+		historyDropdownAction.setEnabled(false);
 		stopAction.setEnabled(true);
 	}
 	public void enableActions(){
 		runTestsAction.setEnabled(true);
 		loadMethodsAction.setEnabled(true);
+		historyDropdownAction.setEnabled(true);
 		if(failureCount>0 || errorCount>0){
 			runFailuresOnlyAction.setEnabled(true);
 		}		

@@ -1,5 +1,6 @@
 package org.mxunit.eclipseplugin.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Observable;
 
 public abstract class AbstractTestElement extends Observable implements ITest{
@@ -8,6 +9,7 @@ public abstract class AbstractTestElement extends Observable implements ITest{
 	protected TestStatus status = TestStatus.BLANK;
 	protected long startTime = System.currentTimeMillis();
 	protected long endTime = System.currentTimeMillis();
+	private SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy h:mm:ss aa");
 	
 	public String getName() {
 		return name;
@@ -31,6 +33,10 @@ public abstract class AbstractTestElement extends Observable implements ITest{
 	
 	public long getEndTime(){
 		return endTime;
+	}
+	
+	public String getFormattedStartTime(){
+		return sdf.format(startTime);
 	}
 
 	public TestStatus getStatus() {

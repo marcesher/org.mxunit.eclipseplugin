@@ -12,19 +12,23 @@ public class TestListLabelProvider extends LabelProvider {
 		
 	}
 	public Image getImage(Object obj) {
-		//System.out.println(obj.getClass());
+		return ResourceManager.getImage( getImageString(obj) );		
+	}
+	
+	public String getImageString(Object obj){
 		TestStatus status  = ((ITest)obj).getStatus();
 		if(status == TestStatus.PASS){
-			return ResourceManager.getImage(ResourceManager.OK);
+			return ResourceManager.OK;
 		}else if(status == TestStatus.ERROR){
-			return ResourceManager.getImage(ResourceManager.ERROR);
+			return ResourceManager.ERROR;
 		}else if(status == TestStatus.FAIL){
-			return ResourceManager.getImage(ResourceManager.FAIL);
+			return ResourceManager.FAIL;
 		}else if(status == TestStatus.INVOCATION_EXCEPTION){
-			return ResourceManager.getImage(ResourceManager.INVOCATION_EXCEPTION);
+			return ResourceManager.INVOCATION_EXCEPTION;
 		}
 		
-		return ResourceManager.getImage(ResourceManager.BLANK);		
+		return ResourceManager.BLANK;
+		
 	}
 
 }

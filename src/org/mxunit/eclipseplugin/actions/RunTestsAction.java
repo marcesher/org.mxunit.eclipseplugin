@@ -16,8 +16,10 @@ import org.mxunit.eclipseplugin.actions.bindings.RemoteFacade;
 import org.mxunit.eclipseplugin.actions.util.RemoteCallCreator;
 import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.ITest;
+import org.mxunit.eclipseplugin.model.TestHistory;
 import org.mxunit.eclipseplugin.model.TestMethod;
 import org.mxunit.eclipseplugin.model.TestStatus;
+import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
 
@@ -52,6 +54,10 @@ public class RunTestsAction extends Action {
         boolean runIt = verifyOKToRun();
         
         if(runIt){
+        	TestSuite currentSuite = (TestSuite) view.getTestsViewer().getInput();
+        	currentSuite.setStartTime(System.currentTimeMillis());
+        	TestHistory history = view.getTestHistory();
+        	history.addSuite(currentSuite);
         	//first, get an array of all tree items so we can easily set the tree's 
             //selected elements
             allTreeItems = treeHelper.getAllTreeItems();
@@ -148,9 +154,11 @@ public class RunTestsAction extends Action {
             runTestMethod(testItem, viewRunID, testRunKey);            
         }
         endTestRun(testRunKey);
+        ((TestSuite) view.getTestsViewer().getInput()).setEndTime(System.currentTimeMillis());
         FilterFailuresAction filter = new FilterFailuresAction(view);
         filter.run();
         view.enableActions();
+        
     }
     
     /**

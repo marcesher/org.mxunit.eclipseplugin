@@ -52,6 +52,7 @@ public class TestSuiteCreator {
 		
 		if(res.getType() == IResource.FOLDER){						   
 			//get all cfcs in the directory
+			suite.setName(res.getName());
 			MXUnitPluginLog.logInfo("TestSuiteCreator: Passing " + selectedResourceAsFile + " to PathUtils.getTestComponents");
 			Collection<File> components = PathUtils.getTestComponents( selectedResourceAsFile  );
 			for (File file : components) {						    
@@ -74,7 +75,7 @@ public class TestSuiteCreator {
             }else{
                 componentName = PathUtils.deriveComponentPath(webroot, selectedResourceAsFile.toString());
             }
-			
+			suite.setName(componentName);
 			System.out.println("componentname is " + componentName);
 			addTestToSuite(suite, selectedResourceAsFile.getAbsolutePath(), componentName);
 		}		

@@ -1,6 +1,7 @@
 package org.mxunit.eclipseplugin.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public final class TestSuite extends AbstractTestElement {
@@ -53,6 +54,19 @@ public final class TestSuite extends AbstractTestElement {
 		this.status = status;
 		setChanged();
 	}	
+	
+	public List<TestMethod> getAllTestMethods(){
+		List<TestMethod> methods = new ArrayList<TestMethod>();
+		List<TestCase> testCases = getTests();
+		for (Iterator<TestCase> caseIter = testCases.iterator(); caseIter.hasNext();) {
+			List<TestMethod> testMethods = caseIter.next().getMethods();
+			for (Iterator<TestMethod> methIter = testMethods.iterator(); methIter
+					.hasNext();) {
+				methods.add(methIter.next());	
+			}
+		}
+		return methods;
+	}
 	
 	
 	/**
