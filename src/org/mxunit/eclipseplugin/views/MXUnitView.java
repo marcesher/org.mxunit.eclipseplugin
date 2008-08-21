@@ -491,7 +491,7 @@ public class MXUnitView extends ViewPart {
 		manager.add(runFailuresOnlyAction);
 		manager.add(stopAction);
 		manager.add(toggleTreeItemsAction);
-		//manager.add(selectTestHistoryAction);
+		manager.add(selectTestHistoryAction);
 		
 		//manager.add(spoofChangeModelAction);
 		manager.add(new Separator());
