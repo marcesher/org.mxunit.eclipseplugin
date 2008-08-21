@@ -63,7 +63,7 @@ public class HistoryDropdownAction extends Action {
 				}
 				
 				new SelectAllInTreeAction(view).run();
-				new ToggleTreeItemsAction(view).run();
+				view.getTestsViewer().expandAll();
 			}
 		}
 	}

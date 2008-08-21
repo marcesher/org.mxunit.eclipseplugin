@@ -18,5 +18,4 @@ public final class ToggleTreeItemsAction extends Action {
 			view.getTestsViewer().collapseAll();
 		}
 	}
-
 }
