@@ -41,10 +41,20 @@ public class HistoryDropdownAction extends Action {
 	
 	private class HistoryAction extends Action {
 		private final TestSuite suite;
-		public HistoryAction(TestSuite s){
+		public HistoryAction(TestSuite s, int position){
 			super("",AS_RADIO_BUTTON);
 			suite = s;
-			setText("  " + s.getName() + " (" + s.getFormattedStartTime() + ")");
+			
+			StringBuffer text = new StringBuffer()
+				.append(" ")
+				.append(s.getName())
+				.append(" (")
+				.append(s.getFormattedStartTime())
+				.append(")");
+			if(position < 10){
+				text.insert(0, position);
+			}
+			setText(text.toString());
 			setImageDescriptor(history.getImageDescriptor(suite));
 		}
 		
@@ -92,13 +102,15 @@ public class HistoryDropdownAction extends Action {
 			manager.setRemoveAllWhenShown(true);
 			final IMenuListener listener = new IMenuListener(){
 				public void menuAboutToShow(IMenuManager iMenuManager) {
+					int position = 1;
 					for (Iterator<TestSuite> iterator = history.getHistory().iterator(); iterator.hasNext();) {
 						TestSuite suite =  iterator.next();
-						HistoryAction action = new HistoryAction(suite);
+						HistoryAction action = new HistoryAction(suite, position);
 						if(history.isActiveEntry(suite)){
 							action.setChecked(true);
 						}
 						iMenuManager.add(action);
+						position++;
 					}
 					
 					iMenuManager.add(new Separator());

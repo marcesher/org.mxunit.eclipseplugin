@@ -134,5 +134,23 @@ public final class TestSuite extends AbstractTestElement {
 		return null;
 	}
 
+	public int hashCode(){
+		return getName().hashCode();
+	}
+	
+	public boolean equals(Object obj){
+		if(this==obj){
+			return true;
+		}		
+		if( obj==null || !(obj instanceof TestSuite) ){
+			return false;
+		}
+		TestSuite suite = (TestSuite)obj;
+		if(getName().length()>0 && getName().equals(suite.getName())){
+			return true;
+		}
+		
+		return false;
+	}
 
 }

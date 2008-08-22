@@ -52,7 +52,7 @@ public class TestSuiteCreator {
 		
 		if(res.getType() == IResource.FOLDER){						   
 			//get all cfcs in the directory
-			suite.setName(res.getName());
+			suite.setName(res.getFullPath().toString());
 			MXUnitPluginLog.logInfo("TestSuiteCreator: Passing " + selectedResourceAsFile + " to PathUtils.getTestComponents");
 			Collection<File> components = PathUtils.getTestComponents( selectedResourceAsFile  );
 			for (File file : components) {						    
