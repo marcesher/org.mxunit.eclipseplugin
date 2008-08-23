@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MXUnit Plugin
 Bundle-SymbolicName: org.mxunit.eclipseplugin; singleton:=true
-Bundle-Version: 1.0.2.qualifier
+Bundle-Version: 1.0.5.qualifier
 Bundle-ClassPath: bin/,
  lib/axis.jar,
  lib/commons-collections-3.2.jar,

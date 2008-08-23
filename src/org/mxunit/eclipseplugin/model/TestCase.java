@@ -14,6 +14,9 @@ public final class TestCase extends AbstractTestElement {
 	/** the full file path for this TestCase */
 	private String filePath = "";
 	
+	public TestSuite getSuite() {
+		return parent;
+	}
 	
 	public String getName() {
 		return name;
@@ -166,5 +169,4 @@ public final class TestCase extends AbstractTestElement {
 	public TestElementType getTestElementType() {
 		return TestElementType.TESTCASE;
 	}
-
 }

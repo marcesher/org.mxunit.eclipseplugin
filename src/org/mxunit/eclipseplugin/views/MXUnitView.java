@@ -40,6 +40,7 @@ import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.part.ViewPart;
+import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.actions.BrowserAction;
 import org.mxunit.eclipseplugin.actions.ComponentSearchAction;
 import org.mxunit.eclipseplugin.actions.FilterFailuresAction;
@@ -56,6 +57,7 @@ import org.mxunit.eclipseplugin.model.TestElementType;
 import org.mxunit.eclipseplugin.model.TestHistory;
 import org.mxunit.eclipseplugin.model.TestMethod;
 import org.mxunit.eclipseplugin.model.TestStatus;
+import org.mxunit.eclipseplugin.preferences.MXUnitPreferenceConstants;
 
 /**
  * The view, baby.
@@ -104,6 +106,7 @@ public class MXUnitView extends ViewPart {
 	public MXUnitView() {	   
 	    initializeConsole();
 	    history = new TestHistory();
+	    history.setMaxEntries( MXUnitPlugin.getDefault().getPluginPreferences().getInt(MXUnitPreferenceConstants.P_MAX_HISTORY) );
     }
 	
 	/**

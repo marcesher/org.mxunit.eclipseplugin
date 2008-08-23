@@ -10,6 +10,10 @@ public final class TestSuite extends AbstractTestElement {
 	/** list of TestCases */
 	private List<TestCase> tests = new ArrayList<TestCase>();
 	
+	public TestSuite getSuite() {
+		return this;
+	}
+	
 	
 	public String getName() {
 		return name;
@@ -152,5 +156,7 @@ public final class TestSuite extends AbstractTestElement {
 		
 		return false;
 	}
+
+	
 
 }

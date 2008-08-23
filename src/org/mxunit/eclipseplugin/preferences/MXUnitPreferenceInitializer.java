@@ -25,6 +25,7 @@ public class MXUnitPreferenceInitializer extends AbstractPreferenceInitializer {
 		
 		store.setDefault(MXUnitPreferenceConstants.P_FACADEURL,
 				"http://localhost/mxunit/framework/RemoteFacade.cfc");
+		store.setDefault(MXUnitPreferenceConstants.P_MAX_HISTORY, 30);
 
 	}
 	

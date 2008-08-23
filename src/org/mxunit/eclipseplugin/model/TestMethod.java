@@ -18,7 +18,9 @@ public final class TestMethod extends AbstractTestElement {
 	/** line number in the file of the error or failure */
 	private int failLineNum = 0;
 	
-	
+	public TestSuite getSuite() {
+		return getParent().getSuite();
+	}
 
 	public String getOutput() {
 		return output;
@@ -137,5 +139,4 @@ public final class TestMethod extends AbstractTestElement {
 	public TestElementType getTestElementType() {
 		return TestElementType.TESTMETHOD;
 	}
-
 }

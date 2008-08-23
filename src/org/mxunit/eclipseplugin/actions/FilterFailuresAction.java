@@ -23,13 +23,6 @@ public class FilterFailuresAction extends Action {
 	}
 	
 	public void run(){		
-		TestSuite suite = (TestSuite) view.getTestsViewer().getInput();
-		
-		if(suite == null || suite.getStatus() == TestStatus.PASS){
-			//System.out.println("skipping failure filter.");
-			return;
-		}
-		
 		if(!isChecked()){
 			view.getTestsViewer().removeFilter(failureFilter);
 		}else{
