@@ -30,13 +30,14 @@ public class HistoryDropdownAction extends Action {
 	private MXUnitView view;
 	private TestHistory history;
 	private Menu menu;
-
+	private HistoryChangeMaxEntriesAction changeMaxAction;
 	
 	public HistoryDropdownAction (MXUnitView view, TestHistory history){		
 		super("Test Run History...", IAction.AS_DROP_DOWN_MENU);
 		this.view = view;
 		this.history = history;
 		setMenuCreator(new HistoryMenuCreator());
+		changeMaxAction = new HistoryChangeMaxEntriesAction(view);
 	}
 	
 	private class HistoryAction extends Action {
@@ -119,6 +120,8 @@ public class HistoryDropdownAction extends Action {
 							history.removeAllSuites();
 						}
 					});
+					iMenuManager.add(new Separator());
+					iMenuManager.add(changeMaxAction);
 				}
 			};
 			
