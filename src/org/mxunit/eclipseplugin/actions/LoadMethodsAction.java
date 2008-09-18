@@ -170,7 +170,7 @@ public final class LoadMethodsAction extends Action {
 					"Unable to run ping method at facade URL "
 							+ callCreator.getFacadeURL(),
 					"Could not connect to facade URL. \n\nTry running this in a browser: "
-							+ callCreator.getFacadeURL() + "&method=ping");
+							+ callCreator.getFacadeURL() + "&&method=ping");
 			view.writeToConsole("Exception message trying to connect to url "
 					+ callCreator.getFacadeURL() + " is: "
 					+ callCreator.getCurrentException().getMessage());
