@@ -104,7 +104,7 @@ public class MXUnitView extends ViewPart {
 	 * The constructor.
 	 */
 	public MXUnitView() {	   
-	    initializeConsole();
+	    //initializeConsole();
 	    history = new TestHistory();
 	    history.setMaxEntries( MXUnitPlugin.getDefault().getPluginPreferences().getInt(MXUnitPreferenceConstants.P_MAX_HISTORY) );
     }
@@ -118,15 +118,17 @@ public class MXUnitView extends ViewPart {
 	/**
 	 * set us up a console
 	 */
-	private void initializeConsole(){
-	    IConsole[] consoles = ConsolePlugin.getDefault().getConsoleManager().getConsoles();
-	    //This could happen if the subversion console, for example, is first on the console stack
-	    if(consoles.length==0  ||  !(consoles[0] instanceof MessageConsole) ){
-            console = new MessageConsole("MXUnit Console", null);
-            ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[]{ console });
-        }else{
-            console = (MessageConsole) consoles[0];
-        }
+	private void ensureConsole(){
+		if(console==null){
+		    IConsole[] consoles = ConsolePlugin.getDefault().getConsoleManager().getConsoles();
+		    //This could happen if the subversion console, for example, is first on the console stack
+		    if(consoles.length==0  ||  !(consoles[0] instanceof MessageConsole) ){
+	            console = new MessageConsole("MXUnit Console", null);
+	            ConsolePlugin.getDefault().getConsoleManager().addConsoles(new IConsole[]{ console });
+	        }else{
+	            console = (MessageConsole) consoles[0];
+	        }
+		}
 	}
 	
 	/**
@@ -376,7 +378,7 @@ public class MXUnitView extends ViewPart {
 		
 		runFailuresOnlyAction = new RunFailuresOnlyAction(this);
 		runFailuresOnlyAction.setText("Run Failures Only");
-		runFailuresOnlyAction.setToolTipText("Run Failures Only");
+		runFailuresOnlyAction.setToolTipText("Run Failures Only (Ctrl-Enter)");
 		runFailuresOnlyAction.setImageDescriptor(
 		        ResourceManager.getImageDescriptor(ResourceManager.RUNFAILURES)
 		);
@@ -413,7 +415,7 @@ public class MXUnitView extends ViewPart {
 		
 		filterFailuresAction = new FilterFailuresAction(this);
 		filterFailuresAction.setText("Show Failures Only");
-		filterFailuresAction.setToolTipText("Show Failures Only");
+		filterFailuresAction.setToolTipText("Show Failures Only (f)");
 		filterFailuresAction.setImageDescriptor(
 				ResourceManager.getImageDescriptor(ResourceManager.TOGGLE_FAILURES)
 		);
@@ -622,6 +624,11 @@ public class MXUnitView extends ViewPart {
             runFailuresOnlyAction.run();
         }
         
+        else if(event.keyCode == (int)'f'){
+        	filterFailuresAction.setChecked(!filterFailuresAction.isChecked());
+        	filterFailuresAction.run();
+        }
+        
         /*System.out.println(ctrlPressed);
         System.out.println(Integer.toHexString(event.character));
         System.out.println(event.keyCode + " " + event.character);*/
@@ -677,7 +684,9 @@ public class MXUnitView extends ViewPart {
 		return new TableItem(detailsViewer, SWT.NONE);
 	}
 	
+	
 	public void writeToConsole(String output){
+		ensureConsole();
 		if(!consoleActivated){
 			console.activate();
 			consoleActivated = true;
