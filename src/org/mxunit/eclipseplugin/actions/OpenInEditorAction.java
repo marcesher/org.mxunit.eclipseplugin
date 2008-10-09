@@ -67,9 +67,7 @@ public final class OpenInEditorAction extends Action {
                         "Could not open file named ["+path+"]. Most likely this file is not in any project in your workspace");
                 return;
             }
-            IEditorDescriptor desc = PlatformUI.getWorkbench().
-            getEditorRegistry().getDefaultEditor(file.getName());        
-            //System.out.println(desc);       
+            IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file.getName());        
             
             IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             Map map = new HashMap();

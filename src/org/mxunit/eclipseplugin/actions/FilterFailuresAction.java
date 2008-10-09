@@ -2,8 +2,6 @@ package org.mxunit.eclipseplugin.actions;
 
 import org.eclipse.jface.action.Action;
 import org.mxunit.eclipseplugin.actions.util.FailureFilter;
-import org.mxunit.eclipseplugin.model.TestStatus;
-import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
 /**
