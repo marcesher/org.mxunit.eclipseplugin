@@ -84,10 +84,10 @@ public final class BrowserAction extends Action {
             //yes, virginia, this kind of concatenation IS faster than
 			//stringbuffer.append()
             if(method.getOutput().trim().length()>0){
-            	output += "<h2>" 
-            		+ method.getName() 
-            		+ "</h2><a name='" 
-            		+ method.getParent().getName() + method.getName() + "'></a>"
+            	output += "<h2>" + method.getName() + "</h2>"
+            		+ "<a name='" + method.getParent().getName() + method.getName() + "'></a>"
+            		+ "<p>Status: " + method.getStatus() +"</p>"
+            		+ "<p>Result: " + method.getResult() + "</p>"
             		+ method.getOutput()
             		+ "<p><a href='#top'>back to top</a><hr></p>";
             }
