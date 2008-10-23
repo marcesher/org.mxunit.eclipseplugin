@@ -67,7 +67,7 @@ public final class BrowserAction extends Action {
 	 * forgive me, father, for not being more clever and xslt-ish about this.
 	 */
 	private String createOutputString(){
-		String output = "<h1>Test Output</h1><a name='top'></a><ul>";
+		String output = getStyleBlock() + "<h1>Test Output</h1><a name='top'></a><ul>";
 		ITest[] methods = treeHelper.getRunnableMethods();
 		
 		for (int i = 0; i < methods.length; i++) {
@@ -86,13 +86,17 @@ public final class BrowserAction extends Action {
             if(method.getOutput().trim().length()>0){
             	output += "<h2>" + method.getName() + "</h2>"
             		+ "<a name='" + method.getParent().getName() + method.getName() + "'></a>"
-            		+ "<p>Status: " + method.getStatus() +"</p>"
-            		+ "<p>Result: " + method.getResult() + "</p>"
+            		+ "<p class='status "+method.getStatus()+"'>Status: " + method.getStatus() +"</p>"
+            		+ "<p><b>Result:</b> " + method.getResult() + "</p>"
             		+ method.getOutput()
             		+ "<p><a href='#top'>back to top</a><hr></p>";
             }
         }
 		return output;
+	}
+	
+	private String getStyleBlock(){
+		return "<style>.status{font-weight: bold} .FAIL{color:navy} .ERROR{color:red} .PASS{color:green} </style> ";
 	}
 
 }
