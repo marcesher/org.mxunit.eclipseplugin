@@ -53,18 +53,18 @@ public class TestSuiteCreator {
 		
 		
 		if(res.getType() == IResource.FOLDER){		
-			/*IContainer container = (IContainer)res;
+			IContainer container = (IContainer)res;
 			
 			try {
 				IResource[] children = container.members();
 				for (int i = 0; i < children.length; i++) {
-					System.out.println(children[i].getProjectRelativePath().toString());
+					System.out.println("resource: " + children[i].getProjectRelativePath().toString());
 				}
 				
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 			
 			//get all cfcs in the directory
 			suite.setName(res.getFullPath().toString());
