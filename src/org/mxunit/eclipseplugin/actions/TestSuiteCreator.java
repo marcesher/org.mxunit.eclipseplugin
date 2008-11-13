@@ -1,11 +1,13 @@
 package org.mxunit.eclipseplugin.actions;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -25,6 +27,7 @@ public class TestSuiteCreator {
 	
 	private Preferences prefs;
 	private MXUnitPropertyManager props;   
+	private ArrayList tests = new ArrayList();
 	
 	public TestSuiteCreator(){
 		prefs = MXUnitPlugin.getDefault().getPluginPreferences();
@@ -53,18 +56,9 @@ public class TestSuiteCreator {
 		
 		
 		if(res.getType() == IResource.FOLDER){		
-			IContainer container = (IContainer)res;
 			
-			try {
-				IResource[] children = container.members();
-				for (int i = 0; i < children.length; i++) {
-					System.out.println("resource: " + children[i].getProjectRelativePath().toString());
-				}
-				
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			printVisitorStuff(res);
 			
 			//get all cfcs in the directory
 			suite.setName(res.getFullPath().toString());
@@ -146,5 +140,30 @@ public class TestSuiteCreator {
 		tc.setName(name);
 		suite.addTest(tc);
 		MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: Adding Test To Suite: fullPath is " + fullPath + ";name is" + name);
+	}
+	
+	private void printVisitorStuff(IResource resource){
+		IResourceVisitor visitor = new TestVisitor();
+		try {
+			resource.accept(visitor);
+			System.out.println(tests.size());
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	class TestVisitor implements IResourceVisitor{
+
+		public boolean visit(IResource resource) throws CoreException {
+			//System.out.println("visitor resource: " + resource.getFullPath());
+			if(resource.getType() == IResource.FILE){
+				
+				tests.add(resource.getFullPath());
+			}
+			return true;
+		}
+		
 	}
 }
