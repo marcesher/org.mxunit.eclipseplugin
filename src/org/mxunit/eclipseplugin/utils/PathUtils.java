@@ -41,7 +41,7 @@ public final class PathUtils {
 		
 		//convert all slashes to periods
 		webroot = webroot.replace(pathSeparator, ".");
-		component = component.replace(pathSeparator, ".");
+		component = component.replace("/", ".");
 		
 		
 		//knock out the webroot from the component path. originally this was done with replaceFirst,
