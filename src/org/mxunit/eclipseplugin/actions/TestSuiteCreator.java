@@ -130,7 +130,7 @@ public class TestSuiteCreator {
 		String path = "";
 		String propValue = "";
 		
-		//loop over all parents up to the project;
+		//for each cfc found, loop over all parents up to the project;
 		//if any parents have a property configured for cfc path
 		//then attach that root to the component and return;
 		//otherwise, derive it from the webroot
@@ -150,7 +150,7 @@ public class TestSuiteCreator {
 				break;
 			}
 		}
-		
+		//we got this far but no parents had a component root defined; now we simply knock the webroot off of the component's path and replace slashes and whatnot.
 		if(path.length() == 0){
 			p.removeFirstSegments(webrootAsPath.segmentCount());
 			path = p.toString().replaceAll("/", ".").replaceFirst(".", "");//have to remove the first period since the path always starts with the /, and that got converted to a period which hangs at the front.
