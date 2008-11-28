@@ -23,7 +23,6 @@ public class TestListContentProvider implements IStructuredContentProvider,
 	}
 	public Object[] getElements(Object parent) {	
 		Object[] children = getChildren(parent);
-		//System.out.println("children.length is " + children.length);
 		return children;
 	}
 	public Object getParent(Object child) {
@@ -38,13 +37,10 @@ public class TestListContentProvider implements IStructuredContentProvider,
 	
 	public Object [] getChildren(Object parent) {
 		if(parent instanceof TestSuite){
-			//System.out.println("it's a testsuite");
 			return ((TestSuite)parent).getTestsAsArray();
 		}else if(parent instanceof TestCase){
-			//System.out.println("it's a testcase");
 			return ((TestCase)parent).getMethodsAsArray();
 		}else{
-			//System.out.println("it's a nothing!");
 			return new Object[0];
 		}
 	}

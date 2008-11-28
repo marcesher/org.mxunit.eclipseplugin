@@ -82,13 +82,13 @@
 	       menubarPath="additions"
 	       class="org.mxunit.eclipseplugin.actions.RunSelectedResourceActionDelegate"	
            definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction"
-	       enablesFor="1">
+	       enablesFor="+">
 	    </action>
 	 </objectContribution>	
 	 
 	 <objectContribution
         id="org.mxunit.eclipseplugin.MXUnitRunner2"
-        objectClass="org.eclipse.core.resources.IFolder"
+        objectClass="org.eclipse.core.resources.IContainer"
 	  
 	       adaptable="true">
 	    <action id="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction2"
@@ -97,7 +97,7 @@
 	       menubarPath="additions"
 	       class="org.mxunit.eclipseplugin.actions.RunSelectedResourceActionDelegate"	
            definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction2"
-	       enablesFor="1">
+	       enablesFor="+">
 	    </action>
 	 </objectContribution>
 	 

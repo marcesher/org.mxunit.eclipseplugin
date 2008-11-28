@@ -19,24 +19,22 @@ import org.mxunit.eclipseplugin.views.MXUnitView;
  */
 public final class RunSelectedResourceActionDelegate implements IViewActionDelegate {
 
-	private IResource selectedResource;
+	private IResource[] selectedResources;
 	private LoadMethodsAction loadAction;
 	private RunTestsAction runAction;
 	
 	public void run(IAction action) {
-		IResource[] resources;
 
 		try {			
 			TestSuiteCreator testSuiteCreator = new TestSuiteCreator();	 
 			
-			if( !testSuiteCreator.isResourceConfigured(selectedResource) ){
-				testSuiteCreator.alertIfResourceNotConfigured(selectedResource);
+			if( !testSuiteCreator.isResourceConfigured(selectedResources[0]) ){
+				testSuiteCreator.alertIfResourceNotConfigured(selectedResources[0]);
 				return;
 			}else{
 				MXUnitView view = (MXUnitView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(MXUnitView.ID);
-				resources = new IResource[]{selectedResource};
 				
-				TestSuite suite = testSuiteCreator.createSuite(resources);
+				TestSuite suite = testSuiteCreator.createSuite(selectedResources);
 				//System.out.println(suite);
 				view.getTestsViewer().setInput(suite);
                 view.getTestsViewer().getTree().selectAll();      
@@ -55,8 +53,11 @@ public final class RunSelectedResourceActionDelegate implements IViewActionDeleg
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
-		selectedResource = (IResource) ((StructuredSelection) selection).getFirstElement();	
-		
+		Object[] selected = ((StructuredSelection) selection).toArray();
+		selectedResources = new IResource[selected.length];
+		for (int i = 0; i < selected.length; i++) {
+			selectedResources[i] = (IResource) selected[i];
+		}
 	}
 
 	public void init(IViewPart view) {

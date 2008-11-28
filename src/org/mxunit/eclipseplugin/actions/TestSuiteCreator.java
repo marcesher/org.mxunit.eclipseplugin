@@ -1,13 +1,7 @@
 package org.mxunit.eclipseplugin.actions;
 
-import java.io.File;
-import java.util.Collection;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -19,31 +13,55 @@ import org.mxunit.eclipseplugin.model.TestCase;
 import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.preferences.MXUnitPreferenceConstants;
 import org.mxunit.eclipseplugin.properties.MXUnitPropertyManager;
-import org.mxunit.eclipseplugin.utils.PathUtils;
 
 public class TestSuiteCreator {
-
-	
 	private Preferences prefs;
 	private MXUnitPropertyManager props;   
-	private String webroot;
+	private IPath webrootAsPath;
 	private String testFilter;
 	TestSuite suite;
 	
 	public TestSuiteCreator(){
 		prefs = MXUnitPlugin.getDefault().getPluginPreferences();
 		props  = new MXUnitPropertyManager();
-		webroot = prefs.getString(MXUnitPreferenceConstants.P_WEBROOTPATH);
+		webrootAsPath = new Path(prefs.getString(MXUnitPreferenceConstants.P_WEBROOTPATH));
 		testFilter = "(?i)Test.*.cfc|(?i).*Test.cfc";
 		suite = new TestSuite();
 	}
 	
+	
+	/**
+	 * Looks at the resource and its parents for a component root, and at the webroot configured for this plugin. If neither are configured, booooooo.
+	 * @param resource the resource whose tests will be collected
+	 * @return true if shit's OK; false if suckas using this are suckas
+	 */
+	public boolean isResourceConfigured(IResource resource){
+		if(webrootAsPath.toString().length()==0 && !doesResourceHaveConfiguredAncestor(resource)){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Throws up alert box for an unconfigured resource
+	 * @param resource the dastardly resource actin' a fool
+	 */
+	public void alertIfResourceNotConfigured(IResource resource){		
+		MXUnitPluginLog.logInfo("No webroot or component root defined for resource " + resource.toString());
+		MessageDialog.openInformation( null, "No webroot or component root defined", "Either a webroot or component root must be defined.\n\nIf your test files are located under the webroot, please specify the webroot in Window -- Preferences -- MXUnit.\n\nIf the test files in this project are located outside of your webroot, please specify a component root in Project -- Properties -- MXUnit (or any of its subdirectories)");			
+	}
+	
+	/**
+	 * This is the heart 'n soul of gathering up all the tests for the selected project/folder/test. It crawls
+	 * through directories and finds files that look like tests. It then derives the CFC notation (dot notation) 
+	 * for each file.
+	 * @param resources the selected resources (tests, folders, projects)
+	 * @return a brand spankin' new TestSuite
+	 */
 	public TestSuite createSuite(IResource[] resources){
-		//for now, i'm only supporting a single resource being selected; in the future
-		//I may add support for multiples; this should "just work"
 		IResource startResource = resources[0];
 		for (int i = 0; i < resources.length; i++) {
-			MXUnitPluginLog.logInfo("Adding to suite with resource named " + resources[i] + "; webroot is " + webroot + "; rawLocation is " + resources[i].getRawLocation().toString());
+			MXUnitPluginLog.logInfo("Adding to suite with resource named " + resources[i] + "; webroot is " + webrootAsPath.toOSString() + "; rawLocation is " + resources[i].getRawLocation().toString());
 			collectFiles(resources[i]);
 		}
 		
@@ -56,94 +74,26 @@ public class TestSuiteCreator {
 		return suite;
 	}
 	
-	public TestSuite createSuiteOLD(IResource[] resources){
-		TestSuite suite = new TestSuite();
+	
+	/**
+	 * climbs a resource's tree to see if it or any ancestors have a component root configured
+	 * @param resource the resource whose tests will be collected
+	 * @return true if any ancestors have a component root; false otherwise
+	 */
+	private boolean doesResourceHaveConfiguredAncestor(IResource resource){
+		boolean configured = false;
 		
-		//initialize the roots to work with: webroot (e.g. c:\inetpub\wwwroot ) or componentroot (eg. components)
-        String componentRoot = "";
-        String componentName = "";		    
-		IWorkspaceRoot wsroot = ResourcesPlugin.getWorkspace().getRoot();
-		
-		IResource res = resources[0];
-		
-		File selectedResourceAsFile = new File(res.getRawLocation().toString());			
-		
-		componentRoot = getProjectComponentRoot(res);			
-		
-		String fileRelativeToRoot = res.getProjectRelativePath().toString();		
-					
-		MXUnitPluginLog.logInfo("webroot is " + webroot + "; selectedResourceAsFile is " + selectedResourceAsFile.toString() + "; componentRoot is " + componentRoot + "; fileRelativeToRoot is " + fileRelativeToRoot);
-		
-		
-		
-		if(res.getType() == IResource.FOLDER){		
-			
-			
-			//printVisitorStuff(res);
-			
-			//get all cfcs in the directory
-			suite.setName(res.getFullPath().toString());
-			MXUnitPluginLog.logInfo("TestSuiteCreator: Passing " + selectedResourceAsFile + " to PathUtils.getTestComponents");
-			Collection<File> components = PathUtils.getTestComponents( selectedResourceAsFile  );
-			for (File file : components) {						    
-			    if(componentRoot.length()>0){  
-			    	IFile fileResource = wsroot.getFileForLocation(new Path(file.getAbsolutePath()));			    	
-			    	fileRelativeToRoot = fileResource.getProjectRelativePath().toString();
-			    	
-			    	MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: file is " + file.toString() + "; fileRelativeToRoot is " + fileRelativeToRoot + "; componentRoot is " + componentRoot);
-			    	
-                    componentName = PathUtils.deriveComponentPathRelativeToProject(componentRoot, fileRelativeToRoot);
-			    }else{
-			        componentName = PathUtils.deriveComponentPath(webroot, file.toString());
-			    }
-				
-				addTestToSuite(suite, file.getAbsolutePath(), componentName);
+		IResource currentParent = resource;
+		IPath p = resource.getFullPath().removeFileExtension();
+		for(int i = p.segmentCount()-1; i > 0;i--){
+			currentParent = currentParent.getParent();
+			if(props.getComponentPropertyValue(currentParent).trim().length() > 0){
+				configured = true;
+				break;
 			}
-		}else{	                    
-            if(componentRoot.length()>0){                                                
-                componentName = PathUtils.deriveComponentPathRelativeToProject(componentRoot, fileRelativeToRoot);
-            }else{
-                componentName = PathUtils.deriveComponentPath(webroot, selectedResourceAsFile.toString());
-            }
-			suite.setName(componentName);
-			System.out.println("componentname is " + componentName);
-			addTestToSuite(suite, selectedResourceAsFile.getAbsolutePath(), componentName);
-		}		
-		
-		MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: Using file as top-level resource: " + selectedResourceAsFile);
-		
-		return suite;
-	}
-	
-	/**
-	 * returns a component root for the resource's project if one is defined; otherwise, returns an empty string
-	 * @param resource the resource in question
-	 * @return String
-	 */
-	public String getProjectComponentRoot(IResource resource){
-		String componentRoot = props.getComponentPropertyValue(resource.getProject());
-        if(componentRoot ==null){
-            componentRoot = "";
-        }
-        return componentRoot;
-	}
-	
-	/**
-	 * 
-	 * @param resource
-	 * @return
-	 */
-	public void alertIfResourceNotConfigured(IResource resource){		
-		MXUnitPluginLog.logInfo("No webroot or component root defined for resource " + resource.toString());
-		MessageDialog.openInformation( null, "No webroot or component root defined", "Either a webroot or component root must be defined.\n\nIf your test files are located under the webroot, please specify the webroot in Window -- Preferences -- MXUnit.\n\nIf the test files in this project are located outside of your webroot, please specify a component root in Project -- Properties -- MXUnit");			
-	}
-	
-	public boolean isResourceConfigured(IResource resource){
-		String componentRoot = getProjectComponentRoot(resource);
-		boolean configured = true;
-		
-		if(webroot.length()==0 && componentRoot.length()==0){
-			configured = false;
+			if(currentParent.getType() == IResource.ROOT){
+				break;
+			}
 		}
 		return configured;
 	}
@@ -169,10 +119,13 @@ public class TestSuiteCreator {
 		} catch (CoreException e) {
 			MXUnitPluginLog.logError("Error visiting test resources with Resource " + resource.toString(), e);
 		}
-		
 	}
 	
-	
+	/**
+	 * a dandy of a function that parses stuff and otherwise creates the DOT-notation CFC paths
+	 * @param resource the resource whose cfc notation will be derived
+	 * @return the cfc notation
+	 */
 	private String deriveCFCPath(IResource resource){
 		String path = "";
 		String propValue = "";
@@ -184,6 +137,7 @@ public class TestSuiteCreator {
 		
 		IResource currentParent = resource;
 		IPath p = resource.getFullPath().removeFileExtension();
+		
 		for(int i = p.segmentCount()-1; i > 0;i--){
 			currentParent = currentParent.getParent();
 			if(currentParent.getType() == IResource.ROOT){
@@ -192,15 +146,14 @@ public class TestSuiteCreator {
 			
 			propValue = props.getComponentPropertyValue(currentParent).trim();
 			if(propValue.length()>0){
-				path = propValue + "." + p.removeFirstSegments(i).toString();
-				path = path.replaceAll("/", ".");
+				path = propValue + "." + p.removeFirstSegments(i).toString().replaceAll("/", ".");
 				break;
 			}
 		}
 		
 		if(path.length() == 0){
-			//File selectedResourceAsFile = new File(resource.getRawLocation().toString());
-			path = PathUtils.deriveComponentPath(webroot, resource.getRawLocation().toString());
+			p.removeFirstSegments(webrootAsPath.segmentCount());
+			path = p.toString().replaceAll("/", ".").replaceFirst(".", "");//have to remove the first period since the path always starts with the /, and that got converted to a period which hangs at the front.
 		}
 		
 		return path;
@@ -208,17 +161,14 @@ public class TestSuiteCreator {
 	
 	
 	class TestVisitor implements IResourceVisitor{
-
 		public boolean visit(IResource resource) throws CoreException {
 			if(resource.getType() == IResource.FILE && 
-					resource.getFullPath().lastSegment()
-					.matches(testFilter)){
+					resource.getFullPath().lastSegment().matches(testFilter)){
 				
 				String path = deriveCFCPath(resource);
 				addTestToSuite(suite, resource.getRawLocation().toString(), path);
 			}
 			return true;
 		}
-		
 	}
 }

@@ -65,8 +65,6 @@ public class HistoryDropdownAction extends Action {
 				history.setActiveEntry(suite);			
 				view.getTestsViewer().setInput(suite);
 				List<TestMethod> methods = suite.getAllTestMethods();
-				System.out.println(suite.getName());
-				System.out.println("inside run... methods size = " + methods.size());
 				view.resetCounts(methods.size());
 	
 				for (Iterator<TestMethod> methIter = methods.iterator(); methIter.hasNext();) {

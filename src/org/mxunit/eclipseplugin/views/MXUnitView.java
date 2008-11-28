@@ -259,7 +259,8 @@ public class MXUnitView extends ViewPart {
 		testsViewer.setSorter(new TestListNameSorter());
 		testsViewer
 				.addSelectionChangedListener(new ISelectionChangedListener() {
-					public void selectionChanged(SelectionChangedEvent event) {						
+					public void selectionChanged(SelectionChangedEvent event) {	
+						clearDetailsPanel();
 						updateDetailsPanel();
 					}
 				});
@@ -293,57 +294,62 @@ public class MXUnitView extends ViewPart {
 	 * 
 	 */
 	public void updateDetailsPanel() {
-		TreeItem[] items = testsViewer.getTree().getSelection();
-		clearDetailsPanel();
-		for (int i = 0; i < items.length; i++) {
-			ITest testitem = (ITest) items[i].getData();
-			if (testitem.getTestElementType() == TestElementType.TESTMETHOD) {
-				TestMethod method = (TestMethod) testitem;
-				if(method.getResult().trim().length()>0){
-				    TableItem nameRow = newTableItem();
+		detailsViewer.getDisplay().asyncExec(new Runnable(){
+
+			public void run() {
+				TreeItem[] items = testsViewer.getTree().getSelection();
+				//clearDetailsPanel();
+				for (int i = 0; i < items.length; i++) {
+					ITest testitem = (ITest) items[i].getData();
+					if (testitem.getTestElementType() == TestElementType.TESTMETHOD) {
+						TestMethod method = (TestMethod) testitem;
+						if(method.getResult().trim().length()>0){
+						    TableItem nameRow = newTableItem();
+						
+		    				nameRow.setData(method);
+		    				nameRow.setText(method.getName());
+		    				TableItem resultRow = newTableItem();
+		                    resultRow.setData(method);
+		    				resultRow.setText(method.getException());  
+		    				if(method.getStatus() == TestStatus.ERROR){
+		    				    resultRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_ERROR));
+		    				}else{
+		    				    resultRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
+		    				}
+		    				Map[] tc = method.getTagcontext();
+		    				if(tc != null){
+		    					//this way, the OpenInEditorAction can be stupid about opening up at the correct file line
+		                        nameRow.setData(tc[0]);
+		                        resultRow.setData(tc[0]);
+		                        TableItem traceRow = null;
+		    				    for (int j = 0; j < method.getTagcontext().length; j++) {
+		    				        String fileName = (String) tc[j].get("FILE");
+		    				        //System.out.println(tc[j].get("LINE"));
+		    				        String fileLine = (String) Integer.toString((Integer)tc[j].get("LINE"));
+		                            traceRow = newTableItem();
+		                            traceRow.setData(tc[j]);
+		                            
+		                            if(fileName.toLowerCase().endsWith(".cfc")){
+		                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFCSTACKFRAME) );
+		                            }else{
+		                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFMSTACKFRAME) );
+		                            }                            
+		                            traceRow.setText(fileName + ": " + fileLine);
+		                        }
+		    				    detailsViewer.showItem(traceRow);
+		    				}
+		    				
+		    				//little spacer
+		    				if (items.length > 1) {
+		    				    newTableItem().setText("");
+		    				}
+						}
+					}
+				}		
+
 				
-    				nameRow.setData(method);
-    				nameRow.setText(method.getName());
-    				detailsViewer.showItem(nameRow);
-    				TableItem resultRow = newTableItem();
-                    resultRow.setData(method);
-    				resultRow.setText(method.getException());  
-    				if(method.getStatus() == TestStatus.ERROR){
-    				    resultRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_ERROR));
-    				}else{
-    				    resultRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
-    				}
-    				Map[] tc = method.getTagcontext();
-    				if(tc != null){
-    					//this way, the OpenInEditorAction can be stupid about opening up at the correct file line
-                        nameRow.setData(tc[0]);
-                        resultRow.setData(tc[0]);
-                        
-    				    for (int j = 0; j < method.getTagcontext().length; j++) {
-    				        String fileName = (String) tc[j].get("FILE");
-    				        //System.out.println(tc[j].get("LINE"));
-    				        String fileLine = (String) Integer.toString((Integer)tc[j].get("LINE"));
-                            TableItem traceRow = newTableItem();
-                            traceRow.setData(tc[j]);
-                            
-                            if(fileName.toLowerCase().endsWith(".cfc")){
-                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFCSTACKFRAME) );
-                            }else{
-                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFMSTACKFRAME) );
-                            }                            
-                            traceRow.setText(fileName + ": " + fileLine);
-                            detailsViewer.showItem(traceRow);
-                        }
-    				}
-    				
-    				//little spacer
-    				if (items.length > 1) {
-    				    newTableItem().setText("");
-    				}
-				}
-			}
-		}		
-		
+			}});
+				
 		
 		
 	}
@@ -351,7 +357,7 @@ public class MXUnitView extends ViewPart {
 	/**
 	 * resets the details table
 	 */
-	private void clearDetailsPanel() {
+	public void clearDetailsPanel() {
 		detailsViewer.removeAll();
 	}
 
@@ -680,7 +686,10 @@ public class MXUnitView extends ViewPart {
 	 * @return TableItem a new table item (row)
 	 */
 	TableItem newTableItem() {
-		return new TableItem(detailsViewer, SWT.NONE);
+		TableItem item = new TableItem(detailsViewer, SWT.NONE);
+		detailsViewer.showItem(detailsViewer.getItem(0));
+		return item;
+		
 	}
 	
 	

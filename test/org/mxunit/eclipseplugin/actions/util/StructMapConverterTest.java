@@ -1,11 +1,5 @@
 package org.mxunit.eclipseplugin.actions.util;
 
-import java.util.HashMap;
-
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMap;
-import org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMapItem;
-
 import junit.framework.TestCase;
 
 public class StructMapConverterTest extends TestCase {

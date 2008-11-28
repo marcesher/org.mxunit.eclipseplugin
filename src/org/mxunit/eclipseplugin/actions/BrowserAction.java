@@ -36,7 +36,7 @@ public final class BrowserAction extends Action {
 			File file = createTempFile();
 			
 			browser = browserSupport.createBrowser(IWorkbenchBrowserSupport.AS_VIEW, "mxunit", "TestCase", "Test case results");
-			browser.openURL( file.toURL() );
+			browser.openURL( file.toURI().toURL() );
 			
 		} catch (PartInitException e) {
 			MXUnitPluginLog.logError("PartInitException in BrowserAction",e);
@@ -96,7 +96,7 @@ public final class BrowserAction extends Action {
 	}
 	
 	private String getStyleBlock(){
-		return "<style>.status{font-weight: bold} .FAIL{color:navy} .ERROR{color:red} .PASS{color:green} </style> ";
+		return "<style>p, div, li{font-family:Verdana, sans-serif} .status{font-weight: bold} .FAIL{color:navy} .ERROR{color:red} .PASS{color:green} </style> ";
 	}
 
 }

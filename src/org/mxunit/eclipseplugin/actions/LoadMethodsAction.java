@@ -78,6 +78,8 @@ public final class LoadMethodsAction extends Action {
 	 * @param runID
 	 */
 	private void loadTests(long runID) {
+		view.clearDetailsPanel();
+		
 		for (int i = 0; i < selectedTests.length; i++) {
 		    if(view.getRunID()!=runID){
 		        break;
@@ -118,7 +120,6 @@ public final class LoadMethodsAction extends Action {
 		        	//update the tree item to reflect the changes we made to the model
 		        	view.getTestsViewer().refresh(item);		                	
 		            view.getTestsViewer().update(item.getParent(),null);  
-		            view.updateDetailsPanel();
 		        }
 		    });
 		}

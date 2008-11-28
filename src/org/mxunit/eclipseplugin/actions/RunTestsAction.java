@@ -35,8 +35,6 @@ public class RunTestsAction extends Action {
     private RemoteFacade facade;
 
     private TreeHelper treeHelper;
-    
-    
     public RunTestsAction(MXUnitView view) {
         this.view = view;
         MXUnitPlugin.getDefault().getPluginPreferences();
@@ -67,16 +65,16 @@ public class RunTestsAction extends Action {
             updatedSelectedTreeItemsList = new ArrayList<TreeItem>();
                         
 	        //deselect all so that we can update the selection as the tests complete
-	        view.getTestsViewer().getTree().deselectAll();      
+	        view.getTestsViewer().getTree().deselectAll();  
+	        view.clearDetailsPanel();
 	       
 	        //create the map of testitems to treeitems
 	        for (int i = 0; i < allTreeItems.length; i++) {
 	            testItemsToTreeItemsMap.put((ITest) allTreeItems[i].getData(), allTreeItems[i]);
 	        } 
 	       
-	       
 	        final Thread t = new Thread() {
-	            public void run(){              
+	            public void run(){     
 	                runTests(viewRunID);
 	            }
 	        };
@@ -137,7 +135,7 @@ public class RunTestsAction extends Action {
      * runs the runnable test methods
      */
     private void runTests(long viewRunID) {    
-        
+    	
     	resetProgressBar();
     	String testRunKey = startTestRun();
         for (int i = 0; i < runnableMethods.length; i++) {
@@ -153,12 +151,13 @@ public class RunTestsAction extends Action {
             //do the deed
             runTestMethod(testItem, viewRunID, testRunKey);            
         }
+        
         endTestRun(testRunKey);
         ((TestSuite) view.getTestsViewer().getInput()).setEndTime(System.currentTimeMillis());
         FilterFailuresAction filter = new FilterFailuresAction(view);
         filter.run();
         view.enableActions();
-        
+        view.updateDetailsPanel();
     }
     
     /**
@@ -178,7 +177,6 @@ public class RunTestsAction extends Action {
         final TestMethod tm = (TestMethod) testItem;
         final String currentComponent = tm.getParent().getName();
         final String currentMethod = tm.getName();
-        
         view.writeToConsole("Running method " + currentMethod + "...");        
         
         Map tmpresults;
@@ -234,14 +232,10 @@ public class RunTestsAction extends Action {
                     //to the already selected items.
                     TreeItem[] tmp = updatedSelectedTreeItemsList.toArray( new TreeItem[0] );  
                     view.getTestsViewer().getTree().setSelection( tmp );  
-                    //ensure that the currently selected tree item is visible in the tree (i.e. ensure we scroll down to it)
-                    view.getTestsViewer().getTree().showItem(tmp[tmp.length-1]);
-                    view.updateDetailsPanel();
                     view.addTestResult(tm.getStatus());
                 }
             });
         }
-        
     }
     
     private String startTestRun(){

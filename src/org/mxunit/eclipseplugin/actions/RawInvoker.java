@@ -1,15 +1,11 @@
 package org.mxunit.eclipseplugin.actions;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
 
 import javax.xml.namespace.QName;
 
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
-import org.apache.axis.transport.http.HTTPConstants;
 
 public class RawInvoker {
     private final Service service = new Service();
