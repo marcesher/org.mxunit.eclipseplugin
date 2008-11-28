@@ -4,7 +4,8 @@
 <toc label="MXUnit Table of Contents">
 	<topic label="Using the MXUnit Plugin"> 
 		<topic label="Introduction to MXUnit" href="help/html/intro.html" />
-		<topic label="Getting Started: Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
+		<topic label="Getting Started: Talking to ColdFusion" href="talkingToColdFusion.html"/>
+		<topic label="Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
 		<topic label="Configure project properties" href="help/html/configureProjectProperties.html"/>
 		<topic label="Running Demo Tests" href="help/html/runningDemoTests.html" />
 		<topic label="Keyboard Shortcuts" href="help/html/keyboardshortcuts.html" />

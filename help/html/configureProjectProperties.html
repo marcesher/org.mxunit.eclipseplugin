@@ -38,6 +38,8 @@ You can set these properties at the project level
 	<li>Enter credentials if required</li>
 </ol>
 
+<h2>That component root.... in a bit more depth</h2>
+<p>Sometimes, your cfc notation doesn't start at the project level but maybe at a level underneath. For example, maybe you have c:\components\tests, and all your tests live under that directory. You have a mapping set up in ColdFusion that points "tests" to that directory. So any components under it are referenced as test.subdir.MyTest.  Now, maybe you have an Eclipse project set up at c:\components. To correctly configure the plugin to work for your unit tests, it won't work to set the properties at the project level... you'll need to set the component root at the "directory" level. To do so, simply right click on that "tests" directory in Eclipse, select "Properties", go to the MXUnit page, and enter "tests" as the component path for that directory.</p>
 
 <h2>Examples</h2>
 
@@ -94,6 +96,18 @@ You can set these properties at the project level
 </ul>
   
 <b>What to do:</b> specify "components" as the component root for this project.
+</p>
+
+<h3>Component Root: Specifying multiple roots in the same project</h3>
+<p>
+Imagine this scenario: Your applications live at d:\apps, and you have a monster project in Eclipse set up at d:\apps. You have some subdirs that look like: d:\apps\App1\tests, d:\apps\App2\tests, and so forth. You have mappings in CF set up that points "app1" to d:\apps\app1, "app2" to d:\apps\app2, etc.
+
+<ul>
+	<li>In Eclipse, right click on the App1 directory, select the MXUnit properties, and add "app1" as the component root</li>
+	<li>Do the same for App2, but using "app2" instead of app1 </li>
+	<li>Do the same for the rest of the directories underneath</li>
+</ul>
+Granted... this definitely a bit more work; still, it gives you the granularity you need for correctly specifiying the CFC path at any folder level.
 </p>
 
 <h3>Username and password</h3>

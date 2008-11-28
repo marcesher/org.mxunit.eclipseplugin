@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Talking to ColdFusion</title>
+</head>
+
+<body>
+<h1>Talking to ColdFusion</h1>
+<p>The MXUnit Eclipse plugin cannot execute ColdFusion code inside of Eclipse; thus, it needs to communicate with your ColdFusion server via other means. The plugin works by making webservice (SOAP) calls to a CFC, passing in the dot-notation path to components; the CFC in turn runs each component's tests and returns results back to the plugin.</p>
+<p>You have two primary things to configure:</p>
+<ol>
+ <li> the URL to the cfc that will serve as the intermediary between Eclipse and CF</li>
+ <li> the cfc path (dot-notation) for each project's components</li>
+ </ol> 
+ 
+ <p>This isn't as spooky as it sounds.</p>
+ 
+ <p>Many users will be able to get away with configuring two global settings. If keep your components under the webroot, then this should be all you need. The plugin will be able to derive the dot-notation (com.blah.blah) path to your components by by comparing the path to the file with the configured webroot preference and then doing some simple string manipulation.
+ 
+ <br><br>
+ If, however, you keep your components outside the webroot, then you'll need to do slightly more work... you'll need to configure your CFC path at the project level, not at the global level. </p>
+ <p>
+ So, let's start:  
+ <br>
+ <a href="configureGlobalPreferences.html">Tell me more about Global Preferences!</a><br>
+ <a href="configureProjectProperties.html">Tell me more about project-level configuration!</a>
+ 
+ </p>
+
+</body>
+</html>
