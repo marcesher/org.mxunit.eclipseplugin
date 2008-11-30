@@ -98,16 +98,36 @@ You can set these properties at the project level
 <b>What to do:</b> specify "components" as the component root for this project.
 </p>
 
-<h3>Component Root: Specifying multiple roots in the same project</h3>
+<h3>Component Root: Using the special "empty" root indicator*</h3>
 <p>
 Imagine this scenario: Your applications live at d:\apps, and you have a monster project in Eclipse set up at d:\apps. You have some subdirs that look like: d:\apps\App1\tests, d:\apps\App2\tests, and so forth. You have mappings in CF set up that points "app1" to d:\apps\app1, "app2" to d:\apps\app2, etc.
+<br><br>
+In this case, the easiest choice is to use the "empty" root indicator. In this example, here's what to do: 
+<ul>
+	<li>Right click on the project, select "Properties", and go to "MXUnit"</li>
+	<li>In the component root field, simply add "/"</li>
+</ul>
+What's this do? Using a slash (or a period) as the component root property indicates "don't prefix anything underneath this container with a root, but don't try to derive the component path from the webroot, either. In this example, the components under apps\app2\tests would then start at app2.tests, essentially ignoring the "apps" directory.
+<br><br>
+<i>*Props to a user named Alanyst for suggesting this feature and contributing code</i>
+</p>
+
+<h3>Component Root: Specifying multiple roots in the same project, on any directory</h3>
+<p>
+Imagine this scenario: Your applications live at d:\apps, and you have a monster project in Eclipse set up at d:\apps. You have some subdirs that look like: d:\apps\v1\Client1\tests, d:\apps\v2\Client1\tests, etc. And you've added CF mappings like so:
 
 <ul>
-	<li>In Eclipse, right click on the App1 directory, select the MXUnit properties, and add "app1" as the component root</li>
-	<li>Do the same for App2, but using "app2" instead of app1 </li>
-	<li>Do the same for the rest of the directories underneath</li>
+	<li>d:\apps\v1\Client1\tests = clientv1.tests</li>
+	<li>d:\apps\v2\Client1\tests = clientv2.tests</li>
 </ul>
-Granted... this definitely a bit more work; still, it gives you the granularity you need for correctly specifiying the CFC path at any folder level.
+
+Now... why you'd do this, I don't know. It's an example, live with it. 
+
+<ul>
+	<li>In Eclipse, right click on the v1\Client1 directory, select the MXUnit properties, and add "clientv1" as the component root</li>
+	<li>Do the same for v2, but using "clientv2" instead of clientv1 </li>
+</ul>
+Granted... this is a bit more work; still, it gives you the granularity you need for correctly specifiying the CFC path at any folder level.
 </p>
 
 <h3>Username and password</h3>
@@ -129,7 +149,8 @@ Granted... this definitely a bit more work; still, it gives you the granularity 
 </xmp>
 </div>
 
-<p><b>Next:</b> <a href="runningDemoTests.html">Running the Demo Tests</a></p>
+<p><b>Next: </b> <a href="howToRunTests.html">How to Run Tests</a></p>
+<p><b>After that:</b> <a href="runningDemoTests.html">Running the Demo Tests</a></p>
 
 
 </body>

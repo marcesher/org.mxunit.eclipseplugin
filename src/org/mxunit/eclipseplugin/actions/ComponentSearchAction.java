@@ -1,6 +1,5 @@
 package org.mxunit.eclipseplugin.actions;
 
-import java.io.File;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -35,8 +34,9 @@ public final class ComponentSearchAction extends Action {
 			selection = new ResourceListSelectionDialog(
 				view.getSite().getShell(),
 				ResourcesPlugin.getWorkspace().getRoot(), 
-				IResource.FILE | IResource.FOLDER 
+				IResource.FILE | IResource.FOLDER | IResource.PROJECT
 			);
+			
 		} catch (Exception e) {
 			MXUnitPluginLog.logError("Exception in ComponentSearchAction",e);
 		}		
@@ -48,8 +48,7 @@ public final class ComponentSearchAction extends Action {
 			IResource res = (IResource)result[0];//safe since we only allow single selection			
 						
 			if(res.getType() == IResource.FILE && !res.getFileExtension().equalsIgnoreCase("cfc")){
-				File selectedResourceAsFile = new File(res.getRawLocation().toString());
-				MessageDialog.openInformation( null, "Whooops....not a CFC", "Selected file ["+ selectedResourceAsFile.getAbsolutePath() +"] is not a CFC");
+				MessageDialog.openInformation( null, "Whooops....not a CFC", "Selected file ["+ res.getRawLocation() +"] is not a CFC");
 			}else if(!testSuiteCreator.isResourceConfigured(res)){
 				testSuiteCreator.alertIfResourceNotConfigured(res);
 			}else{

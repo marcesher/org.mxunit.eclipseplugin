@@ -7,6 +7,7 @@
 		<topic label="Getting Started: Talking to ColdFusion" href="talkingToColdFusion.html"/>
 		<topic label="Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
 		<topic label="Configure project properties" href="help/html/configureProjectProperties.html"/>
+		<topic label="How To Run Tests" href="help/html/howToRunTests.html"/>
 		<topic label="Running Demo Tests" href="help/html/runningDemoTests.html" />
 		<topic label="Keyboard Shortcuts" href="help/html/keyboardshortcuts.html" />
 		<topic label="Using MXUnit Eclipse Snippets" href="help/html/cfeclipsesnippets.html" />

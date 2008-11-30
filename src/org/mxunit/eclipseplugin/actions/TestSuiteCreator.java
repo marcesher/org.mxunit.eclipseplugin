@@ -1,5 +1,7 @@
 package org.mxunit.eclipseplugin.actions;
 
+import java.util.Arrays;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
@@ -19,7 +21,9 @@ public class TestSuiteCreator {
 	private MXUnitPropertyManager props;   
 	private IPath webrootAsPath;
 	private String testFilter;
-	TestSuite suite;
+	private TestSuite suite;
+	/* slashes and periods as the component root property indicate "don't prefix anything underneath this container with a root, but don't try to derive the component path from the webroot, either */
+	private String[] emptyPathIndicators = {"/","\\","."};
 	
 	public TestSuiteCreator(){
 		prefs = MXUnitPlugin.getDefault().getPluginPreferences();
@@ -27,6 +31,7 @@ public class TestSuiteCreator {
 		webrootAsPath = new Path(prefs.getString(MXUnitPreferenceConstants.P_WEBROOTPATH));
 		testFilter = "(?i)Test.*.cfc|(?i).*Test.cfc";
 		suite = new TestSuite();
+		Arrays.sort(emptyPathIndicators);
 	}
 	
 	
@@ -146,7 +151,11 @@ public class TestSuiteCreator {
 			
 			propValue = props.getComponentPropertyValue(currentParent).trim();
 			if(propValue.length()>0){
-				path = propValue + "." + p.removeFirstSegments(i).toString().replaceAll("/", ".");
+				if( Arrays.binarySearch(emptyPathIndicators, propValue) >= 0 ){
+					path = p.removeFirstSegments(i).toString().replaceAll("/", ".");
+				}else{
+					path = propValue + "." + p.removeFirstSegments(i).toString().replaceAll("/", ".");
+				}
 				break;
 			}
 		}

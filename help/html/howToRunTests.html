@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>How to Run Tests</title>
+</head>
+
+<body>
+<h1>How to Run Tests</h1>
+<p>
+	The Plugin can run any TestCase components that live in configured Eclipse projects. This is important: If the TestCase lives on your file system, but is not part of an Eclipse project, the plugin cannot run it as a test! This follows the expected Eclipse behavior: it has no notion of code living outside of projects.
+</p>
+<p>
+You can run tests in three different ways in the plugin:
+
+<ol>
+	<li>Right click any project, directory, CFC, or multiple projects/directories/components. Select "Run MXUnit Tests". This will load the tests and run them.</li>
+	<li>With an open CFC, right click in the Editor window and select "Run MXUnit Test". This will load the test and run it.</li>
+	<li>From the MXUnit view, click the "flashlight" icon (or use keyboard shortcut CTRL-F). This pops up the resource finder. You can then type any directory or component name and it'll filter down to find what you're looking for. Click "OK" and your component(s) will load in the view. They will NOT run. You can run them by hitting Enter or clicking the green Play icon in the view.</li>
+</ol>
+
+</p>
+
+<p>
+In addition, once a test is run, it is added to the Test History. You can access the test history by clicking the History icon (<img src="../../icons/mxunit_history.png" border="0" width="16" height="16">) dropdown and selecting a previously run Suite. This will load the tests into the view but will not automatically run them.
+</p>
+
+<h1>Reloading/Refreshing Tests</h1>
+<p>Once a Test is run, it retains certain data. Re-running a test overwrites its data with the new test results. Sometimes, you want to clear the data without actually running the test. To do so, simply click the "Reload" icon (<img src="../../icons/refresh.png">) or hit F5.</p>
+
+<p>This is mostly useful when you've run a test case component, then you add, remove, or rename test functions. Rather than right-clicking the file in the navigator view and running it again, you can just Reload the test from the view. This will load in the or renamed methods and remove the deleted methods. You can now pick which methods you want to run.</p>
+
+<h1>How does the plugin know what components are tests?</h1>
+<p>Currently, the plugin (and the framework) recognize a test as any file named Test*.cfc or *Test.cfc.</p>
+
+<table border="1">
+	<tr>
+		<th>A TestCase</th>
+		<th>Not a TestCase</th>
+	</tr>
+	<tr>
+		<td>SomeTest.cfc</td>
+		<td>SomeTest.cfm</td>
+	</tr>
+	<tr>
+		<td>SomeTest.cfc</td>
+		<td>SomeTests.cfc</td>
+	</tr>
+	<tr>
+		<td>TestThisThing.cfc</td>
+		<td>ThisThing.cfc</td>
+	</tr>
+	<tr>
+		<td>sometest.cfc</td>
+		<td>TestYouGetThePicture.html</td>
+	</tr>
+</table>
+
+<p>TestCase selection is not case sensitive.</p>
+
+<p>Inside of a TestCase component -- specified as a component that extends mxunit.framework.TestCase -- the MXUnit framework will run <b>any public method</b> as a test, regardless of its name! The framework will NOT run protected or private methods as tests.</p>
+
+<p>In the future, this decision-making will probably change and become configurable.</p>
+
+<p><b>Next:</b> <a href="runningDemoTests.html">Running the Demo Tests</a></p>
+
+</body>
+</html>

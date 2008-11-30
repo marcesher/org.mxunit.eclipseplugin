@@ -5,11 +5,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 
+import org.apache.commons.io.FileUtils;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
+import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
 import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.ITest;
@@ -96,7 +103,15 @@ public final class BrowserAction extends Action {
 	}
 	
 	private String getStyleBlock(){
-		return "<style>p, div, li{font-family:Verdana, sans-serif} .status{font-weight: bold} .FAIL{color:navy} .ERROR{color:red} .PASS{color:green} </style> ";
+		String style = "";
+		try {
+			URL cssURL = MXUnitPlugin.getDefault().getBundle().getEntry("style/defaultBrowserViewStyle.css");
+			File styleFile = new File(FileLocator.toFileURL(cssURL).getFile());
+			style = FileUtils.readFileToString(styleFile);
+		} catch (IOException e) {
+			MXUnitPluginLog.logError("Could not load stylesheet file: ", e);
+		}
+		return "<style> " + style + "</style> ";
 	}
 
 }
