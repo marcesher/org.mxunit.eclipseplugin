@@ -4,6 +4,7 @@ Bundle-Name: MXUnit Plugin
 Bundle-SymbolicName: org.mxunit.eclipseplugin; singleton:=true
 Bundle-Version: 1.0.9.qualifier
 Bundle-ClassPath: bin/,
+ .,
  lib/axis.jar,
  lib/commons-collections-3.2.jar,
  lib/commons-discovery.jar,

@@ -105,7 +105,7 @@ public final class BrowserAction extends Action {
 	private String getStyleBlock(){
 		String style = "";
 		try {
-			URL cssURL = MXUnitPlugin.getDefault().getBundle().getEntry("style/defaultBrowserViewStyle.css");
+			URL cssURL = MXUnitPlugin.getDefault().getBundle().getEntry("/style/defaultBrowserViewStyle.css");
 			File styleFile = new File(FileLocator.toFileURL(cssURL).getFile());
 			style = FileUtils.readFileToString(styleFile);
 		} catch (IOException e) {

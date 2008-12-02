@@ -3,6 +3,7 @@
 	<context id="mxunit_view">
 		<description>This view runs MXUnit Tests</description>
 		<topic label="Introduction to MXUnit" href="help/html/intro.html" />
+  <topic href="help/html/talkingToColdFusion.html" label="Getting Started: Talking to ColdFusion"/>
 		<topic label="Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
 		<topic label="Configure project properties" href="help/html/configureProjectProperties.html"/>
 		<topic label="Running the Demo Tests" href="help/html/runningDemoTests.html" />
