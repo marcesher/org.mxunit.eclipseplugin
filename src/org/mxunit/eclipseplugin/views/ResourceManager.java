@@ -31,6 +31,7 @@ public final class ResourceManager {
 	public final static String HELP = "help.png";
 	public final static String TOGGLE_FAILURES = "mxunit_toggleErrorFailIcon.png";
 	public final static String HISTORY = "mxunit_history.png";
+	public final static String TIMEOUT = "timeout_clock.png";
 	
 	public static Image getImage(String image){
 		String url = PATH + image;

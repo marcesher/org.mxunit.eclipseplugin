@@ -436,6 +436,10 @@ public class MXUnitView extends ViewPart {
 		
 		timeoutChangePreferenceAction = new TimeoutChangePreferenceAction(this);
 		timeoutChangePreferenceAction.setText("Change Timeout Preference");
+		timeoutChangePreferenceAction.setToolTipText("Change Timeout Preference");
+		timeoutChangePreferenceAction.setImageDescriptor(
+				ResourceManager.getImageDescriptor(ResourceManager.TIMEOUT)
+		);
 		
 		
 		stopAction = new Action() {
