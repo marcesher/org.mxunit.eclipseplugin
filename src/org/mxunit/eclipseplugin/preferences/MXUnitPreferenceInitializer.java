@@ -26,7 +26,7 @@ public class MXUnitPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(MXUnitPreferenceConstants.P_FACADEURL,
 				"http://localhost/mxunit/framework/RemoteFacade.cfc");
 		store.setDefault(MXUnitPreferenceConstants.P_MAX_HISTORY, 30);
-		store.setDefault(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT, 60);
+		store.setDefault(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT, 30);
 
 	}
 	
