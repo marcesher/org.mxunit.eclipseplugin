@@ -141,7 +141,10 @@ public class TestSuiteCreator {
 		//otherwise, derive it from the webroot
 		
 		IResource currentParent = resource;
-		IPath p = resource.getFullPath().removeFileExtension();
+		IPath p = resource.getLocation().removeFileExtension();
+		//the 'device' (c:) is not part of the segment count. we gotta knock it off for the stuff below to work.
+		p = p.setDevice(null);
+		webrootAsPath = webrootAsPath.setDevice(null);		
 		
 		for(int i = p.segmentCount()-1; i > 0;i--){
 			currentParent = currentParent.getParent();
@@ -163,8 +166,9 @@ public class TestSuiteCreator {
 		}
 		//we got this far but no parents had a component root defined; now we simply knock the webroot off of the component's path and replace slashes and whatnot.
 		if(path.length() == 0){
-			p.removeFirstSegments(webrootAsPath.segmentCount());
-			path = p.toString().replaceAll("/", ".").replaceFirst(".", "");//have to remove the first period since the path always starts with the /, and that got converted to a period which hangs at the front.
+			MXUnitPluginLog.logInfo("No component root defined; using webroot: ["+webrootAsPath+"] on path " + p);
+			p = p.removeFirstSegments(webrootAsPath.segmentCount());
+			path = p.toString().replaceAll("/", ".");
 		}
 		
 		return path;
@@ -174,8 +178,7 @@ public class TestSuiteCreator {
 	class TestVisitor implements IResourceVisitor{
 		public boolean visit(IResource resource) throws CoreException {
 			if(resource.getType() == IResource.FILE && 
-					resource.getFullPath().lastSegment().matches(testFilter)){
-				
+					resource.getFullPath().lastSegment().matches(testFilter)){				
 				String path = deriveCFCPath(resource);
 				addTestToSuite(suite, resource.getRawLocation().toString(), path);
 			}
