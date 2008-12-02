@@ -50,6 +50,7 @@ import org.mxunit.eclipseplugin.actions.RunFailuresOnlyAction;
 import org.mxunit.eclipseplugin.actions.RunTestsAction;
 import org.mxunit.eclipseplugin.actions.SelectAllInTreeAction;
 import org.mxunit.eclipseplugin.actions.SpoofChangeModelAction;
+import org.mxunit.eclipseplugin.actions.TimeoutChangePreferenceAction;
 import org.mxunit.eclipseplugin.actions.ToggleTreeItemsAction;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestElementType;
@@ -91,6 +92,7 @@ public class MXUnitView extends ViewPart {
 	private SpoofChangeModelAction spoofChangeModelAction;
 	private FilterFailuresAction filterFailuresAction;
 	private HistoryDropdownAction historyDropdownAction;
+	private TimeoutChangePreferenceAction timeoutChangePreferenceAction;
 	private Action stopAction;
 	private Action helpAction;
 	
@@ -432,6 +434,9 @@ public class MXUnitView extends ViewPart {
 				ResourceManager.getImageDescriptor(ResourceManager.HISTORY)
 		);
 		
+		timeoutChangePreferenceAction = new TimeoutChangePreferenceAction(this);
+		timeoutChangePreferenceAction.setText("Change Timeout Preference");
+		
 		
 		stopAction = new Action() {
             public void run() {
@@ -469,7 +474,7 @@ public class MXUnitView extends ViewPart {
 	 */
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
-		//fillLocalPullDown(bars.getMenuManager());
+		fillLocalPullDown(bars.getMenuManager());
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
@@ -477,14 +482,11 @@ public class MXUnitView extends ViewPart {
 	 * the little dropdown on the far right of the toolbar
 	 * 
 	 * @param manager
-	 
+	 */
 	private void fillLocalPullDown(IMenuManager manager) {
-        manager.add(loadMethodsAction);
-        manager.add(new Separator());
-        manager.add(runTestsAction);
-		manager.add(new Separator());
-		manager.add(toggleTreeItemsAction);
-	}*/
+        manager.add(timeoutChangePreferenceAction);
+       
+	}
 
 	/**
 	 * toolbar actions
@@ -753,12 +755,15 @@ public class MXUnitView extends ViewPart {
 		loadMethodsAction.setEnabled(false);
 		runFailuresOnlyAction.setEnabled(false);
 		historyDropdownAction.setEnabled(false);
+		filterFailuresAction.setEnabled(false);
 		stopAction.setEnabled(true);
+		
 	}
 	public void enableActions(){
 		runTestsAction.setEnabled(true);
 		loadMethodsAction.setEnabled(true);
 		historyDropdownAction.setEnabled(true);
+		filterFailuresAction.setEnabled(true);
 		if(failureCount>0 || errorCount>0){
 			runFailuresOnlyAction.setEnabled(true);
 		}		

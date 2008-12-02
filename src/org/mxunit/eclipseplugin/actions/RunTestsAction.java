@@ -206,11 +206,15 @@ public class RunTestsAction extends Action {
             tm.setStatusFromString((String) keys.get("RESULT"));
             
         } catch (RemoteException e) {
+        	String message = e.toString();
+        	if(message.indexOf("SocketTimeoutException") > 0){
+        		message += "; Is the timeout preference too low? Are you dumping/calling debug() on large data or cfc instances?  ";
+        	}
             tm.setStatus(TestStatus.ERROR);
-            tm.setResult(e.toString());
-            tm.setException(e.toString());
+            tm.setResult(message);
+            tm.setException(message);
             tm.setTagcontext(null);
-            view.writeToConsole("RemoteException: " + e.toString());
+            view.writeToConsole("RemoteException: " + message);
             MXUnitPluginLog.logError("RemoteException in RunTestsAction",e);
         }
         view.writeToConsole("   finished.\n");

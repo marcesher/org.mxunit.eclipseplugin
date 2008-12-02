@@ -66,6 +66,7 @@ public class RemoteCallCreator {
 			if(registry.getRegisteredFacadeType(facadeURL) == null){
 				MXUnitPluginLog.logInfo(facadeURL + " is not registered. Attempting to get server type and register...");
 				facade = locator.getRemoteFacadeCfc();
+				
 				String serverTypeString = facade.getServerType();
 				RemoteServerType type = registry.registerFacade(facadeURL, serverTypeString);
 				MXUnitPluginLog.logInfo(facadeURL + " registered as type " + type);
@@ -75,6 +76,8 @@ public class RemoteCallCreator {
 			//this could return either the normal Binding OR the BlueDragon binding			
 			locator.setRemoteServerType(  registry.getRegisteredFacadeType(facadeURL)  );
 			facade = locator.getRemoteFacadeCfc();
+			facade.setTimeout(prefs.getInt(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT)*1000);
+			
 		} catch (ServiceException e) {			
 			currentException = e;
 			MXUnitPluginLog.logError("ServiceException getting remote facade", e);

@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
-	<title>Talking to ColdFusion</title>
+	<title>Getting Started: Talking to ColdFusion</title>
 </head>
 
 <body>
@@ -18,10 +18,14 @@
  
  <p>This isn't as spooky as it sounds.</p>
  
- <p>Many users will be able to get away with configuring two global settings. If keep your components under the webroot, then this should be all you need. The plugin will be able to derive the dot-notation (com.blah.blah) path to your components by by comparing the path to the file with the configured webroot preference and then doing some simple string manipulation.
+ <p>Many users will be able to get away with configuring two global settings: the 'Remote Facade URL' and the 'webroot'. 
+ 
+ If you don't require any custom pre-test behavior, then a single RemoteFacade.cfc URL, set as a global preference, will suffice. You'll just point to the one in the mxunit/framework directory.
+ 
+ If you keep your components under the webroot, then the 'webroot' setting will be all you need. The plugin will be able to derive the dot-notation (com.blah.blah) path to your components by by comparing the path to the file with the configured webroot preference and then doing some simple string manipulation.
  
  <br><br>
- If, however, you keep your components outside the webroot, then you'll need to do slightly more work... you'll need to configure your CFC path at the project level, not at the global level. </p>
+ If, however, you need custom pre-test behavior in the RemoteFacade URL, or if you keep your components outside the webroot, then you'll need to do slightly more work... you'll need to configure the RemoteFacade URL and/or your CFC path at the project level, not at the global level. </p>
  <p>
  So, let's start:  
  <br>

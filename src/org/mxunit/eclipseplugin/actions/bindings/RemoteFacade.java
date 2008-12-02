@@ -15,5 +15,6 @@ public interface RemoteFacade extends java.rmi.Remote {
     public java.util.HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;
     public java.lang.Object[] getComponentMethods(java.lang.String componentName) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;
     public java.lang.String startTestRun() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;
-	public String getServerType()  throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;;
+	public String getServerType()  throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;
+	public void setTimeout(int timeout)  throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;
 }

@@ -114,7 +114,7 @@ public class TestSuiteCreator {
 		tc.setFilePath(fullPath);
 		tc.setName(name);
 		suite.addTest(tc);
-		MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: Adding Test To Suite: fullPath is " + fullPath + ";name is" + name);
+		MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: Adding Test To Suite: fullPath is " + fullPath + "; name is" + name);
 	}
 	
 	private void collectFiles(IResource resource){
@@ -156,6 +156,8 @@ public class TestSuiteCreator {
 				}else{
 					path = propValue + "." + p.removeFirstSegments(i).toString().replaceAll("/", ".");
 				}
+				
+				MXUnitPluginLog.logInfo("Using resource " + currentParent + " as source for componentroot property [value="+propValue+"]; path is determined to be " + path);
 				break;
 			}
 		}

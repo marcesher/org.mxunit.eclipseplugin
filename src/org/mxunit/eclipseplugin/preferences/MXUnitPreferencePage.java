@@ -2,6 +2,7 @@ package org.mxunit.eclipseplugin.preferences;
 
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -46,6 +47,7 @@ public class MXUnitPreferencePage
 		addHelpLink(container);	
 		addURLGroup(container);	
 		addWebrootGroup(container);	
+		addTimeoutGroup(container);
 		addAuthGroup(container);
 	}
 
@@ -85,7 +87,7 @@ public class MXUnitPreferencePage
 		gd.horizontalSpan = 3;
 		urlGroup.setLayoutData(gd);
 		urlGroup.setLayout(new GridLayout(3,false));
-		
+
 		StringFieldEditor urlEditor = new StringFieldEditor(MXUnitPreferenceConstants.P_FACADEURL, "  &URL to remote facade:",60, urlGroup);
 		addField(urlEditor);		
 		
@@ -98,10 +100,35 @@ public class MXUnitPreferencePage
 				+ "is useful when you have multiple environments for the same project,\n"
 				+ "e.g. local, dev, staging, etc. or need to provide custom functionality\n" 
 				+ "in the test runner.\n\n");
-				
+		
+		
 		//have to modify the layout AFTER the addField calls because addField is monkeying with any preset layout junk we do
 		GridLayout urlLayout = (GridLayout)urlGroup.getLayout();
 		urlLayout.numColumns = 3;
+	}
+	
+	private void addTimeoutGroup(Composite container){
+		Group timeoutGroup = new Group(container,SWT.NONE);		
+		timeoutGroup.setText("Method Timeout");
+		GridData gd = new GridData(GridData.FILL,GridData.FILL,false,false);	
+		gd.horizontalSpan = 3;
+		timeoutGroup.setLayoutData(gd);
+		timeoutGroup.setLayout(new GridLayout(3,false));
+		
+		IntegerFieldEditor timeoutEditor = new IntegerFieldEditor(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT, "  &Timeout (sec.):",timeoutGroup, 3);
+		timeoutEditor.setValidRange(0, 180);
+		addField(timeoutEditor);			
+		
+		Label empty = new Label(timeoutGroup, SWT.NONE);
+		empty.setText("");
+		
+		Label timeoutLabel = new Label(timeoutGroup, SWT.NONE);
+		timeoutLabel.setText("This controls the timeout, in seconds, of each single method call. Use 0 for unlimited.");
+		
+		
+		//have to modify the layout AFTER the addField calls because addField is monkeying with any preset layout junk we do
+		GridLayout timeoutLayout = (GridLayout)timeoutGroup.getLayout();
+		timeoutLayout.numColumns = 3;
 	}
 
 
