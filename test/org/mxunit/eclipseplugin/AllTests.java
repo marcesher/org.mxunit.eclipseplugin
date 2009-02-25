@@ -4,6 +4,7 @@ import org.mxunit.eclipseplugin.model.TestCaseComparatorTest;
 import org.mxunit.eclipseplugin.model.TestCaseTest;
 import org.mxunit.eclipseplugin.model.TestHistoryTest;
 import org.mxunit.eclipseplugin.model.TestSuiteTest;
+import org.mxunit.eclipseplugin.preferences.MXUnitPreferenceInitializerTest;
 import org.mxunit.eclipseplugin.sandbox.StructReturnInvokerTest;
 
 import junit.framework.Test;
@@ -19,6 +20,8 @@ public class AllTests {
 		suite.addTestSuite(TestSuiteTest.class);
 		suite.addTestSuite(TestCaseComparatorTest.class);
 		suite.addTestSuite(TestHistoryTest.class);
+		suite.addTestSuite(MXUnitPreferenceInitializerTest.class);
+		
 		
 		//$JUnit-END$
 		return suite;
