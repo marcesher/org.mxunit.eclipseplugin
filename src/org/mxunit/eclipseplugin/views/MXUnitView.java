@@ -17,6 +17,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseAdapter;
@@ -38,6 +40,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.ViewPart;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.actions.BrowserAction;
@@ -135,7 +138,7 @@ public class MXUnitView extends ViewPart {
 	/**
 	 * the "guts" of the view
 	 */
-	public void createPartControl(Composite parent) {		
+	public void createPartControl(final Composite parent) {		
 		GridLayout layout = new GridLayout();
 		layout.marginWidth = 1;
 		layout.numColumns = 1;
@@ -144,11 +147,12 @@ public class MXUnitView extends ViewPart {
 		//the sash is the separator between the top and the bottom; it creates the resizer
 		//the sash is the parent for the topHalf and bottomHalf composites; those composites
 		//are the parents for the widgets that go in them
-		SashForm sash = new SashForm(parent, SWT.VERTICAL);
+		final SashForm sash = new SashForm(parent, SWT.VERTICAL);
 		GridData sashData = new GridData(GridData.FILL_BOTH);
 		sashData.horizontalSpan = 1;
 		sash.setLayoutData(sashData);
 		sash.setLayout(new FillLayout());
+		//sash.setOrientation(SWT.HORIZONTAL);
 		
 		//create top layout
 		GridLayout topLayout = new GridLayout();
@@ -174,6 +178,18 @@ public class MXUnitView extends ViewPart {
 		createTestsViewer(topHalf);
 		createTraceLabel(bottomHalf);
 		createDetailsViewer(bottomHalf);
+		
+		
+		ControlAdapter resizeListener = new ControlAdapter(){
+			public void controlResized(ControlEvent e) {
+				if(parent.getBounds().width > parent.getShell().getBounds().width/2){
+					sash.setOrientation(SWT.HORIZONTAL);
+				}else{
+					sash.setOrientation(SWT.VERTICAL);
+				}
+			}
+		};
+		parent.addControlListener(resizeListener);
 				
 		//now make the view actually do stuff
 		makeActions();

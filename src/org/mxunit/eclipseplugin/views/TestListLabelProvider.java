@@ -1,16 +1,33 @@
 package org.mxunit.eclipseplugin.views;
 
+import java.text.DecimalFormat;
+
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StyledCellLabelProvider;
+import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
 import org.mxunit.eclipseplugin.model.ITest;
+import org.mxunit.eclipseplugin.model.TestElementType;
 import org.mxunit.eclipseplugin.model.TestStatus;
 
-public class TestListLabelProvider extends LabelProvider {
+public class TestListLabelProvider extends StyledCellLabelProvider {
 	
 	public String getText(Object obj) {
 		return ((ITest)obj).getName();
-		
 	}
+	
+	public void update(ViewerCell cell){
+		ITest el = (ITest) cell.getElement();
+		StyledString styledString = new StyledString(el.toString());
+		styledString.append(" ("+ DecimalFormat.getInstance().format(Math.random()) + " s)",
+				StyledString.QUALIFIER_STYLER);
+		cell.setText(styledString.toString());
+		cell.setStyleRanges(styledString.getStyleRanges());
+		cell.setImage(getImage(el));
+		super.update(cell);
+	}
+	
 	public Image getImage(Object obj) {
 		return ResourceManager.getImage( getImageString(obj) );		
 	}
