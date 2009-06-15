@@ -41,7 +41,9 @@ public class TestSuiteCreator {
 	 * @return true if shit's OK; false if suckas using this are suckas
 	 */
 	public boolean isResourceConfigured(IResource resource){
-		if(webrootAsPath.toString().length()==0 && !doesResourceHaveConfiguredAncestor(resource)){
+		if(webrootAsPath.toString().length()==0 
+			&& (props.getComponentPropertyValue(resource).trim().length() == 0)
+			&& !doesResourceHaveConfiguredAncestor(resource)){
 			return false;
 		}
 		return true;
@@ -87,7 +89,6 @@ public class TestSuiteCreator {
 	 */
 	private boolean doesResourceHaveConfiguredAncestor(IResource resource){
 		boolean configured = false;
-		
 		IResource currentParent = resource;
 		IPath p = resource.getFullPath().removeFileExtension();
 		for(int i = p.segmentCount()-1; i > 0;i--){
