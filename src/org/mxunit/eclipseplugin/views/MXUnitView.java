@@ -291,7 +291,7 @@ public class MXUnitView extends ViewPart {
 	 */
 	private void createTraceLabel(Composite parent) {
 		Label traceLabel = new Label(parent, SWT.NONE);
-		traceLabel.setText("Trace");
+		traceLabel.setText("Tag Context");
 		traceLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
