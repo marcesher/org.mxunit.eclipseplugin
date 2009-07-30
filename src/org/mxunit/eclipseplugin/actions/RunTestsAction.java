@@ -202,7 +202,9 @@ public class RunTestsAction extends Action {
                 tm.setTagcontext(tagContextMap);
             }
             tm.setResult((String) keys.get("MESSAGE"));
-            tm.setOutput((String) keys.get("OUTPUT"));            
+            tm.setOutput((String) keys.get("OUTPUT"));      
+            tm.setActual((String) keys.get("ACTUAL"));
+            tm.setExpected((String) keys.get("EXPECTED"));
             tm.setStatusFromString((String) keys.get("RESULT"));
             
         } catch (RemoteException e) {

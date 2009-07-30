@@ -6,7 +6,7 @@ public final class TestMethod extends AbstractTestElement {
 
 	
 	/** String returned from the test runner, e.g. pass, fail, error*/
-	private String result = "";
+	private String result, expected, actual = "";
 	/** any generated output (html) */
 	private String output = "";
 	/** exception string */
@@ -81,8 +81,28 @@ public final class TestMethod extends AbstractTestElement {
 		this.status = TestStatus.BLANK;
 		setChanged();
 	}
-
 	
+	
+	public String getExpected() {
+		return expected;
+	}
+
+	public void setExpected(String expected) {
+		this.expected = expected;
+	}
+	
+	public boolean isComparableFailure(){
+		return expected.length() + actual.length() > 0;
+	}
+
+	public String getActual() {
+		return actual;
+	}
+
+	public void setActual(String actual) {
+		this.actual = actual;
+	}
+
 	/**
      * @return the exception
      */

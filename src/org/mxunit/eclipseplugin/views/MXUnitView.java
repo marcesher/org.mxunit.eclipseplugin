@@ -9,13 +9,16 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -32,6 +35,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -40,7 +44,6 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
-import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.ViewPart;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.actions.BrowserAction;
@@ -49,6 +52,7 @@ import org.mxunit.eclipseplugin.actions.FilterFailuresAction;
 import org.mxunit.eclipseplugin.actions.HistoryDropdownAction;
 import org.mxunit.eclipseplugin.actions.LoadMethodsAction;
 import org.mxunit.eclipseplugin.actions.OpenInEditorAction;
+import org.mxunit.eclipseplugin.actions.ResultCompareAction;
 import org.mxunit.eclipseplugin.actions.RunFailuresOnlyAction;
 import org.mxunit.eclipseplugin.actions.RunTestsAction;
 import org.mxunit.eclipseplugin.actions.SelectAllInTreeAction;
@@ -96,6 +100,7 @@ public class MXUnitView extends ViewPart {
 	private FilterFailuresAction filterFailuresAction;
 	private HistoryDropdownAction historyDropdownAction;
 	private TimeoutChangePreferenceAction timeoutChangePreferenceAction;
+	private ResultCompareAction resultCompareAction;
 	private Action stopAction;
 	private Action helpAction;
 	
@@ -159,7 +164,7 @@ public class MXUnitView extends ViewPart {
 		topLayout.marginWidth = 0;
 		topLayout.marginHeight = 0;
 		//create top container
-		Composite topHalf = new Composite(sash,SWT.BORDER);
+		Composite topHalf = new Composite(sash,SWT.NONE);
 		topHalf.setLayout(topLayout);
 		topHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
@@ -168,7 +173,7 @@ public class MXUnitView extends ViewPart {
 		bottomLayout.marginWidth = 0;
 		bottomLayout.marginHeight = 0;
 		//create bottom container
-		Composite bottomHalf = new Composite(sash,SWT.BORDER);
+		Composite bottomHalf = new Composite(sash,SWT.NONE);
 		bottomHalf.setLayout(bottomLayout);
 		bottomHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
@@ -176,7 +181,7 @@ public class MXUnitView extends ViewPart {
 		createCounterPanel(topHalf);
 		createProgressPanel(topHalf);
 		createTestsViewer(topHalf);
-		createTraceLabel(bottomHalf);
+		createTraceBar(bottomHalf);
 		createDetailsViewer(bottomHalf);
 		
 		
@@ -289,10 +294,58 @@ public class MXUnitView extends ViewPart {
 	 * this here thing creates the tiny little label in between the tests viewer and the details panel
 	 * @param parent
 	 */
-	private void createTraceLabel(Composite parent) {
-		Label traceLabel = new Label(parent, SWT.NONE);
+	private void createTraceBar(Composite parent) {
+		Composite middleBar = new Composite(parent,SWT.NONE);
+		middleBar.setLayout(new FillLayout());
+		middleBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		gridLayout.marginWidth = 0;
+		gridLayout.marginHeight = 0;
+		middleBar.setLayout(gridLayout);
+		
+		CLabel traceLabel = new CLabel(middleBar, SWT.NONE);
 		traceLabel.setText("Tag Context");
-		traceLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		traceLabel.setToolTipText("Tag Context will appear below");
+		traceLabel.setImage(ResourceManager.getImage(ResourceManager.CFCSTACKFRAME));
+
+		ToolBar compareToolbar = new ToolBar(middleBar,SWT.HORIZONTAL);
+		ToolBarManager toolBarManager = new ToolBarManager(compareToolbar);
+		resultCompareAction = new ResultCompareAction();
+		resultCompareAction.setToolTipText("Compare Actual with Expected Test Result");
+		resultCompareAction.setImageDescriptor(ResourceManager.getImageDescriptor(ResourceManager.COMPARE));
+		resultCompareAction.setEnabled(false);
+		toolBarManager.add(resultCompareAction);
+		
+		GridData gridData = new GridData();
+		gridData.horizontalAlignment = SWT.END;
+		gridData.grabExcessHorizontalSpace = true;
+		compareToolbar.setLayoutData(gridData);
+		
+		toolBarManager.update(true);
+		
+		testsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {	
+				System.out.println("event: " + event.getSelection());
+				IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+				if(!selection.isEmpty()){
+						
+					ITest test = (ITest) selection.toList().get(selection.size()-1);
+					if(test.getTestElementType() == TestElementType.TESTMETHOD){
+						TestMethod testMethod = (TestMethod)test;
+						if(testMethod.isComparableFailure()){
+							resultCompareAction.setTestMethod(testMethod);
+							resultCompareAction.setEnabled(true);
+						}
+						else{
+							resultCompareAction.setEnabled(false);
+						}
+					}
+				}
+			}
+		});
+		
 	}
 
 	/**
