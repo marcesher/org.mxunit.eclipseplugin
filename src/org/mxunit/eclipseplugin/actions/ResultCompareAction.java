@@ -9,8 +9,7 @@ import org.mxunit.eclipseplugin.model.TestMethod;
 
 public class ResultCompareAction extends Action {
 	
-	TestMethod testMethod;
-	
+	private TestMethod testMethod;	
 	
 	public void setTestMethod(TestMethod testMethod){
 		this.testMethod = testMethod;

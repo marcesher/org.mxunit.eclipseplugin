@@ -327,10 +327,8 @@ public class MXUnitView extends ViewPart {
 		
 		testsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {	
-				System.out.println("event: " + event.getSelection());
 				IStructuredSelection selection = (IStructuredSelection)event.getSelection();
 				if(!selection.isEmpty()){
-						
 					ITest test = (ITest) selection.toList().get(selection.size()-1);
 					if(test.getTestElementType() == TestElementType.TESTMETHOD){
 						TestMethod testMethod = (TestMethod)test;
