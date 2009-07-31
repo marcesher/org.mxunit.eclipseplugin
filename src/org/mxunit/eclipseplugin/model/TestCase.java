@@ -78,6 +78,14 @@ public final class TestCase extends AbstractTestElement {
 	public String getType(){
 		return "TestCase";
 	}
+	
+	public long getTotalServerTime(){
+		long total = 0;
+		for(TestMethod method : methods){
+			total += method.getTotalServerTime();
+		}
+		return total;
+	}
 
 	public void setStatus(TestStatus status) {
 		this.status = status;

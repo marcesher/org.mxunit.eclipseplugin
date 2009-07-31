@@ -182,6 +182,7 @@ public class RunTestsAction extends Action {
         Map tmpresults;
         
         try {            
+        	tm.setStartTime(System.currentTimeMillis());
         	tmpresults = (Map) facade.executeTestCase(currentComponent, currentMethod, testRunKey);
             
             Map results = new CaseInsensitiveMap(tmpresults);
@@ -206,6 +207,7 @@ public class RunTestsAction extends Action {
             tm.setActual((String) keys.get("ACTUAL"));
             tm.setExpected((String) keys.get("EXPECTED"));
             tm.setStatusFromString((String) keys.get("RESULT"));
+            tm.setTotalServerTime( ((Number) keys.get("TIME")).longValue());
             
         } catch (RemoteException e) {
         	String message = e.toString();
@@ -218,6 +220,8 @@ public class RunTestsAction extends Action {
             tm.setTagcontext(null);
             view.writeToConsole("RemoteException: " + message);
             MXUnitPluginLog.logError("RemoteException in RunTestsAction",e);
+        }finally{
+        	tm.setEndTime(System.currentTimeMillis());
         }
         view.writeToConsole("   finished.\n");
         

@@ -9,6 +9,7 @@ public abstract class AbstractTestElement extends Observable implements ITest{
 	protected TestStatus status = TestStatus.BLANK;
 	protected long startTime = System.currentTimeMillis();
 	protected long endTime = System.currentTimeMillis();
+	protected long totalServerTime = 0;
 	private SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy h:mm:ss aa");
 	
 	public String getName() {
@@ -27,6 +28,10 @@ public abstract class AbstractTestElement extends Observable implements ITest{
 		this.endTime = endTime;
 	}
 	
+	public void setTotalServerTime(long totalServerTime) {
+		this.totalServerTime = totalServerTime;
+	}
+	
 	public long getStartTime(){
 		return startTime;
 	}
@@ -38,6 +43,10 @@ public abstract class AbstractTestElement extends Observable implements ITest{
 	public String getFormattedStartTime(){
 		return sdf.format(startTime);
 	}
+	
+	public long getTotalServerTime(){
+		return totalServerTime;
+	}
 
 	public TestStatus getStatus() {
 		return status;
@@ -45,6 +54,10 @@ public abstract class AbstractTestElement extends Observable implements ITest{
     
     public void clearStatus(){
         status = TestStatus.BLANK;
+    }
+    
+    public boolean isComparableFailure(){
+    	return false;
     }
 
 	public abstract ITest getParent();

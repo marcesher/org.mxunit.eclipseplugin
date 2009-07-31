@@ -2,6 +2,7 @@
 package org.mxunit.eclipseplugin.views;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import org.eclipse.jface.viewers.LabelProvider;
 /*import org.eclipse.jface.viewers.StyledCellLabelProvider;
@@ -21,8 +22,10 @@ public class TestListLabelProvider extends LabelProvider {
 /*	public void update(ViewerCell cell){
 		ITest el = (ITest) cell.getElement();
 		StyledString styledString = new StyledString(el.toString());
-		styledString.append(" ("+ DecimalFormat.getInstance().format(Math.random()) + " s)",
-				StyledString.QUALIFIER_STYLER);
+		NumberFormat fmt = DecimalFormat.getInstance();
+		fmt.setParseIntegerOnly(false);
+		styledString.append(" ("+ fmt.format( (double)el.getTotalServerTime()/1000d ) + " s)",
+				StyledString.COUNTER_STYLER);
 		cell.setText(styledString.toString());
 		cell.setStyleRanges(styledString.getStyleRanges());
 		cell.setImage(getImage(el));

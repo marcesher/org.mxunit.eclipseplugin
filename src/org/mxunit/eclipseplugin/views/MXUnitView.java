@@ -330,15 +330,13 @@ public class MXUnitView extends ViewPart {
 				IStructuredSelection selection = (IStructuredSelection)event.getSelection();
 				if(!selection.isEmpty()){
 					ITest test = (ITest) selection.toList().get(selection.size()-1);
-					if(test.getTestElementType() == TestElementType.TESTMETHOD){
+					if(test.isComparableFailure()){
 						TestMethod testMethod = (TestMethod)test;
-						if(testMethod.isComparableFailure()){
-							resultCompareAction.setTestMethod(testMethod);
-							resultCompareAction.setEnabled(true);
-						}
-						else{
-							resultCompareAction.setEnabled(false);
-						}
+						resultCompareAction.setTestMethod(testMethod);
+						resultCompareAction.setEnabled(true);
+					}
+					else{
+						resultCompareAction.setEnabled(false);
 					}
 				}
 			}
@@ -828,6 +826,7 @@ public class MXUnitView extends ViewPart {
 		historyDropdownAction.setEnabled(false);
 		filterFailuresAction.setEnabled(false);
 		resultCompareAction.setEnabled(false);
+		
 		stopAction.setEnabled(true);
 		
 	}

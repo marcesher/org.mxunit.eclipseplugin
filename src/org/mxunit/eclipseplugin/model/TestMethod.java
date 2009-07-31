@@ -7,7 +7,9 @@ public final class TestMethod extends AbstractTestElement {
 	
 	/** String returned from the test runner, e.g. pass, fail, error*/
 	private String result = "";
+	/** an expected value */
 	private String expected = "";
+	/** an actual value */
 	private String actual = "";
 	/** any generated output (html) */
 	private String output = "";
@@ -161,4 +163,5 @@ public final class TestMethod extends AbstractTestElement {
 	public TestElementType getTestElementType() {
 		return TestElementType.TESTMETHOD;
 	}
+
 }

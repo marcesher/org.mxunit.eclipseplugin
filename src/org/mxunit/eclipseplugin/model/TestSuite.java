@@ -72,6 +72,14 @@ public final class TestSuite extends AbstractTestElement {
 		return methods;
 	}
 	
+	public long getTotalServerTime(){
+		long total = 0;
+			for(TestCase test : tests){
+				total += test.getTotalServerTime();
+			}
+		return total;
+	}
+	
 	
 	/**
 	 * given the passed-in status, updateStatus will determine
