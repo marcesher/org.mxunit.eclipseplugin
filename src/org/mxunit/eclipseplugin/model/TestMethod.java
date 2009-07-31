@@ -6,7 +6,9 @@ public final class TestMethod extends AbstractTestElement {
 
 	
 	/** String returned from the test runner, e.g. pass, fail, error*/
-	private String result, expected, actual = "";
+	private String result = "";
+	private String expected = "";
+	private String actual = "";
 	/** any generated output (html) */
 	private String output = "";
 	/** exception string */
