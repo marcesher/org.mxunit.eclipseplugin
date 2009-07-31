@@ -827,6 +827,7 @@ public class MXUnitView extends ViewPart {
 		runFailuresOnlyAction.setEnabled(false);
 		historyDropdownAction.setEnabled(false);
 		filterFailuresAction.setEnabled(false);
+		resultCompareAction.setEnabled(false);
 		stopAction.setEnabled(true);
 		
 	}
