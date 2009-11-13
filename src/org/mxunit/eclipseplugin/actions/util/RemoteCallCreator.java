@@ -113,6 +113,9 @@ public class RemoteCallCreator {
 		IFile ifile = root.getFileForLocation(path);
 		if(ifile != null){
 			res = root.findMember(ifile.getFullPath());
+			if(res == null){
+				MXUnitPluginLog.logWarning("Bad news... resource is null trying to call root.findMember() on " + ifile.getFullPath());
+			}
 		}else{
 			MXUnitPluginLog.logWarning("Bad news... resource is null for filepath " + filepath);
 		}
