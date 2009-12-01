@@ -514,10 +514,10 @@ public class MXUnitView extends ViewPart {
 		selectAllAction.setText("Select all Tests (Ctrl-A)");
 		
 		openInEditorAction = new OpenInEditorAction(this);
-		openInEditorAction.setText("Open file");
+		openInEditorAction.setText("Open File");
 		
 		copyExceptionMessageAction = new CopyExceptionMessageAction(this, clipboard);
-		copyExceptionMessageAction.setText("Copy exception");
+		copyExceptionMessageAction.setText("Copy Exception");
 		copyExceptionMessageAction.setToolTipText("Copy the exception message");
 		
 		copyTagContextAction = new CopyTagContextAction(this, clipboard);

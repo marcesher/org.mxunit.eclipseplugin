@@ -24,6 +24,7 @@ public class TestCaseTest extends TestCase {
 				"added method",2,tc.getMethods().size());
 		tc.addMethod(method4);
 		assertEquals("should now have 3 methods",3,tc.getMethods().size());
+		throw new RuntimeException("blah");
 	}
 	
 	public void testUpdateStatus(){

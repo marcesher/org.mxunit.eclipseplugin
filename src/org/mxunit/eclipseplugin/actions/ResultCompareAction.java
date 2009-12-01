@@ -19,7 +19,7 @@ public class ResultCompareAction extends Action {
 		ResultCompareItem expected = new ResultCompareItem("Expected",testMethod.getExpected());
         ResultCompareItem actual = new ResultCompareItem("Actual",testMethod.getActual());
         ResultCompareInput input = new ResultCompareInput(expected,actual);
-        
+        input.setTitle(testMethod.getParent().getName() + " -- " + testMethod.getName() + "()");
         CompareUI.openCompareDialog(input);
 	}
 }

@@ -26,7 +26,8 @@ public class ResultCompareInput extends CompareEditorInput {
 		getCompareConfiguration().setLeftLabel("Expected result");
 		getCompareConfiguration().setRightLabel("Actual result");
 		DiffNode node = new DiffNode(expected, actual);
-		//node.setKind(Differencer.CONFLICTING);
+		
+		node.setKind(Differencer.CHANGE);
 		return node;
 
 	}
