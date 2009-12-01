@@ -59,6 +59,7 @@ import org.mxunit.eclipseplugin.actions.SelectAllInTreeAction;
 import org.mxunit.eclipseplugin.actions.SpoofChangeModelAction;
 import org.mxunit.eclipseplugin.actions.TimeoutChangePreferenceAction;
 import org.mxunit.eclipseplugin.actions.ToggleTreeItemsAction;
+import org.mxunit.eclipseplugin.model.FailureTrace;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestElementType;
 import org.mxunit.eclipseplugin.model.TestHistory;
@@ -372,29 +373,37 @@ public class MXUnitView extends ViewPart {
 						TestMethod method = (TestMethod) testitem;
 						if(method.getResult().trim().length()>0){
 						    TableItem nameRow = newTableItem();
-						
-		    				nameRow.setData(method);
+						    FailureTrace trace = new FailureTrace(method,method.getParent().getFilePath(),1);
+						    
+						    if(method.getTagcontext()!=null){
+						    	Map thisContext = method.getTagcontext()[0];
+						    	trace.setFilePath((String) thisContext.get("FILE"));
+						    	trace.setFileLine((Integer) thisContext.get("LINE"));
+						    }
+						    
+		    				nameRow.setData(trace);
 		    				nameRow.setText(method.getName());
-		    				TableItem resultRow = newTableItem();
-		                    resultRow.setData(method);
-		    				resultRow.setText(method.getException());  
+		    				
+		    				TableItem exceptionMessageRow = newTableItem();
+		                    exceptionMessageRow.setData(trace);
+		    				exceptionMessageRow.setText(method.getException());  
 		    				if(method.getStatus() == TestStatus.ERROR){
-		    				    resultRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_ERROR));
+		    				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_ERROR));
 		    				}else{
-		    				    resultRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
+		    				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
 		    				}
 		    				Map[] tc = method.getTagcontext();
 		    				if(tc != null){
 		    					//this way, the OpenInEditorAction can be stupid about opening up at the correct file line
-		                        nameRow.setData(tc[0]);
-		                        resultRow.setData(tc[0]);
+		                        
 		                        TableItem traceRow = null;
 		    				    for (int j = 0; j < method.getTagcontext().length; j++) {
 		    				        String fileName = (String) tc[j].get("FILE");
 		    				        //System.out.println(tc[j].get("LINE"));
-		    				        String fileLine = (String) Integer.toString((Integer)tc[j].get("LINE"));
+		    				        Integer fileLine = (Integer)tc[j].get("LINE");
+		    				        FailureTrace detailTrace = new FailureTrace(method,fileName,fileLine);
 		                            traceRow = newTableItem();
-		                            traceRow.setData(tc[j]);
+		                            traceRow.setData(detailTrace);
 		                            
 		                            if(fileName.toLowerCase().endsWith(".cfc")){
 		                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFCSTACKFRAME) );

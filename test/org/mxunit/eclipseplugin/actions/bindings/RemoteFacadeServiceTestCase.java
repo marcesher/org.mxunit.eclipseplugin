@@ -150,6 +150,31 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             // TBD - validate results
     }
     
+    public void test5RemoteFacadeCfcExecuteTestCaseThatFails() throws Exception {
+        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        try {
+            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+        }
+        catch (javax.xml.rpc.ServiceException jre) {
+            if(jre.getLinkedCause()!=null)
+                jre.getLinkedCause().printStackTrace();
+            throw new junit.framework.AssertionFailedError("JAX-RPC ServiceException caught: " + jre);
+        }
+        assertTrue("binding is null", binding != null);
+
+        // Test operation
+        try {
+            java.util.HashMap value = null;
+            value = binding.executeTestCase("mxunit.PluginDemoTests.SubDir.AnotherSubDir.SomeOtherTest", "thisShouldThrowAnError", "");
+            System.out.println(value);
+           
+        }
+        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+            throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
+        }
+            // TBD - validate results
+    }
+    
    /* public void test5RemoteFacadeCfcExecuteTestCaseBlueDragon() throws Exception {
     	String ServiceURL = BDServiceURL;
         org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;

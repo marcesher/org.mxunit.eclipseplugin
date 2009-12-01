@@ -18,7 +18,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
-import org.mxunit.eclipseplugin.model.TestMethod;
+import org.mxunit.eclipseplugin.model.FailureTrace;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
 public final class OpenInEditorAction extends Action {
@@ -42,18 +42,14 @@ public final class OpenInEditorAction extends Action {
 		IPath path = null;
 		int line = 1;
 		
-		if(data instanceof Map){
-		    Map m = (Map)data;		   
-		    path = new Path((String) m.get("FILE"));	
-		    line = (Integer)m.get("LINE");		    
-		}
-		//this case only happens when there were no tagcontext lines and all we have is a TestMethod. This happens when the file under test is bad. or we get some cfc invocation exception 
-		else if(data instanceof TestMethod){
-		    TestMethod method = (TestMethod)data;
-		    path = new Path(method.getParent().getFilePath());
-		
+		if(data instanceof FailureTrace){
+			FailureTrace trace = (FailureTrace)data;
+			path = new Path(trace.getFilePath());
+			line = trace.getFileLine();
 		//this happens when a blank line is clicked
-		}else{			
+		}else{	
+			System.out.println(data);
+			System.out.println("don't know what to do with data");
 			return;
 		}
         
@@ -78,6 +74,7 @@ public final class OpenInEditorAction extends Action {
             marker.delete();           
         
         } catch(Exception e){
+        	System.out.println("inside error");
         	MXUnitPluginLog.logError("Exception opening file in OpenInEditorAction",e);
         }
 	}
