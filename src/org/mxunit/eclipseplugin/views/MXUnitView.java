@@ -380,16 +380,14 @@ public class MXUnitView extends ViewPart {
 
 			public void widgetSelected(SelectionEvent e) {
 				FailureTrace trace = (FailureTrace)getDetailsViewer().getSelection()[0].getData();
-				if(trace == null){
+				if(trace == null || !trace.getMethod().isComparableFailure()){
 					resultCompareAction.setEnabled(false);
 					return;
 				}
 				if(trace.getMethod().isComparableFailure()){
 					resultCompareAction.setTestMethod(trace.getMethod());
 					resultCompareAction.setEnabled(true);
-				}else{
-					resultCompareAction.setEnabled(false);
-				}		
+				}	
 			}});
 	}
 
