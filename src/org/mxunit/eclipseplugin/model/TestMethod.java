@@ -164,4 +164,16 @@ public final class TestMethod extends AbstractTestElement {
 		return TestElementType.TESTMETHOD;
 	}
 
+	public String getTagcontextAsString() {
+		StringBuilder sb = new StringBuilder(getException());
+		Map[] tagContext = getTagcontext();
+		for (Map thisFile : tagContext) {
+			sb.append("\n\tat ")
+				.append(thisFile.get("FILE"))
+				.append(": ")
+				.append(thisFile.get("LINE"));
+		}
+		return sb.toString();
+	}
+
 }

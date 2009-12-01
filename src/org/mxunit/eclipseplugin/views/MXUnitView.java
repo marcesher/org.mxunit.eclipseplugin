@@ -20,12 +20,17 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -48,6 +53,8 @@ import org.eclipse.ui.part.ViewPart;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.actions.BrowserAction;
 import org.mxunit.eclipseplugin.actions.ComponentSearchAction;
+import org.mxunit.eclipseplugin.actions.CopyExceptionMessageAction;
+import org.mxunit.eclipseplugin.actions.CopyTagContextAction;
 import org.mxunit.eclipseplugin.actions.FilterFailuresAction;
 import org.mxunit.eclipseplugin.actions.HistoryDropdownAction;
 import org.mxunit.eclipseplugin.actions.LoadMethodsAction;
@@ -102,8 +109,12 @@ public class MXUnitView extends ViewPart {
 	private HistoryDropdownAction historyDropdownAction;
 	private TimeoutChangePreferenceAction timeoutChangePreferenceAction;
 	private ResultCompareAction resultCompareAction;
+	private CopyExceptionMessageAction copyExceptionMessageAction;
+	private CopyTagContextAction copyTagContextAction;
 	private Action stopAction;
 	private Action helpAction;
+	
+	private Clipboard clipboard;
 	
 	private MessageConsole console;
 	private boolean consoleActivated = false;
@@ -117,6 +128,7 @@ public class MXUnitView extends ViewPart {
 	    //initializeConsole();
 	    history = new TestHistory();
 	    history.setMaxEntries( MXUnitPlugin.getDefault().getPluginPreferences().getInt(MXUnitPreferenceConstants.P_MAX_HISTORY) );
+	   
     }
 	
 	/**
@@ -124,6 +136,11 @@ public class MXUnitView extends ViewPart {
 	 */
 	public void dispose(){
 		ResourceManager.dispose();
+		try {
+			clipboard.dispose();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	/**
 	 * set us up a console
@@ -145,6 +162,7 @@ public class MXUnitView extends ViewPart {
 	 * the "guts" of the view
 	 */
 	public void createPartControl(final Composite parent) {		
+		clipboard = new Clipboard(parent.getDisplay());
 		GridLayout layout = new GridLayout();
 		layout.marginWidth = 1;
 		layout.numColumns = 1;
@@ -355,6 +373,24 @@ public class MXUnitView extends ViewPart {
 		GridData detailsData = new GridData(GridData.FILL_BOTH);
 		detailsPanel.setLayoutData(detailsData);
 		detailsViewer = new Table(detailsPanel, SWT.SINGLE | SWT.FULL_SELECTION);
+		detailsViewer.addSelectionListener(new SelectionListener(){
+			public void widgetDefaultSelected(SelectionEvent e) {
+				System.out.println("inside widgetDefaultSelected");
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				FailureTrace trace = (FailureTrace)getDetailsViewer().getSelection()[0].getData();
+				if(trace == null){
+					resultCompareAction.setEnabled(false);
+					return;
+				}
+				if(trace.getMethod().isComparableFailure()){
+					resultCompareAction.setTestMethod(trace.getMethod());
+					resultCompareAction.setEnabled(true);
+				}else{
+					resultCompareAction.setEnabled(false);
+				}		
+			}});
 	}
 
 	/**
@@ -369,65 +405,57 @@ public class MXUnitView extends ViewPart {
 				//clearDetailsPanel();
 				for (int i = 0; i < items.length; i++) {
 					ITest testitem = (ITest) items[i].getData();
-					if (testitem.getTestElementType() == TestElementType.TESTMETHOD) {
-						TestMethod method = (TestMethod) testitem;
-						if(method.getResult().trim().length()>0){
-						    TableItem nameRow = newTableItem();
-						    FailureTrace trace = new FailureTrace(method,method.getParent().getFilePath(),1);
-						    
-						    if(method.getTagcontext()!=null){
-						    	Map thisContext = method.getTagcontext()[0];
-						    	trace.setFilePath((String) thisContext.get("FILE"));
-						    	trace.setFileLine((Integer) thisContext.get("LINE"));
-						    }
-						    
-		    				nameRow.setData(trace);
-		    				nameRow.setText(method.getName());
-		    				
-		    				TableItem exceptionMessageRow = newTableItem();
-		                    exceptionMessageRow.setData(trace);
-		    				exceptionMessageRow.setText(method.getException());  
-		    				if(method.getStatus() == TestStatus.ERROR){
-		    				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_ERROR));
-		    				}else{
-		    				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
-		    				}
-		    				Map[] tc = method.getTagcontext();
-		    				if(tc != null){
-		    					//this way, the OpenInEditorAction can be stupid about opening up at the correct file line
-		                        
-		                        TableItem traceRow = null;
-		    				    for (int j = 0; j < method.getTagcontext().length; j++) {
-		    				        String fileName = (String) tc[j].get("FILE");
-		    				        //System.out.println(tc[j].get("LINE"));
-		    				        Integer fileLine = (Integer)tc[j].get("LINE");
-		    				        FailureTrace detailTrace = new FailureTrace(method,fileName,fileLine);
-		                            traceRow = newTableItem();
-		                            traceRow.setData(detailTrace);
-		                            
-		                            if(fileName.toLowerCase().endsWith(".cfc")){
-		                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFCSTACKFRAME) );
-		                            }else{
-		                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFMSTACKFRAME) );
-		                            }                            
-		                            traceRow.setText(fileName + ": " + fileLine);
-		                        }
-		    				    detailsViewer.showItem(traceRow);
-		    				}
-		    				
-		    				//little spacer
-		    				if (items.length > 1) {
-		    				    newTableItem().setText("");
-		    				}
-						}
+					if (testitem.getTestElementType() != TestElementType.TESTMETHOD || ((TestMethod) testitem).getResult().trim().length()==0  ) {
+						continue;
 					}
+					
+					TestMethod method = (TestMethod) testitem;
+				    TableItem nameRow = newTableItem();
+				    FailureTrace trace = new FailureTrace(method,method.getParent().getFilePath(),1);
+				    
+				    if(method.getTagcontext()!=null){
+				    	Map thisContext = method.getTagcontext()[0];
+				    	trace.setFilePath((String) thisContext.get("FILE"));
+				    	trace.setFileLine((Integer) thisContext.get("LINE"));
+				    }
+				    
+    				nameRow.setData(trace);
+    				nameRow.setText(method.getName());
+    				
+    				TableItem exceptionMessageRow = newTableItem();
+                    exceptionMessageRow.setData(trace);
+    				exceptionMessageRow.setText(method.getException());  
+    				if(method.getStatus() == TestStatus.ERROR){
+    				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_ERROR));
+    				}else{
+    				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
+    				}
+    				Map[] tc = method.getTagcontext();
+    				if(tc != null){
+                        TableItem traceRow = null;
+    				    for (int j = 0; j < method.getTagcontext().length; j++) {
+    				        String fileName = (String) tc[j].get("FILE");
+    				        Integer fileLine = (Integer)tc[j].get("LINE");
+    				        FailureTrace detailTrace = new FailureTrace(method,fileName,fileLine);
+                            traceRow = newTableItem();
+                            traceRow.setData(detailTrace);
+                            
+                            if(fileName.toLowerCase().endsWith(".cfc")){
+                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFCSTACKFRAME) );
+                            }else{
+                                traceRow.setImage( ResourceManager.getImage(ResourceManager.CFMSTACKFRAME) );
+                            }                            
+                            traceRow.setText(fileName + ": " + fileLine);
+                        }
+    				    detailsViewer.showItem(traceRow);
+    				}
+    				
+    				//little spacer
+    				if (items.length > 1) {
+    				    newTableItem().setText("");
+    				}
 				}		
-
-				
 			}});
-				
-		
-		
 	}
 
 	/**
@@ -490,6 +518,14 @@ public class MXUnitView extends ViewPart {
 		openInEditorAction = new OpenInEditorAction(this);
 		openInEditorAction.setText("Open file");
 		
+		copyExceptionMessageAction = new CopyExceptionMessageAction(this, clipboard);
+		copyExceptionMessageAction.setText("Copy exception");
+		copyExceptionMessageAction.setToolTipText("Copy the exception message");
+		
+		copyTagContextAction = new CopyTagContextAction(this, clipboard);
+		copyTagContextAction.setText("Copy Tag Context");
+		copyTagContextAction.setToolTipText("Copy the Tag Context as a String");
+		
 		spoofChangeModelAction = new SpoofChangeModelAction(testsViewer.getTree());
 		spoofChangeModelAction.setText("Spoof");
 
@@ -514,6 +550,8 @@ public class MXUnitView extends ViewPart {
 		timeoutChangePreferenceAction.setImageDescriptor(
 				ResourceManager.getImageDescriptor(ResourceManager.TIMEOUT)
 		);
+		
+		
 		
 		
 		stopAction = new Action() {
@@ -641,6 +679,10 @@ public class MXUnitView extends ViewPart {
 	
 	void fillDetailsContextMenu(IMenuManager manager){
 	    manager.add(openInEditorAction);
+	    manager.add(new Separator());
+	    manager.add(copyExceptionMessageAction);
+	    manager.add(copyTagContextAction);
+	    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 
 	private void hookDoubleClickAction() {
