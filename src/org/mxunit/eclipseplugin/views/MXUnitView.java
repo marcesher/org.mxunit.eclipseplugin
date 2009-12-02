@@ -411,8 +411,7 @@ public class MXUnitView extends ViewPart {
 				    TableItem nameRow = newTableItem();
 				    FailureTrace trace = new FailureTrace(method,method.getParent().getFilePath(),1);
 				    
-				    if(method.getTagcontext()!=null && method.getTagcontext().length > 0){
-				    	System.out.println(method.getTagcontext());
+				    if(method.getTagcontext().length > 0){
 				    	Map thisContext = method.getTagcontext()[0];
 				    	trace.setFilePath((String) thisContext.get("FILE"));
 				    	trace.setFileLine((Integer) thisContext.get("LINE"));
@@ -430,7 +429,7 @@ public class MXUnitView extends ViewPart {
     				    exceptionMessageRow.setImage(ResourceManager.getImage(ResourceManager.CIRCLE_FAIL));
     				}
     				Map[] tc = method.getTagcontext();
-    				if(tc != null && tc.length > 0){
+    				if(tc.length > 0){
                         TableItem traceRow = null;
     				    for (int j = 0; j < method.getTagcontext().length; j++) {
     				        String fileName = (String) tc[j].get("FILE");
