@@ -16,7 +16,7 @@ public final class TestMethod extends AbstractTestElement {
 	/** exception string */
 	private String exception = "";
 	/** tag context array */
-	private Map[] tagcontext;
+	private Map[] tagcontext = new Map[0];
 	/** the TestCase to which this method belongs */
 	private TestCase parent;
 	/** line number in the file of the error or failure */
