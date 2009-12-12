@@ -3,6 +3,8 @@ package org.mxunit.eclipseplugin.model;
 import java.text.SimpleDateFormat;
 import java.util.Observable;
 
+import org.eclipse.core.resources.IResource;
+
 public abstract class AbstractTestElement extends Observable implements ITest{
 
 	protected String name = "";
@@ -10,6 +12,8 @@ public abstract class AbstractTestElement extends Observable implements ITest{
 	protected long startTime = System.currentTimeMillis();
 	protected long endTime = System.currentTimeMillis();
 	protected long totalServerTime = 0;
+	protected IResource resource = null;
+	
 	private SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy h:mm:ss aa");
 	
 	public String getName() {
@@ -59,9 +63,22 @@ public abstract class AbstractTestElement extends Observable implements ITest{
     public boolean isComparableFailure(){
     	return false;
     }
+    
+    
+    public IResource getResource(){
+    	return resource;
+    }
+    
+    public void setResource(IResource resource){
+    	this.resource = resource;
+    }
+    
+    
 
 	public abstract ITest getParent();
 	
 	public abstract TestElementType getTestElementType();
+	
+	
 
 }

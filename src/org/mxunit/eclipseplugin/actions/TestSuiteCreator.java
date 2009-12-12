@@ -107,15 +107,16 @@ public class TestSuiteCreator {
 	/**
 	 * convenience method for adding a resource to the suite
 	 * @param suite The TestSuite to modify
-	 * @param fullPath full path to component
 	 * @param name component name using dot notation
+	 * @param resource The Eclipse Resource backing this element
 	 */
-	private void addTestToSuite(TestSuite suite, String fullPath, String name){
+	private void addTestToSuite(TestSuite suite, String name, IResource resource){
 		TestCase tc = new TestCase();
-		tc.setFilePath(fullPath);
+		tc.setResource(resource);
+		tc.setFilePath(resource.getRawLocation().toString());
 		tc.setName(name);
 		suite.addTest(tc);
-		MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: Adding Test To Suite: fullPath is " + fullPath + "; name is" + name);
+		MXUnitPluginLog.logInfo("MXUnit TestSuiteCreator: Adding Test To Suite: fullPath is " + tc.getFilePath() + "; name is" + name);
 	}
 	
 	private void collectFiles(IResource resource){
@@ -181,7 +182,7 @@ public class TestSuiteCreator {
 			if(resource.getType() == IResource.FILE && 
 					resource.getFullPath().lastSegment().matches(testFilter)){				
 				String path = deriveCFCPath(resource);
-				addTestToSuite(suite, resource.getRawLocation().toString(), path);
+				addTestToSuite(suite, path, resource);
 			}
 			return true;
 		}

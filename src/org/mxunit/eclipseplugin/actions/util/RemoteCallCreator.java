@@ -53,8 +53,8 @@ public class RemoteCallCreator {
 
 
 	public RemoteFacade createFacade(ITest testelement) {
-		IResource resource = determineResource(testelement);
-
+		//IResource resource = determineResource(testelement);
+		IResource resource = testelement.getResource();
 		facadeURL = determineURL(resource);
 		if(resource != null){
 			username = props.getUsernamePropertyValue(resource.getProject());
@@ -97,32 +97,6 @@ public class RemoteCallCreator {
 
 	public Exception getCurrentException() {
 		return currentException;
-	}
-
-	private IResource determineResource(ITest testelement) {
-		IResource res = null;
-		ITest item = testelement;
-		String filepath = "";
-		if (item.getTestElementType() == TestElementType.TESTCASE) {
-			filepath = ((TestCase) item).getFilePath();
-		} else {
-			filepath = ((TestMethod) item).getParent().getFilePath();
-		}
-		IPath path = new Path(filepath);
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile ifile = root.getFileForLocation(path);
-		if(ifile != null){
-			res = root.findMember(ifile.getFullPath());
-			if(res == null){
-				MXUnitPluginLog.logWarning("Bad news... resource is null trying to call root.findMember() on " 
-						+ ifile.getFullPath() 
-						+ "; testelement passed into determineResource was " + testelement);
-			}
-		}else{
-			MXUnitPluginLog.logWarning("Bad news... resource is null for filepath " + filepath);
-		}
-		
-		return res;
 	}
 
 	private String determineURL(IResource resource) {

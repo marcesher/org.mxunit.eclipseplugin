@@ -217,7 +217,6 @@ public class RunTestsAction extends Action {
             tm.setStatus(TestStatus.ERROR);
             tm.setResult(message);
             tm.setException(message);
-            tm.setTagcontext(null);
             view.writeToConsole("RemoteException: " + message);
             MXUnitPluginLog.logError("RemoteException in RunTestsAction",e);
         }finally{

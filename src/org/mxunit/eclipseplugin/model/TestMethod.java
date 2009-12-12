@@ -2,6 +2,8 @@ package org.mxunit.eclipseplugin.model;
 
 import java.util.Map;
 
+import org.eclipse.core.resources.IResource;
+
 public final class TestMethod extends AbstractTestElement {
 
 	
@@ -86,6 +88,9 @@ public final class TestMethod extends AbstractTestElement {
 		setChanged();
 	}
 	
+	public IResource getResource(){
+		return getParent().getResource();
+	}
 	
 	public String getExpected() {
 		return expected;
