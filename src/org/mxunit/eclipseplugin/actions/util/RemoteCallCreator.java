@@ -53,7 +53,6 @@ public class RemoteCallCreator {
 
 
 	public RemoteFacade createFacade(ITest testelement) {
-		//IResource resource = determineResource(testelement);
 		IResource resource = testelement.getResource();
 		facadeURL = determineURL(resource);
 		if(resource != null){
