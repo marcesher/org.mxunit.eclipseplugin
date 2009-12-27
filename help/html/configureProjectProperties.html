@@ -13,10 +13,10 @@
 <h2>Why</h2>
 
 <p>
-Some projects are special cases. Maybe by default your test components all live in directories under your webroot, but for one project your test files live outside the webroot, maybe in c:\cfusionmx\extensions\cfc.
+Some projects are special cases. Maybe the plugin cannot use its default behavior for figuring out the dot-notation for the project's CFCs.
 
 
-Or maybe a specific project requires that all tests include some custom behavior before the test is run, but you don't want to pollute your test code itself.</p>
+Or maybe a specific project requires that all tests include some custom behavior before the test is run, but you don't want to pollute your test code itself. </p>
 
 <p>Project Properties to the rescue!</p>
 
@@ -44,8 +44,6 @@ You can set these properties at the project level
 <h2>Examples</h2>
 
 <h3>Custom Remote URL</h3>
-
-<p>
 <ul>
 	<li>You have a set of unit tests that require something special at every test run
 	<li>You don't want to include that thing in the test itself (i.e. in the constructor or setUp() method)

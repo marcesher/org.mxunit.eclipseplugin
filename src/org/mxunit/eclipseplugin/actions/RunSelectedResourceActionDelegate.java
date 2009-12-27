@@ -27,25 +27,19 @@ public final class RunSelectedResourceActionDelegate implements IViewActionDeleg
 
 		try {			
 			TestSuiteCreator testSuiteCreator = new TestSuiteCreator();	 
+			MXUnitView view = (MXUnitView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(MXUnitView.ID);
 			
-			if( !testSuiteCreator.isResourceConfigured(selectedResources[0]) ){
-				testSuiteCreator.alertIfResourceNotConfigured(selectedResources[0]);
-				return;
-			}else{
-				MXUnitView view = (MXUnitView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(MXUnitView.ID);
-				
-				TestSuite suite = testSuiteCreator.createSuite(selectedResources);
-				//System.out.println(suite);
-				view.getTestsViewer().setInput(suite);
-                view.getTestsViewer().getTree().selectAll();      
-                view.enableActions();
-                
-                loadAction = new LoadMethodsAction(view);
-                runAction = new RunTestsAction(view);
-                
-                loadAction.run();                               
-                runAction.run();
-			}				
+			TestSuite suite = testSuiteCreator.createSuite(selectedResources);
+			//System.out.println(suite);
+			view.getTestsViewer().setInput(suite);
+            view.getTestsViewer().getTree().selectAll();      
+            view.enableActions();
+            
+            loadAction = new LoadMethodsAction(view);
+            runAction = new RunTestsAction(view);
+            
+            loadAction.run();                               
+            runAction.run();
 			
 		} catch (PartInitException e) {
 			MXUnitPluginLog.logError("Exception in RunSelectedResourceActionDelegate",e);

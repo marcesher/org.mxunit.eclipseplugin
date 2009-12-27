@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+<title>Project-Specific RemoteFacade URL</title>
+</head>
+
+<body>
+<h1>Project-Specific RemoteFacade URL</h1>
+<p>Pointing a project at a custom RemoteFacade URL involves two simple steps:</p>
+<ol>
+  <li>Create the new RemoteFacade.cfc</li>
+  <li>Point your project properties to the new URL</li>
+</ol>
+<h2>How</h2>
+<h3>	Creating the new RemoteFacade.cfc</h3>
+<ol>
+  <li>Create a New CFC. Put it wherever. Name it whatever.
+  <li>Set the "extends" attribute of the component tag to "mxunit.Framework.RemoteFacade"
+  <li>Ensure you can access the wsdl for the file in a browser. For example, if you created c:\inetpub\wwwroot\myproject\RemoteFacade.cfc, try hitting http://localhost/myproject/RemoteFacade.cfc?wsdl
+</ol>
+<h3>Pointing your project properties to the new URL</h3>
+<ol>
+  <li>Right click on the project name in the Navigator or Project Explorer
+  <li>Select "Properties"
+  <li>Select "MXUnit Properties"
+  <li>Add the path to your custom remote URL
+    <ul>
+      <li>NOTE: if you're just using this to point to an mxunit install on a different port, then you can skip the "/mxunit/framework/RemoteFacade.cfc" part of the URL. Just use http://localhost:8888, for example. In that case, the plugin will suffix your url with "mxunit/framework/RemoteFacade.cfc"</li>
+  </ul>  
+</ol>
+<h2>Example #1: Creating a custom RemoteFacade.cfc for your project which tests CF ORM / Hibernate Components</h2>
+<p>In your project, create a file named RemoteFacade.cfc and give it this content:</p>
+
+<div style="color:blue">
+<xmp>
+<cfcomponent extends="mxunit.framework.RemoteFacade">
+</cfcomponent>
+</xmp>
+</div>
+<p>Right click on your project and set the RemoteFacade URL property to point to the URL for this new component</p>
+<p>Now, all calls to your tests <strong>for this project</strong> will route through this RemoteFacade.cfc. Since your project also has an Application.cfc, that means that everything from your Application.cfc will apply</p>
+
+
+
+
+
+<h2>Example #2: Creating a custom RemoteFacade.cfc for your project and including custom behavior for every test case</h2>
+<p>Follow the same steps as above</p>
+<p>In your new RemoteFacade.cfc, implement the actOnTestCase method to peform whatever behavior you would like for each test case. Here's an example:</p>
+
+<div style="color:blue">
+<xmp>
+<cfcomponent extends="mxunit.framework.RemoteFacade">
+
+	<cffunction name="actOnTestCase">
+		<cfargument name="TestCase">
+		
+		<cfif findNoCase("TestManager.Retail",GetMetadata(TestCase).name)>
+			<cfinclude template="retail/Application.cfm">		
+		<cfelse>
+			<cfinclude template="enrollment/Application.cfm">
+		</cfif>
+	</cffunction>
+	
+
+</cfcomponent>
+</xmp>
+</div>
+
+
+</body>
+</html>
+

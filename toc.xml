@@ -2,28 +2,78 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="MXUnit Table of Contents">
-	<topic label="Using the MXUnit Plugin"> 
-		<topic label="Introduction to MXUnit" href="help/html/intro.html" />
-		<topic label="Getting Started: Talking to ColdFusion" href="help/html/talkingToColdFusion.html"/>
-		<topic label="Configure global preferences" href="help/html/configureGlobalPreferences.html"/> 
-		<topic label="Configure project properties" href="help/html/configureProjectProperties.html"/>
-		<topic label="How To Run Tests" href="help/html/howToRunTests.html"/>
-		<topic label="Running Demo Tests" href="help/html/runningDemoTests.html" />
-		<topic label="Keyboard Shortcuts" href="help/html/keyboardshortcuts.html" />
+	<topic href="help/html/intro.html" label="Introduction to MXUnit" />
+
+	<topic label="Using the MXUnit Plugin">
+		<topic label="Plugin Configuration">
+			<topic label="Getting Started: Talking to ColdFusion" href="help/html/talkingToColdFusion.html" />
+   <topic label="The RemoteFacade URL">
+      <topic href="help/html/remotefacade.html" label="Basics">
+      </topic>
+      <topic href="help/html/project-specific-remotefacade.html" label="Using a Project-specific URL">
+      </topic>
+      <topic href="help/html/ORM.html" label="Testing CF ORM / Hibernate components">
+      </topic>
+      <topic href="help/html/NeedApplication.html" label="Testing components that need an Application.cfc">
+      </topic>
+   </topic>
+   <topic href="help/html/cfcpath.html" label="CFC Path (Dot-notation)">
+   </topic>
+   <topic href="help/html/timeout.html" label="Timeout Preference">
+   </topic>
+   <topic href="help/html/authentication.html" label="Authentication">
+   </topic>
+		</topic>
+
+
+		<topic label="Running Tests">
+			<topic label="How To Run Tests" href="help/html/howToRunTests.html" />
+   <topic href="help/html/whataretests.html" label="How does it know which files are TestCases?">
+   </topic>
+			<topic label="Running Demo Tests" href="help/html/runningDemoTests.html" />
+			<topic label="Keyboard Shortcuts" href="help/html/keyboardshortcuts.html" />
+   <topic href="help/html/suites.html" label="Test Suites">
+   </topic>
+		</topic>
+
+	</topic>
+	
+	<topic label="Eclipse Snippets">
 		<topic label="Using MXUnit Eclipse Snippets" href="help/html/cfeclipsesnippets.html" />
 	</topic>
+	
 	<topic label="Non-Plugin Test Generation and Execution">
-		<topic label="Generating Tests for existing components (non-plugin)" href="help/html/generatingTests.html" />
+		<topic label="Generating Tests for existing components (non-plugin)"
+			href="help/html/generatingTests.html" />
 		<topic label="Running tests outside of the plugin">
-			<topic label="Running single tests" href="help/html/runningSingleTestsInBrowser.html"/>
-			<topic label="Running directories of tests" href="help/html/runningDirectoriesInBrowser.html"/>
+			<topic label="Running single tests" href="help/html/runningSingleTestsInBrowser.html" />
+			<topic label="Running directories of tests" href="help/html/runningDirectoriesInBrowser.html" />
 		</topic>
 		<topic label="MXUnit ANT Integration" href="http://mxunit.org/mxunit-ant-doc.html" />
 	</topic>
-	
+
 
 	<topic label="Resources">
 		<topic label="MXUnit Website" href="http://www.mxunit.org" />
-		<topic label="Submit a bug" href="http://code.google.com/p/mxunit/issues/entry" />
+		<topic href="http://mxunit.org/doc/index.cfm#cfmeetup" label="MXUnit Presentations">
+		</topic>
+		<topic href="http://groups.google.com/group/mxunit/topics"
+			label="MXUnit Google Group">
+		</topic>
+		<topic href="http://blog.mxunit.org/" label="MXUnit Blog">
+		</topic>
+		<topic label="Submit a Bug or Feature Request" href="http://code.google.com/p/mxunit/issues/entry" />
+		<topic href="http://tech.groups.yahoo.com/group/testdrivendevelopment/"
+			label="Yahoo Test-Driven Development Group">
+		</topic>
 	</topic>
+	<topic
+		href="http://wiki.mxunit.org/display/default/Eclipse+Plugin+Troubleshooting"
+		label="Troubleshooting (via MXUnit Wiki)">
+	</topic>
+	<topic href="http://wiki.mxunit.org/display/default/Eclipse+Plugin+FAQ"
+		label="Frequently Asked Questions (via MXUnit Wiki)">
+	</topic>
+	  <topic href="http://wiki.mxunit.org/display/default/Eclipse+Plugin+Tips+and+Tricks" label="Tips and Tricks (via MXUnit Wiki)">
+  </topic>
 </toc>

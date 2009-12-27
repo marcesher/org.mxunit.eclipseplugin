@@ -6,7 +6,7 @@ Bundle-Activator: org.mxunit.eclipseplugin.MXUnitPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.1.3.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-ClassPath: bin/,
  .,
  lib/axis.jar,

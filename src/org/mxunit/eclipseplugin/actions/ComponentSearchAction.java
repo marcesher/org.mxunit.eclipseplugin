@@ -49,8 +49,6 @@ public final class ComponentSearchAction extends Action {
 						
 			if(res.getType() == IResource.FILE && !res.getFileExtension().equalsIgnoreCase("cfc")){
 				MessageDialog.openInformation( null, "Whooops....not a CFC", "Selected file ["+ res.getRawLocation() +"] is not a CFC");
-			}else if(!testSuiteCreator.isResourceConfigured(res)){
-				testSuiteCreator.alertIfResourceNotConfigured(res);
 			}else{
 				IResource[] resources = new IResource[result.length];
 				for (int i = 0; i < result.length; i++) {

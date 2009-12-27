@@ -12,11 +12,10 @@
 
 <h2>The preferences</h2>
 <p>
-There are 3 global preferences:
+There are 2 global preferences:
 
 	<ul>
 		<li>Remote Facade URL</li>
-		<li>Your web root</li>
 		<li>Method Timeout</li>
 	</ul>
 </p>
@@ -28,23 +27,12 @@ comes bundled with the MXUnit framework. When you first installed the plugin, it
 guessing the location of this Remote URL, but more than likely it guessed wrong... so you'll need to set it up correctly. 
 </p>
 
-<p>In addition, in order for the plugin to correctly determine the CFC notation for your components, you'll need to 
-specify the location of your web root. The thinking here is that more often than not, test components will live under
-the webroot. So a one-time setup of the webroot is all most people will need. Subsequently, any tests under the webroot
-will have their CFC notation correctly determined. (However, for those who have projects with tests outside the webroot, there's 
-a bit of additional project-level configuration you'll need to do. See below.)
-</p>
-
 <p>Regarding Method Timeout: The plugin makes a separate call to CF for <i>every single test method</i>. The Method Timeout setting allows you to specify a maximum amount of time, in seconds, the test runner should wait for a single test method to complete. If a method call does not complete in the time specified, the plugin stops trying and moves on to the next test method. You can use a setting of "0" seconds to specify NO Timeout. The default setting is 30 seconds, which would allow an extremely long-running test. </p>
-
 <h2>How</h2>
-
-<p>
 <ol>
-	<li>Window -- Preferences -- MXUnit</li>
+  <li>Window -- Preferences -- MXUnit</li>
 	<li>Check and correct the URL if necessary. For example, maybe it currently reads "http://localhost/mxunit/framework/RemoteFacade.cfc" </li>
 	but your CF installation is at localhost:8501. Change the URL accordingly.
-	<li>Check and correct your webroot if necessary. For example, maybe your webroot is c:\cfusionmx\wwwroot instead of c:\inetpub\wwwroot.</li>
 	<li>Set any value between 0 and 180 for the method timeout.</li>
 </ol>
 In addition, the method timeout can be changed by clicking on the dropdown triangle to the right side of the MXUnit view and clicking the "Change Timeout Preference" menu item. From there, enter your desired value.
@@ -55,7 +43,7 @@ In addition, the method timeout can be changed by clicking on the dropdown trian
 There are times when these preferences won't suit your needs:
 <ul>
 	<li>You need custom remote functionality. For example, you need the RemoteFacade.cfc to include a custom Application.cfm file for every test</li>
-	<li>Your test components are not underneath your webroot but are instead accessed by means of a CF mapping</li>
+	<li>You're testing components that use ColdFusion's built-in Hibernate ORM. In those cases, the components will not work correctly if they aren't run under the context of their Application.cfc. </li>
 </ul>
 In these cases, you'll need to <a href="configureProjectProperties.html">override certain properties at the project level</a>.
 </p>

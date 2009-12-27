@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>How does the plugin know which files are tests?</title>
+</head>
+
+<body>
+ <h1>How does the plugin know which files are tests? </h1>
+ <p>MXUnit treats all files named &quot;Test*.cfc&quot; or &quot;*Test.cfc&quot; as a test case. If you have a project with 1000 files in it, and you right click on the project and select &quot;Run MXUnit Tests&quot;, it'll cherrypick just the Test components and run those tests. MXUnit does not expect or enforce any directory conventions. </p>
+ <p>This means you can store your tests in separate directories, or you can store your tests along-side the components under test. The plugin will find just the tests and igore the rest.</p>
+ <table border="1">
+   <tr>
+     <th>A TestCase</th>
+     <th>Not a TestCase</th>
+   </tr>
+   <tr>
+     <td>SomeTest.cfc</td>
+     <td>SomeTest.cfm</td>
+   </tr>
+   <tr>
+     <td>SomeTest.cfc</td>
+     <td>SomeTests.cfc</td>
+   </tr>
+   <tr>
+     <td>TestThisThing.cfc</td>
+     <td>ThisThing.cfc</td>
+   </tr>
+   <tr>
+     <td>sometest.cfc</td>
+     <td>TestYouGetThePicture.html</td>
+   </tr>
+ </table>
+ <p>The plugin does not support <a href="suites.html">Test Suites</a>. </p>
+</body>
+</html>

@@ -5,8 +5,6 @@ package org.mxunit.eclipseplugin.preferences;
  */
 public class MXUnitPreferenceConstants {
 
-	public static final String P_WEBROOTPATH = "pathPreference";
-
 	public static final String P_FACADEURL = "urlPreference";	
 	
 	public static final String P_MAX_HISTORY = "maxHistoryPreference";

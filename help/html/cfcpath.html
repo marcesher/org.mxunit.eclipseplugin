@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+<title>CFC Path</title>
+</head>
+
+<body>
+<h1>CFC Path</h1>
+<p>When the plugin cannot use its default behavior for figuring out the dot-notation for the project's CFCs, you'll need to tell the plugin what to do. You do this at the project or directory level, in the MXUnit Properties cfc path property.</p>
+<h2>How</h2>
+<ol>
+  <li>Right click on the project name or a directory in a project in the Navigator or Project Explorer
+  <li>Select "Properties"
+  <li>Select "MXUnit Properties"
+  <li>Set the component root for the project or directory
+</ol>
+<h2>Explanation</h2>
+<p>The MXUnit Eclipse plugin needs to turn your files (c:\inetpub\wwwroot\myproject\MyTest.cfc) into the correct cfc path &quot;dot notation&quot; which ColdFusion understands (perhaps it's &quot;myproject.MyTest&quot;).</p>
+<p>Below I'll describe several different scenarios, each using a different filesystem and project configuration example</p>
+<hr>
+<h3>The Default Behavior</h3>
+<ul>
+  <li>Project setup: c:\inetpub\wwwroot\MyProject</li>
+  <li>Example MXUnit Test Case: c:\inetpub\wwwroot\MyProject\tests\SomeTest.cfc</li>
+  <li>ColdFusion sees that as &quot;MyProject.tests.SomeTest&quot;. No ColdFusion Mapping was required in CFAdministrator</li>
+</ul>
+<p>By default, the plugin will start at the last &quot;segment&quot; of the file path (In this case, &quot;SomeTest&quot;), and travel up the path, a segment at a time, prepending the next segment it encounters and adding a &quot;.&quot; (period). It will do this until it reaches the &quot;root&quot; of the project. In this case, the logic would &quot;look&quot; like this (roughly):</p>
+<blockquote>
+  <p>loop 1: SomeTest</p>
+  <p>loop 2: tests.SomeTest</p>
+  <p>loop 3: MyProject.tests.SomeTest</p>
+  <p>loop 4: &quot;I'm at the root of the project... stop deriving the path&quot;. Return MyProject.tests.SomeTest</p>
+</blockquote>
+<hr>
+<h3>Using the cfcpath as a &quot;prefix&quot;</h3>
+<ul>
+  <li>Project setup: c:\nonwebrootcomponents
+  <li>You have a CF mapping for this directory (in CFAdmin) named "components".
+  <li>CF sees c:\nonwebrootcomponents\test\MyBusinessObjectTest.cfc as components.test.MyBusinessObjectTest
+</ul>
+<b>What to do:</b> specify "components" as the cfcpath for this project.
+</p>
+This is what will routhly happen inside the plugin to figure out the CFC path for this file:
+<blockquote>
+  <p>loop 1: MyBusinessObjectTest</p>
+  <p>loop 2: test.MyBusinessObjectTest</p>
+  <p>loop 2: at project root; sees cfcpath property as &quot;components&quot;. Appends that to test.MyBusinessObjectTest, with a period. Return &quot;components.test.MyBusinessObjectTest&quot;</p>
+</blockquote>
+<hr>
+<h3>Specifying multiple cfcpath properties in the same project, on any directory</h3>
+<p> Imagine this scenario: Your applications live at d:\apps, and you have a monster project in Eclipse set up at d:\apps. You have some subdirs that look like: d:\apps\v1\Client1\tests, d:\apps\v2\Client1\tests, etc. And you've added CF mappings like so:
+  
+<ul>
+  <li>d:\apps\v1\Client1\tests = clientv1.tests</li>
+  <li>d:\apps\v2\Client1\tests = clientv2.tests</li>
+</ul>
+Now... why you'd do this, I don't know. It's an example, live with it.
+<ul>
+  <li>In Eclipse, right click on the v1\Client1 directory, select the MXUnit properties, and add "clientv1" as the component root</li>
+  <li>Do the same for v2, but using "clientv2" instead of clientv1 </li>
+</ul>
+Granted... this is a bit more work; still, it gives you the granularity you need for correctly specifiying the CFC path at any folder level.
+</p>
+<hr>
+<h3>Using the &quot;empty&quot; indicator*</h3>
+<p>Imagine this scenario: Your applications live at d:\apps, and you have a monster project in Eclipse set up at d:\apps. You have some subdirs that look like: d:\apps\App1\tests, d:\apps\App2\tests, and so forth. You have mappings in CF set up that points "app1" to d:\apps\app1, "app2" to d:\apps\app2, etc. <br>
+  <br>
+In this case, the easiest choice is to use the "empty" root indicator. In this example, here's what to do: </p>
+<ul>
+  <li>Right click on the project, select "Properties", and go to "MXUnit"</li>
+  <li>In the component root field, simply add "/"</li>
+</ul>
+What's this do? Using a slash (or a period) as the component root property indicates "don't prefix anything underneath this container with a root. In this example, the components under apps\app2\tests would then start at app2.tests, essentially ignoring the "apps" directory. <br>
+<br>
+<i>*Props to a user named Alanyst for suggesting this feature and contributing code</i>
+</p>
+<h2>Troubleshooting</h2>
+<p>Please see <a href="http://wiki.mxunit.org/display/default/Eclipse+Plugin+Troubleshooting">this page on the MXUnit wiki</a> for troubleshooting cfc path problems and getting help when all else fails.</p>
+<p>&nbsp;</p>
+
+
+</body>
+</html>
+

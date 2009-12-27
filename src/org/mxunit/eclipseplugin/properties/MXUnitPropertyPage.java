@@ -62,34 +62,24 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		
 		panel.setLayoutData(data);
 		
-		addHelpLink(panel);
 		addFacadeURL(panel);	
 		addComponentRoot(panel);
 		addAuthGroup(panel);
 		
 		return panel;
 	}
-	
-	/**
-	 * add the help link to property sheet
-	 * @param container
-	 */
-	private void addHelpLink(Composite container) {
-		Link helpLink = new Link(container,SWT.NONE);
-		helpLink.setText("View <a>MXUnit Help</a>\n");
-		activateHelpContents(helpLink);
-	}
+
 
 	/**
 	 * add the listener to the help link text for opening the help page
 	 * @param helpLink
 	 */
-	private void activateHelpContents(Link helpLink) {
+	private void activateHelpContents(Link helpLink, final String htmlPath) {
 		helpLink.addListener(
 			SWT.Selection, new Listener(){					
 				public void handleEvent(Event event){
 					final IWorkbenchHelpSystem helpSystem = PlatformUI.getWorkbench().getHelpSystem();
-					helpSystem.displayHelpResource("/org.mxunit.eclipseplugin/help/html/configureProjectProperties.html");
+					helpSystem.displayHelpResource("/org.mxunit.eclipseplugin/help/html/"+htmlPath);
 					
 				}
 			}
@@ -115,7 +105,11 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		facadeURLField.setStringValue( propManager.getURLPropertyValue( (IResource)getElement().getAdapter(IResource.class) ) );
 		
 		addBlankLabel(group);
-		addDescriptionLabel(group,"Use this field to override the facade URL preference for\nthis project only.\n\nIf you're simply pointing to mxunit on a different port, you can\nend the URL at the port (http://localhost:8888, for example)");
+		addDescriptionLabel(group,"Use this field to override the facade URL preference for\nthis project only.\n\nIf you're simply pointing to MXUnit on a different port, you can\nend the URL at the port (http://localhost:8888, for example)");
+		addBlankLabel(group);
+		Link helpLink = new Link(group,SWT.NONE);
+		helpLink.setText("See <a>Help</a> for details\n");
+		activateHelpContents(helpLink,"project-specific-remotefacade.html");
 		
 	}
 	
@@ -140,7 +134,7 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		Link helpLink = new Link(group,SWT.NONE);
 		helpLink.setText("e.g. com.mybusiness.test " +
 				"\n\nSee <a>Help</a> for details\n");
-		activateHelpContents(helpLink);
+		activateHelpContents(helpLink,"cfcpath.html");
 	}
 
 	
@@ -173,6 +167,11 @@ public class MXUnitPropertyPage extends PropertyPage implements
 				"Use the username and password fields to set credentials for accessing the\n" +
 				"test runner URL; this should work for basic and digest authentication.\n" +
 				"With NTLM, your mileage may vary.");
+		
+		addBlankLabel(group);
+		Link helpLink = new Link(group,SWT.NONE);
+		helpLink.setText("See <a>Help</a> for details\n");
+		activateHelpContents(helpLink,"authentication.html");
 		
 	}
 	

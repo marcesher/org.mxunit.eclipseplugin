@@ -17,20 +17,21 @@
  </ol> 
  
  <p>This isn't as spooky as it sounds.</p>
+ <h2>RemoteFacade.cfc URL</h2>
  
- <p>Many users will be able to get away with configuring two global settings: the 'Remote Facade URL' and the 'webroot'. 
+ <p>Many users will be able to get away with configuring one global setting: the 'Remote Facade URL'. 
  
- If you don't require any custom pre-test behavior, then a single RemoteFacade.cfc URL, set as a global preference, will suffice. You'll just point to the one in the mxunit/framework directory.
- 
- If you keep your components under the webroot, then the 'webroot' setting will be all you need. The plugin will be able to derive the dot-notation (com.blah.blah) path to your components by by comparing the path to the file with the configured webroot preference and then doing some simple string manipulation.
- 
- <br><br>
- If, however, you need custom pre-test behavior in the RemoteFacade URL, or if you keep your components outside the webroot, then you'll need to do slightly more work... you'll need to configure the RemoteFacade URL and/or your CFC path at the project level, not at the global level. </p>
+ If you don't require any custom pre-test behavior, then a single RemoteFacade.cfc URL, set as a global preference, will suffice. You'll just point to the one in the mxunit/framework directory. </p>
+ <p>If, however, you need custom pre-test behavior in the RemoteFacade URL -- or if you need your tests to run under the context of the project's Application.cfc (you will NEED to do this if you're testing CF ORM components) -- then you'll need to do slightly more work... you'll need to configure the RemoteFacade URL at the project level, not at the global level. </p>
+ <h2>CFC Path</h2>
+ <p>Usually, the plugin will be able to derive the dot-notation (com.blah.blah) path to your components by taking the segments of the filesystem path, relative to the project root, and converting slashes to dots. For example, if you have an Eclipse project at C:\myapps\PilesOCash\ --and in there you have a directory of tests at C:\myapps\PilesOCash\tests\magic\MakeMeABillionaireTest.cfc -- then the plugin would turn that cfc into the dot-notation of &quot;PilesOCash.tests.magic.MakeMeABillionaireTest&quot;. </p>
+ <p>If this is how ColdFusion sees that component, then you're gold. If not, then you'll need to tell the plugin what the path to your MXUnit test components should be, at the project level.<br>
+ </p>
  <p>
  So, let's start:  
  <br>
- <a href="configureGlobalPreferences.html">Tell me more about Global Preferences!</a><br>
- <a href="configureProjectProperties.html">Tell me more about project-level configuration!</a>
+ <a href="remotefacade.html">Tell me more about the RemoteFacade URL</a><br>
+ <a href="cfcpath.html">Tell me more about CFC Paths</a>
  
  </p>
 

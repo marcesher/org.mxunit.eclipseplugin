@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="../../../PRODUCT_PLUGIN/book.css" type="text/css">
+	<title>Authentication</title>
+</head>
+
+<body>
+<h1>Project-level Authentication</h1>
+<p>You can set the username and password credentials to use if the Remote Facade URL is protected by an authentication mechanism. This should work for basic, digest, or NTLMv1 authentication. It will not work for NTLMv2.</p>
+<h2>How</h2>
+<ol>
+  <li>Right click on the project name in the Navigator or Project Explorer
+  <li>Select "Properties"
+  <li>Select "MXUnit Properties"
+  <li>Enter credentials    
+</ol>
+<p>If the remote url is protected by basic or digest authentication, enter the username and password in these fields. For NTLMv1 authentication, you must enter the username as domain\username, e.g. MyDomain\BobbySue. </p>
+<p><strong>We suggest NOT using authentication for the remote facade URL. Best practice for unit testing is that testing happens locally, not on a shared dev server.
+</strong>
+<p>If you must use a shared server, then we additionally suggest using a custom URL for just the projects that require authentication. This is simple: 
+<ol>
+  <li>Create a file named "RemoteFacade.cfc" in your protected directory</li>
+  <li>In the MXUnit properties for this project, point the Test runner URL for just this project to your new file. For example, if your new file is at WEBROOT/SomeProtectedApp/unittests/RemoteFacade.cfc, set the URL to http://DEVSERVER/SomeProtectedApp/unittests/RemoteFacade.cfc</li>
+  <li>Populate the RemoteFacade.cfc with the following code:</li>
+</ol>
+<div style="color:blue">
+<xmp>
+<cfcomponent extends="mxunit.framework.RemoteFacade">
+
+</cfcomponent>
+</xmp>
+</div>
+</body>
+</html>

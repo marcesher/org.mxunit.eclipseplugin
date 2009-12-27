@@ -41,11 +41,6 @@ public final class RunActiveEditorInputActionDelegate implements IEditorActionDe
 				File selectedResourceAsFile = new File(resource.getRawLocation().toString());
 				MessageDialog.openInformation( null, "Whooops....not a CFC", "Selected file ["+ selectedResourceAsFile.getAbsolutePath() +"] is not a CFC");
 			
-			//ensure webroot or component root defined
-			}else if( !testSuiteCreator.isResourceConfigured(resource) ){
-				testSuiteCreator.alertIfResourceNotConfigured(resource);
-				return;
-			
 			//get on with it
 			} else {
 				MXUnitView view = (MXUnitView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(MXUnitView.ID);
