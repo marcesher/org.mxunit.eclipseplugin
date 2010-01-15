@@ -2,8 +2,9 @@
 
 	<context id="mxunit_view">
 		<description>This view runs MXUnit Tests</description>
-		<topic label="View the MXUnit Eclipse Plugin Help" href="help/html/intro.html" />
-			
+		<topic label="View All the MXUnit Eclipse Plugin Help" href="help/html/intro.html" />
+		<topic label="The Plugin can't figure out my CFC Path" href="help/html/cfcpath.html" />
+		<topic label="Talking to ColdFusion: The RemoteFacade.cfc URL" href="help/html/remotefacade.html"/>
 	</context>
 	
 </contexts>

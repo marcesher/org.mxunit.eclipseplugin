@@ -35,8 +35,8 @@ public final class TestSuite extends AbstractTestElement {
 		return tests.toArray( new TestCase[tests.size()] );
 	}
 	
-	public boolean hasChildren(){
-		return tests.size()>0;
+	public TestCase[] getChildren(){
+		return getTestsAsArray();
 	}
 	
 	public void addTest(TestCase testcase){

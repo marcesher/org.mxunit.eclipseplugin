@@ -51,8 +51,8 @@ public final class TestCase extends AbstractTestElement {
 		return methods.toArray( new TestMethod[methods.size()] );
 	}
 	
-	public boolean hasChildren(){
-		return methods.size()>0;
+	public TestMethod[] getChildren(){
+		return getMethodsAsArray();
 	}
 
 	public TestSuite getParent() {

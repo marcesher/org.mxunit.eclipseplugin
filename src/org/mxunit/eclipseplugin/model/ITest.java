@@ -19,7 +19,8 @@ public interface ITest {
 	public ITest getParent();
     public void clearStatus();
     public boolean isComparableFailure();
-    
+    public boolean hasChildren();
+    public ITest[] getChildren();
     
 }
 

@@ -3,6 +3,7 @@ package org.mxunit.eclipseplugin.views;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestCase;
 import org.mxunit.eclipseplugin.model.TestMethod;
 import org.mxunit.eclipseplugin.model.TestSuite;
@@ -26,33 +27,16 @@ public class TestListContentProvider implements IStructuredContentProvider,
 		return children;
 	}
 	public Object getParent(Object child) {
-		if(child instanceof TestMethod){			
-			return ((TestMethod)child).getParent();
-		}else if(child instanceof TestCase){
-			return ((TestCase)child).getParent();
-		}else{
-			return null;
-		}		
+		return ((ITest)child).getParent();
 	}
 	
 	public Object [] getChildren(Object parent) {
-		if(parent instanceof TestSuite){
-			return ((TestSuite)parent).getTestsAsArray();
-		}else if(parent instanceof TestCase){
-			return ((TestCase)parent).getMethodsAsArray();
-		}else{
-			return new Object[0];
-		}
+		return ((ITest)parent).getChildren();
+		
 	}
 	
 	public boolean hasChildren(Object parent) {
-		if(parent instanceof TestSuite){
-			return ((TestSuite)parent).hasChildren();
-		}else if(parent instanceof TestCase){
-			return ((TestCase)parent).hasChildren();
-		}else{
-			return false;
-		}		
+		return ((ITest)parent).hasChildren();
 	}
 }
 

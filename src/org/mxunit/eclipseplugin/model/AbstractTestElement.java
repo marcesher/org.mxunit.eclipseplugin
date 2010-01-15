@@ -73,7 +73,13 @@ public abstract class AbstractTestElement extends Observable implements ITest{
     	this.resource = resource;
     }
     
+    public boolean hasChildren(){
+    	return getChildren().length > 0;
+    }
     
+    public ITest[] getChildren(){
+    	return new ITest[0];
+    }
 
 	public abstract ITest getParent();
 	

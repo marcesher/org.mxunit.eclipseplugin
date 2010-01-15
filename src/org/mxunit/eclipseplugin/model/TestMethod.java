@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IResource;
 
-public final class TestMethod extends AbstractTestElement {
+public class TestMethod extends AbstractTestElement {
 
 	
 	/** String returned from the test runner, e.g. pass, fail, error*/
@@ -19,6 +19,9 @@ public final class TestMethod extends AbstractTestElement {
 	private String exception = "";
 	/** tag context array */
 	private Map[] tagcontext = new Map[0];
+	/** dataprovider array */
+	private TestMethodDataProviderElement[] dataProviders = new TestMethodDataProviderElement[0];
+	
 	/** the TestCase to which this method belongs */
 	private TestCase parent;
 	/** line number in the file of the error or failure */
@@ -68,6 +71,10 @@ public final class TestMethod extends AbstractTestElement {
 		this.status = status;
 		parent.updateStatus(this.status);	
 		setChanged();
+	}
+	
+	public TestMethodDataProviderElement[] getChildren(){
+		return dataProviders;
 	}
 	
 	public void setStatusFromString(String statusString){
