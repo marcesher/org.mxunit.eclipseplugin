@@ -1,9 +1,12 @@
 <project name="GenStubs" basedir=".">
 
 	<target name="genStubs">
-		<property  name="local.wsdl" value="http://localhost/mxunit/framework/RemoteFacade.cfc?wsdl"/>
-		<property  name="generated.dir" location="generated"/>
-		<property name="package" value="org.mxunit.eclipseplugin.actions.bindings"/>
+		<property name="local.wsdl" value="http://localhost/mxunit/framework/RemoteFacade.cfc?wsdl" />
+		<property name="local.obd.wsdl" value="http://localhost:8090/mxunit/framework/RemoteFacade.cfc?wsdl" />
+		<property name="generated.dir" location="generated" />
+		<property name="generated.obd.dir" location="${generated.dir}" />
+		<property name="package" value="org.mxunit.eclipseplugin.actions.bindings.generated" />
+		<property name="package.obd" value="${package}.bluedragon" />
 		<path id="axis.classpath">
 			<fileset dir="lib">
 				<include name="*.jar" />
@@ -11,14 +14,24 @@
 		</path>
 
 		<taskdef resource="axis-tasks.properties" classpathref="axis.classpath" />
-		<delete dir="${generated.dir}"/>
-		<mkdir dir="${generated.dir}"/>
+		
+		<mkdir dir="${generated.dir}" />
+		<mkdir dir="${generated.obd.dir}" />
 		<axis-wsdl2java output="${generated.dir}" testcase="true" verbose="true" url="${local.wsdl}">
-			<mapping namespace="http://framework.mxunit" package="${package}"/>
-			<mapping namespace="http://rpc.xml.coldfusion" package="${package}"/>
-			<mapping namespace="http://xml.apache.org/xml-soap" package="${package}"/>
-			
+			<mapping namespace="http://framework.mxunit" package="${package}" />
+			<mapping namespace="http://rpc.xml.coldfusion" package="${package}" />
+			<mapping namespace="http://xml.apache.org/xml-soap" package="${package}" />
+
 		</axis-wsdl2java>
+
+
+		<axis-wsdl2java output="${generated.obd.dir}" testcase="true" verbose="true" url="${local.obd.wsdl}">
+			<mapping namespace="http://mxunit/framework/RemoteFacade.cfc" package="${package.obd}" />
+			<mapping namespace="http://wstypes.newatlanta.com" package="${package.obd}" />
+
+
+		</axis-wsdl2java>
+
 	</target>
 
 

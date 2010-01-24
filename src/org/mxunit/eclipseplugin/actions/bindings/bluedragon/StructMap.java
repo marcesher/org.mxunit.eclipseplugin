@@ -8,6 +8,7 @@
 package org.mxunit.eclipseplugin.actions.bindings.bluedragon;
 
 
+
 public class StructMap  implements java.io.Serializable {
     private org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMapItem[] item;
 
