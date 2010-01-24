@@ -1,7 +1,6 @@
 package org.mxunit.eclipseplugin.actions.util;
 
 import java.rmi.RemoteException;
-import java.util.Hashtable;
 
 import javax.xml.rpc.ServiceException;
 
@@ -13,7 +12,6 @@ import org.mxunit.eclipseplugin.MXUnitPluginLog;
 import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
 import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
-import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.RemoteFacadeRegistry;
 import org.mxunit.eclipseplugin.model.RemoteServerType;
