@@ -2,13 +2,12 @@
  * CFCInvocationException.java
  *
  * This file was auto-generated from WSDL
- * by the Apache Axis WSDL2Java emitter.
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
 package org.mxunit.eclipseplugin.actions.bindings;
 
 public class CFCInvocationException  extends org.apache.axis.AxisFault  implements java.io.Serializable {
-
     public CFCInvocationException() {
     }
 
@@ -41,7 +40,18 @@ public class CFCInvocationException  extends org.apache.axis.AxisFault  implemen
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(CFCInvocationException.class);
+        new org.apache.axis.description.TypeDesc(CFCInvocationException.class, true);
+
+    static {
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"));
+    }
+
+    /**
+     * Return type metadata object
+     */
+    public static org.apache.axis.description.TypeDesc getTypeDesc() {
+        return typeDesc;
+    }
 
     /**
      * Get Custom Serializer
@@ -52,7 +62,7 @@ public class CFCInvocationException  extends org.apache.axis.AxisFault  implemen
            javax.xml.namespace.QName _xmlType) {
         return 
           new  org.apache.axis.encoding.ser.BeanSerializer(
-            _javaType, _xmlType, null);
+            _javaType, _xmlType, typeDesc);
     }
 
     /**
@@ -64,7 +74,7 @@ public class CFCInvocationException  extends org.apache.axis.AxisFault  implemen
            javax.xml.namespace.QName _xmlType) {
         return 
           new  org.apache.axis.encoding.ser.BeanDeserializer(
-            _javaType, _xmlType, null);
+            _javaType, _xmlType, typeDesc);
     }
 
 

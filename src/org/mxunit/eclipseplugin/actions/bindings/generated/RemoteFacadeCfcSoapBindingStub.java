@@ -5,13 +5,14 @@
  * by the Apache Axis WSDL2Java emitter.
  */
 
-package org.mxunit.eclipseplugin.actions.bindings;
+package org.mxunit.eclipseplugin.actions.bindings.generated;
 
 import java.util.Hashtable;
 
 
 
-public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org.mxunit.eclipseplugin.actions.bindings.RemoteFacade {
+
+public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub implements org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
@@ -148,16 +149,16 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
 
     };
 
-    public RemoteFacadeImpl() throws org.apache.axis.AxisFault {
+    public RemoteFacadeCfcSoapBindingStub() throws org.apache.axis.AxisFault {
          this(null);
     }
 
-    public RemoteFacadeImpl(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public RemoteFacadeCfcSoapBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
          this(service);
          super.cachedEndpoint = endpointURL;
     }
 
-    public RemoteFacadeImpl(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public RemoteFacadeCfcSoapBindingStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
         if (service == null) {
             super.service = new org.apache.axis.client.Service();
         } else {
@@ -175,7 +176,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             qName = new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "QueryBean");
             cachedSerQNames.add(qName);
-            cls = org.mxunit.eclipseplugin.actions.bindings.QueryBean.class;
+            cls = org.mxunit.eclipseplugin.actions.bindings.generated.QueryBean.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -189,14 +190,14 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
 
             qName = new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException");
             cachedSerQNames.add(qName);
-            cls = org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException.class;
+            cls = org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
 
             qName = new javax.xml.namespace.QName("http://xml.apache.org/xml-soap", "mapItem");
             cachedSerQNames.add(qName);
-            cls = org.mxunit.eclipseplugin.actions.bindings.MapItem.class;
+            cls = org.mxunit.eclipseplugin.actions.bindings.generated.MapItem.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -231,7 +232,8 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
             
             
             //only use this if we need to send credentials; it slows it down otherwise
-            if (super.cachedUsername != null) {  
+            
+            /*if (super.cachedUsername != null) {  
             	System.out.println("Username is not empty. Using CommonsHTTPSender.");
 	            org.apache.axis.transport.http.CommonsHTTPSender requestConnectionHandler = new org.apache.axis.transport.http.CommonsHTTPSender();           
 	            org.apache.axis.transport.http.CommonsHTTPSender responseConnectionHandler = new org.apache.axis.transport.http.CommonsHTTPSender();            
@@ -247,7 +249,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
 	            
 	            
 	            //System.out.println("uname and pw are: " + super.cachedUsername + "; " + super.cachedPassword);
-            }
+            }*/
             
             
             
@@ -302,7 +304,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public boolean ping() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public boolean ping() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -328,7 +330,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public void initializeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public void initializeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -347,7 +349,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         getResponseHeaders(_call);
     }
 
-    public java.lang.String endTestRun(java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public java.lang.String endTestRun(java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -373,7 +375,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public double purgeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public double purgeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -399,7 +401,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public java.util.HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public java.util.HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -425,7 +427,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public java.lang.Object[] getComponentMethods(java.lang.String componentName) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public java.lang.Object[] getComponentMethods(java.lang.String componentName) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -451,7 +453,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public java.lang.String startTestRun() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public java.lang.String startTestRun() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -477,7 +479,7 @@ public class RemoteFacadeImpl extends org.apache.axis.client.Stub implements org
         }
     }
 
-    public java.lang.String getServerType() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException {
+    public java.lang.String getServerType() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }

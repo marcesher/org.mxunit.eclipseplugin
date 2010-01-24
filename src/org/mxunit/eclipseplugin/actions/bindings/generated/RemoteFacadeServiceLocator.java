@@ -5,18 +5,15 @@
  * by the Apache Axis WSDL2Java emitter.
  */
 
-package org.mxunit.eclipseplugin.actions.bindings;
+package org.mxunit.eclipseplugin.actions.bindings.generated;
 
 import org.mxunit.eclipseplugin.model.RemoteServerType;
 
 
-public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service implements org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeService {
+public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service implements org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeService {
 
     // Use to get a proxy class for RemoteFacadeCfc
     private java.lang.String RemoteFacadeCfc_address = "";
-    private RemoteServerType remoteServerType = RemoteServerType.COLDFUSION;
-    private java.lang.String username = null;
-    private java.lang.String password = null;
     
     public RemoteFacadeServiceLocator(String url){
     	RemoteFacadeCfc_address = url;    
@@ -25,8 +22,6 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
     	RemoteFacadeCfc_address = url;  
     	if(username != null && username.trim().length()>0){
     		System.out.println("Setting username and password.");
-	    	this.username = username;
-	    	this.password = password;
     	}
     }
     
@@ -46,7 +41,7 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
         RemoteFacadeCfcWSDDServiceName = name;
     }
 
-    public org.mxunit.eclipseplugin.actions.bindings.RemoteFacade getRemoteFacadeCfc() throws javax.xml.rpc.ServiceException {
+    public org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade getRemoteFacadeCfc() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(RemoteFacadeCfc_address);
@@ -57,17 +52,12 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
         return getRemoteFacadeCfc(endpoint);
     }
 
-    public org.mxunit.eclipseplugin.actions.bindings.RemoteFacade getRemoteFacadeCfc(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade getRemoteFacadeCfc(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-        	RemoteFacadeImpl _stub = new RemoteFacadeImpl(portAddress, this);
+        	RemoteFacadeCfcSoapBindingStub _stub = new RemoteFacadeCfcSoapBindingStub(portAddress, this);
         	//warning: super lame-o alert
-        	if(remoteServerType == RemoteServerType.BLUEDRAGON){
-        		_stub = new RemoteFacadeBlueDragonImpl(portAddress, this);
-        	}
         	
             _stub.setPortName(getRemoteFacadeCfcWSDDServiceName());
-            _stub.setUsername(username);
-            _stub.setPassword(password);
             return _stub;
         }
         catch (org.apache.axis.AxisFault e) {
@@ -83,8 +73,8 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (org.mxunit.eclipseplugin.actions.bindings.RemoteFacade.class.isAssignableFrom(serviceEndpointInterface)) {
-                org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeImpl _stub = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeImpl(new java.net.URL(RemoteFacadeCfc_address), this);
+            if (org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade.class.isAssignableFrom(serviceEndpointInterface)) {
+                org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeCfcSoapBindingStub _stub = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeCfcSoapBindingStub(new java.net.URL(RemoteFacadeCfc_address), this);
                 _stub.setPortName(getRemoteFacadeCfcWSDDServiceName());
                 return _stub;
             }
@@ -128,10 +118,6 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
         }
         return ports.iterator();
     }
-	public void setRemoteServerType(RemoteServerType remoteServerType) {
-		this.remoteServerType = remoteServerType;
-		
-	}
 
 
 	

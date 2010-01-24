@@ -35,9 +35,9 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
         super(name);
     }
     public void test1RemoteFacadeCfcPing() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -51,16 +51,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             boolean value = false;
             value = binding.ping();
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
 
     public void test2RemoteFacadeCfcInitializeSuitePool() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -73,16 +73,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
         try {
             binding.initializeSuitePool();
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
 
     public void test3RemoteFacadeCfcEndTestRun() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -96,16 +96,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             java.lang.String value = null;
             value = binding.endTestRun(new java.lang.String());
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
 
     public void test4RemoteFacadeCfcPurgeSuitePool() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -119,16 +119,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             double value = -3;
             value = binding.purgeSuitePool();
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
 
     public void test5RemoteFacadeCfcExecuteTestCase() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -144,16 +144,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             System.out.println(value);
            
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
     
     public void test5RemoteFacadeCfcExecuteTestCaseThatFails() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -169,7 +169,7 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             System.out.println(value);
            
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
@@ -202,8 +202,8 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     
     public void test5RemoteFacadeCfcExecuteTestCaseBlueDragon() throws Exception {
     	String ServiceURL = BDServiceURL;
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
-        RemoteFacadeServiceLocator locator = new RemoteFacadeServiceLocator(ServiceURL,username,password);
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
+        Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator(ServiceURL);
         locator.setRemoteServerType(RemoteServerType.BLUEDRAGON);
         try {
             binding = locator.getRemoteFacadeCfc();
@@ -221,16 +221,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             value = binding.executeTestCase("mxunit.PluginDemoTests.HodgePodgeTest", "testOK", "");
             //System.out.println(value);
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
 
     public void test6RemoteFacadeCfcGetComponentMethods() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -244,16 +244,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             java.lang.Object[] value = null;
             value = binding.getComponentMethods("mxunit.PluginDemoTests.HodgePodgeTest");
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
 
     public void test7RemoteFacadeCfcStartTestRun() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -267,16 +267,16 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             java.lang.String value = null;
             value = binding.startTestRun();
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
             // TBD - validate results
     }
     
     public void test8RemoteFacadeCfcGetServerType() throws Exception {
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
         try {
-            binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+            binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
         }
         catch (javax.xml.rpc.ServiceException jre) {
             if(jre.getLinkedCause()!=null)
@@ -291,7 +291,7 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             value = binding.getServerType();
             assertEquals("ColdFusion Server",value);
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
           
@@ -299,8 +299,8 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     
     public void test8RemoteFacadeCfcGetServerTypeBlueDragon() throws Exception {
     	String ServiceURL = BDServiceURL;
-        org.mxunit.eclipseplugin.actions.bindings.RemoteFacade binding;
-        binding = new org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade binding;
+        binding = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator(ServiceURL,username,password).getRemoteFacadeCfc();
        
         // Test operation
         try {
@@ -308,7 +308,7 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             value = binding.getServerType();
             assertEquals("BlueDragon",value);
         }
-        catch (org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException e1) {
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
             throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
         }
           

@@ -6,7 +6,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.TreeItem;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
-import org.mxunit.eclipseplugin.actions.bindings.RemoteFacade;
+import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
 import org.mxunit.eclipseplugin.actions.util.RemoteCallCreator;
 import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.ITest;

@@ -7,6 +7,7 @@ import org.apache.axis.AxisFault;
 import org.apache.axis.description.OperationDesc;
 import org.apache.axis.description.ParameterDesc;
 import org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMap;
+import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.actions.util.StructMapConverter;
 
 /**
@@ -17,14 +18,13 @@ import org.mxunit.eclipseplugin.actions.util.StructMapConverter;
  * May 14, 2008
  *
  */
-public class RemoteFacadeBlueDragonImpl extends	RemoteFacadeImpl {
+public class Custom_RemoteFacadeBlueDragonImpl extends	Custom_RemoteFacadeImpl {
 
-	public RemoteFacadeBlueDragonImpl() throws AxisFault {
+	public Custom_RemoteFacadeBlueDragonImpl() throws AxisFault {
 		super();
 	}
 	
-	public RemoteFacadeBlueDragonImpl(URL portAddress,
-			RemoteFacadeServiceLocator remoteFacadeServiceLocator) throws AxisFault {
+	public Custom_RemoteFacadeBlueDragonImpl(URL portAddress, RemoteFacadeServiceLocator remoteFacadeServiceLocator) throws AxisFault {
 		super(portAddress, remoteFacadeServiceLocator);
 	}
 

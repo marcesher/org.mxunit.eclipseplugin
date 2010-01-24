@@ -1,0 +1,25 @@
+<project name="GenStubs" basedir=".">
+
+	<target name="genStubs">
+		<property  name="local.wsdl" value="http://localhost/mxunit/framework/RemoteFacade.cfc?wsdl"/>
+		<property  name="generated.dir" location="generated"/>
+		<property name="package" value="org.mxunit.eclipseplugin.actions.bindings"/>
+		<path id="axis.classpath">
+			<fileset dir="lib">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+
+		<taskdef resource="axis-tasks.properties" classpathref="axis.classpath" />
+		<delete dir="${generated.dir}"/>
+		<mkdir dir="${generated.dir}"/>
+		<axis-wsdl2java output="${generated.dir}" testcase="true" verbose="true" url="${local.wsdl}">
+			<mapping namespace="http://framework.mxunit" package="${package}"/>
+			<mapping namespace="http://rpc.xml.coldfusion" package="${package}"/>
+			<mapping namespace="http://xml.apache.org/xml-soap" package="${package}"/>
+			
+		</axis-wsdl2java>
+	</target>
+
+
+</project>

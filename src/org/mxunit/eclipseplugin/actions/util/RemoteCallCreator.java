@@ -1,27 +1,22 @@
 package org.mxunit.eclipseplugin.actions.util;
 
 import java.rmi.RemoteException;
+import java.util.Hashtable;
 
 import javax.xml.rpc.ServiceException;
 
-import org.eclipse.core.resources.IFile;
+import org.apache.axis.client.Stub;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Preferences;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
-import org.mxunit.eclipseplugin.actions.bindings.CFCInvocationException;
-import org.mxunit.eclipseplugin.actions.bindings.RemoteFacade;
-import org.mxunit.eclipseplugin.actions.bindings.RemoteFacadeServiceLocator;
+import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeServiceLocator;
+import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
+import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
+import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.RemoteFacadeRegistry;
 import org.mxunit.eclipseplugin.model.RemoteServerType;
-import org.mxunit.eclipseplugin.model.TestCase;
-import org.mxunit.eclipseplugin.model.TestElementType;
-import org.mxunit.eclipseplugin.model.TestMethod;
 import org.mxunit.eclipseplugin.preferences.MXUnitPreferenceConstants;
 import org.mxunit.eclipseplugin.properties.MXUnitPropertyManager;
 
@@ -40,8 +35,8 @@ public class RemoteCallCreator {
 	private Exception currentException;
 
 	private RemoteFacade facade;
-	private String username;
-	private String password;
+	private String username = "";
+	private String password = "";
 	
 	private RemoteFacadeRegistry registry = RemoteFacadeRegistry.getRegistry();
 	
@@ -60,11 +55,12 @@ public class RemoteCallCreator {
 			password = props.getPasswordPropertyValue(resource.getProject());
 		}
 		try {
-			RemoteFacadeServiceLocator locator = new RemoteFacadeServiceLocator(facadeURL, username, password); 
+			Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator(facadeURL); 
 			
 			if(registry.getRegisteredFacadeType(facadeURL) == null){
 				MXUnitPluginLog.logInfo(facadeURL + " is not registered. Attempting to get server type and register...");
 				facade = locator.getRemoteFacadeCfc();
+				
 				
 				String serverTypeString = facade.getServerType();
 				RemoteServerType type = registry.registerFacade(facadeURL, serverTypeString);
@@ -75,6 +71,12 @@ public class RemoteCallCreator {
 			//this could return either the normal Binding OR the BlueDragon binding			
 			locator.setRemoteServerType(  registry.getRegisteredFacadeType(facadeURL)  );
 			facade = locator.getRemoteFacadeCfc();
+			
+			 //only use this if we need to send credentials; it slows it down otherwise
+            if (username.length() > 0) {  
+            	setCredentials();	     
+            }
+            
 			facade.setTimeout(prefs.getInt(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT)*1000);
 			
 		} catch (ServiceException e) {			
@@ -88,6 +90,16 @@ public class RemoteCallCreator {
 			MXUnitPluginLog.logError("RemoteException calling getServerType", e);
 		}
 		return facade;
+	}
+
+
+	/**
+	 * 
+	 */
+	private void setCredentials() {
+		System.out.println("Credentials are not empty. Setting...");
+		((Stub) facade).setUsername(username);
+		((Stub) facade).setPassword(password);		
 	}
 
 	public String getFacadeURL() {
