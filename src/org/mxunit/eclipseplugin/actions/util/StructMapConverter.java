@@ -3,8 +3,8 @@ package org.mxunit.eclipseplugin.actions.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMap;
-import org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMapItem;
+import org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap;
+import org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMapItem;
 
 /**
  * for converting the BlueDragon structmap into a HashMap. This way, our RunTestsAction doesn't have to 

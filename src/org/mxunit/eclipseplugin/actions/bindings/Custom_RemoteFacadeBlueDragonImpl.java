@@ -1,13 +1,14 @@
 package org.mxunit.eclipseplugin.actions.bindings;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import org.apache.axis.AxisFault;
 import org.apache.axis.description.OperationDesc;
 import org.apache.axis.description.ParameterDesc;
-import org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMap;
 import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
+import org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap;
 import org.mxunit.eclipseplugin.actions.util.StructMapConverter;
 
 /**
@@ -18,7 +19,7 @@ import org.mxunit.eclipseplugin.actions.util.StructMapConverter;
  * May 14, 2008
  *
  */
-public class Custom_RemoteFacadeBlueDragonImpl extends	Custom_RemoteFacadeImpl {
+public class Custom_RemoteFacadeBlueDragonImpl extends	org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub {
 
 	public Custom_RemoteFacadeBlueDragonImpl() throws AxisFault {
 		super();
@@ -27,7 +28,9 @@ public class Custom_RemoteFacadeBlueDragonImpl extends	Custom_RemoteFacadeImpl {
 	public Custom_RemoteFacadeBlueDragonImpl(URL portAddress, RemoteFacadeServiceLocator remoteFacadeServiceLocator) throws AxisFault {
 		super(portAddress, remoteFacadeServiceLocator);
 	}
-
+	
+	
+	
 	public HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
@@ -42,7 +45,7 @@ public class Custom_RemoteFacadeBlueDragonImpl extends	Custom_RemoteFacadeImpl {
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "TestRunKey"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://wstypes.newatlanta.com", "StructMap"));
-        oper.setReturnClass(org.mxunit.eclipseplugin.actions.bindings.bluedragon.StructMap.class);
+        oper.setReturnClass(org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap.class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "executeTestCaseReturn"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
@@ -76,4 +79,14 @@ public class Custom_RemoteFacadeBlueDragonImpl extends	Custom_RemoteFacadeImpl {
 		  throw axisFaultException;
 		}
     }
+
+	
+	/*
+	public HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
+       StructMap structMap = super.executeTestCase_internal(componentName, methodNames, testRunKey);
+       HashMap<String, Object> converted = new HashMap<String, Object>();
+       StructMapConverter converter = new StructMapConverter();
+       converted = converter.convertToHashMap((StructMap) structMap);
+       return converted;
+    }*/
 }

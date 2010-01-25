@@ -12,6 +12,7 @@ import org.mxunit.eclipseplugin.MXUnitPluginLog;
 import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
 import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
+import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.RemoteFacadeRegistry;
 import org.mxunit.eclipseplugin.model.RemoteServerType;
@@ -53,7 +54,10 @@ public class RemoteCallCreator {
 			password = props.getPasswordPropertyValue(resource.getProject());
 		}
 		try {
-			Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator(facadeURL); 
+			Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
+			locator.setRemoteFacadeCfcEndpointAddress(facadeURL);
+			
+			//Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator(facadeURL); 
 			
 			if(registry.getRegisteredFacadeType(facadeURL) == null){
 				MXUnitPluginLog.logInfo(facadeURL + " is not registered. Attempting to get server type and register...");
@@ -68,14 +72,15 @@ public class RemoteCallCreator {
 			
 			//this could return either the normal Binding OR the BlueDragon binding			
 			locator.setRemoteServerType(  registry.getRegisteredFacadeType(facadeURL)  );
-			facade = locator.getRemoteFacadeCfc();
+        	facade = locator.getRemoteFacadeCfc();
+			
 			
 			 //only use this if we need to send credentials; it slows it down otherwise
             if (username.length() > 0) {  
             	setCredentials();	     
             }
             
-			facade.setTimeout(prefs.getInt(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT)*1000);
+            ((Stub) facade).setTimeout(prefs.getInt(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT)*1000);
 			
 		} catch (ServiceException e) {			
 			currentException = e;

@@ -2,36 +2,39 @@
  * RemoteFacadeServiceLocator.java
  *
  * This file was auto-generated from WSDL
- * by the Apache Axis WSDL2Java emitter.
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
 package org.mxunit.eclipseplugin.actions.bindings.generated;
 
-import org.mxunit.eclipseplugin.model.RemoteServerType;
-
-
 public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service implements org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeService {
 
+/**
+ * Main default interface into MXUnit framework from the MXUnit Ecplise
+ * Plugin.
+ */
+
+    public RemoteFacadeServiceLocator() {
+    }
+
+
+    public RemoteFacadeServiceLocator(org.apache.axis.EngineConfiguration config) {
+        super(config);
+    }
+
+    public RemoteFacadeServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+        super(wsdlLoc, sName);
+    }
+
     // Use to get a proxy class for RemoteFacadeCfc
-    private java.lang.String RemoteFacadeCfc_address = "";
-    
-    public RemoteFacadeServiceLocator(String url){
-    	RemoteFacadeCfc_address = url;    
-    }
-    public RemoteFacadeServiceLocator(String url, String username, String password){
-    	RemoteFacadeCfc_address = url;  
-    	if(username != null && username.trim().length()>0){
-    		System.out.println("Setting username and password.");
-    	}
-    }
-    
-    
+    private java.lang.String RemoteFacadeCfc_address = "http://localhost/mxunit/framework/RemoteFacade.cfc";
+
     public java.lang.String getRemoteFacadeCfcAddress() {
         return RemoteFacadeCfc_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String RemoteFacadeCfcWSDDServiceName = "RemoteFacadeCfc";
+    private java.lang.String RemoteFacadeCfcWSDDServiceName = "RemoteFacade.cfc";
 
     public java.lang.String getRemoteFacadeCfcWSDDServiceName() {
         return RemoteFacadeCfcWSDDServiceName;
@@ -47,16 +50,14 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
             endpoint = new java.net.URL(RemoteFacadeCfc_address);
         }
         catch (java.net.MalformedURLException e) {
-            return null; // unlikely as URL was validated in WSDL2Java
+            throw new javax.xml.rpc.ServiceException(e);
         }
         return getRemoteFacadeCfc(endpoint);
     }
 
     public org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade getRemoteFacadeCfc(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-        	RemoteFacadeCfcSoapBindingStub _stub = new RemoteFacadeCfcSoapBindingStub(portAddress, this);
-        	//warning: super lame-o alert
-        	
+            org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeCfcSoapBindingStub _stub = new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeCfcSoapBindingStub(portAddress, this);
             _stub.setPortName(getRemoteFacadeCfcWSDDServiceName());
             return _stub;
         }
@@ -65,6 +66,9 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
         }
     }
 
+    public void setRemoteFacadeCfcEndpointAddress(java.lang.String address) {
+        RemoteFacadeCfc_address = address;
+    }
 
     /**
      * For the given interface, get the stub implementation.
@@ -94,8 +98,8 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
         if (portName == null) {
             return getPort(serviceEndpointInterface);
         }
-        String inputPortName = portName.getLocalPart();
-        if ("RemoteFacadeCfc".equals(inputPortName)) {
+        java.lang.String inputPortName = portName.getLocalPart();
+        if ("RemoteFacade.cfc".equals(inputPortName)) {
             return getRemoteFacadeCfc();
         }
         else  {
@@ -114,12 +118,30 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("RemoteFacadeCfc"));
+            ports.add(new javax.xml.namespace.QName("http://framework.mxunit", "RemoteFacade.cfc"));
         }
         return ports.iterator();
     }
 
+    /**
+    * Set the endpoint address for the specified port name.
+    */
+    public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
+        
+if ("RemoteFacadeCfc".equals(portName)) {
+            setRemoteFacadeCfcEndpointAddress(address);
+        }
+        else 
+{ // Unknown Port Name
+            throw new javax.xml.rpc.ServiceException(" Cannot set Endpoint Address for Unknown Port" + portName);
+        }
+    }
 
-	
+    /**
+    * Set the endpoint address for the specified port name.
+    */
+    public void setEndpointAddress(javax.xml.namespace.QName portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
+        setEndpointAddress(portName.getLocalPart(), address);
+    }
 
 }

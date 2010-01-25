@@ -1,30 +1,30 @@
 /**
- * MapItem.java
+ * StructMapItem.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package org.mxunit.eclipseplugin.actions.bindings.generated;
+package org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon;
 
-public class MapItem  implements java.io.Serializable {
+public class StructMapItem  implements java.io.Serializable {
     private java.lang.Object key;
 
-    private java.lang.Object value;
+    private java.lang.Object val;
 
-    public MapItem() {
+    public StructMapItem() {
     }
 
-    public MapItem(
+    public StructMapItem(
            java.lang.Object key,
-           java.lang.Object value) {
+           java.lang.Object val) {
            this.key = key;
-           this.value = value;
+           this.val = val;
     }
 
 
     /**
-     * Gets the key value for this MapItem.
+     * Gets the key value for this StructMapItem.
      * 
      * @return key
      */
@@ -34,7 +34,7 @@ public class MapItem  implements java.io.Serializable {
 
 
     /**
-     * Sets the key value for this MapItem.
+     * Sets the key value for this StructMapItem.
      * 
      * @param key
      */
@@ -44,28 +44,28 @@ public class MapItem  implements java.io.Serializable {
 
 
     /**
-     * Gets the value value for this MapItem.
+     * Gets the val value for this StructMapItem.
      * 
-     * @return value
+     * @return val
      */
-    public java.lang.Object getValue() {
-        return value;
+    public java.lang.Object getVal() {
+        return val;
     }
 
 
     /**
-     * Sets the value value for this MapItem.
+     * Sets the val value for this StructMapItem.
      * 
-     * @param value
+     * @param val
      */
-    public void setValue(java.lang.Object value) {
-        this.value = value;
+    public void setVal(java.lang.Object val) {
+        this.val = val;
     }
 
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof MapItem)) return false;
-        MapItem other = (MapItem) obj;
+        if (!(obj instanceof StructMapItem)) return false;
+        StructMapItem other = (StructMapItem) obj;
         if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
@@ -77,9 +77,9 @@ public class MapItem  implements java.io.Serializable {
             ((this.key==null && other.getKey()==null) || 
              (this.key!=null &&
               this.key.equals(other.getKey()))) &&
-            ((this.value==null && other.getValue()==null) || 
-             (this.value!=null &&
-              this.value.equals(other.getValue())));
+            ((this.val==null && other.getVal()==null) || 
+             (this.val!=null &&
+              this.val.equals(other.getVal())));
         __equalsCalc = null;
         return _equals;
     }
@@ -94,8 +94,8 @@ public class MapItem  implements java.io.Serializable {
         if (getKey() != null) {
             _hashCode += getKey().hashCode();
         }
-        if (getValue() != null) {
-            _hashCode += getValue().hashCode();
+        if (getVal() != null) {
+            _hashCode += getVal().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -103,10 +103,10 @@ public class MapItem  implements java.io.Serializable {
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(MapItem.class, true);
+        new org.apache.axis.description.TypeDesc(StructMapItem.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://xml.apache.org/xml-soap", "mapItem"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://wstypes.newatlanta.com", "StructMapItem"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("key");
         elemField.setXmlName(new javax.xml.namespace.QName("", "key"));
@@ -114,8 +114,8 @@ public class MapItem  implements java.io.Serializable {
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("value");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "value"));
+        elemField.setFieldName("val");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "val"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "anyType"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
