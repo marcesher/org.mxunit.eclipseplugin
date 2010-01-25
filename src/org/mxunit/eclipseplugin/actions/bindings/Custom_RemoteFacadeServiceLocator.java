@@ -49,10 +49,18 @@ public class Custom_RemoteFacadeServiceLocator extends	RemoteFacadeServiceLocato
     
     
     public RemoteFacade getBlueDragonBinding(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    	return (RemoteFacade) getRawBlueDragonBinding(portAddress);
+    }
+    
+    public Custom_RemoteFacadeBlueDragonImpl getRawBlueDragonBinding(java.net.URL portAddress){
     	try {
-    	Custom_RemoteFacadeBlueDragonImpl _bdstub;
-			_bdstub = new Custom_RemoteFacadeBlueDragonImpl(portAddress, this);
-			return (RemoteFacade) _bdstub;
+    		Custom_RemoteFacadeBlueDragonImpl _bdstub;
+    		org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator
+    			obdLocator = new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator();
+			_bdstub = new Custom_RemoteFacadeBlueDragonImpl(portAddress, obdLocator);
+			_bdstub.setPortName(getRemoteFacadeCfcWSDDServiceName());
+			
+			return _bdstub;
 			
 		} catch (AxisFault e) {
 			return null;
@@ -64,7 +72,9 @@ public class Custom_RemoteFacadeServiceLocator extends	RemoteFacadeServiceLocato
      */
     public RemoteFacade getBlueDragonBinding(){
     	try {
-			return getBlueDragonBinding( new java.net.URL(getRemoteFacadeCfcAddress()));
+    		org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator
+			obdLocator = new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator();
+			return getBlueDragonBinding( new java.net.URL(obdLocator.getRemoteFacadeCfcAddress()));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,5 +84,17 @@ public class Custom_RemoteFacadeServiceLocator extends	RemoteFacadeServiceLocato
 		}
 		return null;
     }
+    public Custom_RemoteFacadeBlueDragonImpl getRawBlueDragonBinding(){
+    	try {
+    		org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator
+			obdLocator = new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator();
+			return getRawBlueDragonBinding( new java.net.URL(obdLocator.getRemoteFacadeCfcAddress()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+    }
+
 
 }

@@ -54,10 +54,8 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         _operations[1] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("purgeSuitePool");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
-        oper.setReturnClass(double.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "purgeSuitePoolReturn"));
+        oper.setName("initializeSuitePool");
+        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
         oper.addFault(new org.apache.axis.description.FaultDesc(
@@ -67,21 +65,6 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
                       true
                      ));
         _operations[2] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("startTestRun");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        oper.setReturnClass(java.lang.String.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "startTestRunReturn"));
-        oper.setStyle(org.apache.axis.constants.Style.RPC);
-        oper.setUse(org.apache.axis.constants.Use.ENCODED);
-        oper.addFault(new org.apache.axis.description.FaultDesc(
-                      new javax.xml.namespace.QName("http://framework.mxunit", "fault"),
-                      "org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException",
-                      new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"), 
-                      true
-                     ));
-        _operations[3] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("endTestRun");
@@ -98,15 +81,28 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
                       new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"), 
                       true
                      ));
+        _operations[3] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getFrameworkDate");
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
+        oper.setReturnClass(java.util.Calendar.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "getFrameworkDateReturn"));
+        oper.setStyle(org.apache.axis.constants.Style.RPC);
+        oper.setUse(org.apache.axis.constants.Use.ENCODED);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://framework.mxunit", "fault"),
+                      "org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException",
+                      new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"), 
+                      true
+                     ));
         _operations[4] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getComponentMethods");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "ComponentName"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://framework.mxunit", "ArrayOf_xsd_anyType"));
-        oper.setReturnClass(java.lang.Object[].class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "getComponentMethodsReturn"));
+        oper.setName("purgeSuitePool");
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
+        oper.setReturnClass(double.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "purgeSuitePoolReturn"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
         oper.addFault(new org.apache.axis.description.FaultDesc(
@@ -116,21 +112,6 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
                       true
                      ));
         _operations[5] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getFrameworkVersion");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        oper.setReturnClass(java.lang.String.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "getFrameworkVersionReturn"));
-        oper.setStyle(org.apache.axis.constants.Style.RPC);
-        oper.setUse(org.apache.axis.constants.Use.ENCODED);
-        oper.addFault(new org.apache.axis.description.FaultDesc(
-                      new javax.xml.namespace.QName("http://framework.mxunit", "fault"),
-                      "org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException",
-                      new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"), 
-                      true
-                     ));
-        _operations[6] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("executeTestCase");
@@ -151,13 +132,30 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
                       new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"), 
                       true
                      ));
+        _operations[6] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getFrameworkVersion");
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        oper.setReturnClass(java.lang.String.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "getFrameworkVersionReturn"));
+        oper.setStyle(org.apache.axis.constants.Style.RPC);
+        oper.setUse(org.apache.axis.constants.Use.ENCODED);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://framework.mxunit", "fault"),
+                      "org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException",
+                      new javax.xml.namespace.QName("http://rpc.xml.coldfusion", "CFCInvocationException"), 
+                      true
+                     ));
         _operations[7] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getFrameworkDate");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
-        oper.setReturnClass(java.util.Calendar.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "getFrameworkDateReturn"));
+        oper.setName("getComponentMethods");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "ComponentName"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://framework.mxunit", "ArrayOf_xsd_anyType"));
+        oper.setReturnClass(java.lang.Object[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "getComponentMethodsReturn"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
         oper.addFault(new org.apache.axis.description.FaultDesc(
@@ -169,8 +167,10 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         _operations[8] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("initializeSuitePool");
-        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
+        oper.setName("startTestRun");
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        oper.setReturnClass(java.lang.String.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "startTestRunReturn"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
         oper.addFault(new org.apache.axis.description.FaultDesc(
@@ -405,7 +405,7 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
 }
     }
 
-    public double purgeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
+    public void initializeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -414,7 +414,7 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "purgeSuitePool"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "initializeSuitePool"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
@@ -423,53 +423,7 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
-        else {
-            extractAttachments(_call);
-            try {
-                return ((java.lang.Double) _resp).doubleValue();
-            } catch (java.lang.Exception _exception) {
-                return ((java.lang.Double) org.apache.axis.utils.JavaUtils.convert(_resp, double.class)).doubleValue();
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-    if (axisFaultException.detail != null) {
-        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
-              throw (java.rmi.RemoteException) axisFaultException.detail;
-         }
-        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
-              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
-         }
-   }
-  throw axisFaultException;
-}
-    }
-
-    public java.lang.String startTestRun() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[3]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "startTestRun"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (java.lang.String) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
-            }
-        }
+        extractAttachments(_call);
   } catch (org.apache.axis.AxisFault axisFaultException) {
     if (axisFaultException.detail != null) {
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {
@@ -488,7 +442,7 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[4]);
+        _call.setOperation(_operations[3]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
@@ -522,129 +476,12 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
 }
     }
 
-    public java.lang.Object[] getComponentMethods(java.lang.String componentName) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[5]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "getComponentMethods"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {componentName});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (java.lang.Object[]) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-    if (axisFaultException.detail != null) {
-        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
-              throw (java.rmi.RemoteException) axisFaultException.detail;
-         }
-        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
-              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
-         }
-   }
-  throw axisFaultException;
-}
-    }
-
-    public java.lang.String getFrameworkVersion() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[6]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "getFrameworkVersion"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (java.lang.String) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-    if (axisFaultException.detail != null) {
-        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
-              throw (java.rmi.RemoteException) axisFaultException.detail;
-         }
-        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
-              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
-         }
-   }
-  throw axisFaultException;
-}
-    }
-
-    public java.util.HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[7]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "executeTestCase"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {componentName, methodNames, testRunKey});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (java.util.HashMap) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (java.util.HashMap) org.apache.axis.utils.JavaUtils.convert(_resp, java.util.HashMap.class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-    if (axisFaultException.detail != null) {
-        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
-              throw (java.rmi.RemoteException) axisFaultException.detail;
-         }
-        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
-              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
-         }
-   }
-  throw axisFaultException;
-}
-    }
-
     public java.util.Calendar getFrameworkDate() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[8]);
+        _call.setOperation(_operations[4]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
@@ -678,16 +515,16 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
 }
     }
 
-    public void initializeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
+    public double purgeSuitePool() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[9]);
+        _call.setOperation(_operations[5]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "initializeSuitePool"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "purgeSuitePool"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
@@ -696,7 +533,170 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
-        extractAttachments(_call);
+        else {
+            extractAttachments(_call);
+            try {
+                return ((java.lang.Double) _resp).doubleValue();
+            } catch (java.lang.Exception _exception) {
+                return ((java.lang.Double) org.apache.axis.utils.JavaUtils.convert(_resp, double.class)).doubleValue();
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
+              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
+         }
+   }
+  throw axisFaultException;
+}
+    }
+
+    public java.util.HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[6]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "executeTestCase"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {componentName, methodNames, testRunKey});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.util.HashMap) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.util.HashMap) org.apache.axis.utils.JavaUtils.convert(_resp, java.util.HashMap.class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
+              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
+         }
+   }
+  throw axisFaultException;
+}
+    }
+
+    public java.lang.String getFrameworkVersion() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[7]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "getFrameworkVersion"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.String) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
+              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
+         }
+   }
+  throw axisFaultException;
+}
+    }
+
+    public java.lang.Object[] getComponentMethods(java.lang.String componentName) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[8]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "getComponentMethods"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {componentName});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.Object[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) {
+              throw (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException) axisFaultException.detail;
+         }
+   }
+  throw axisFaultException;
+}
+    }
+
+    public java.lang.String startTestRun() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[9]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit", "startTestRun"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.String) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
+            }
+        }
   } catch (org.apache.axis.AxisFault axisFaultException) {
     if (axisFaultException.detail != null) {
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {

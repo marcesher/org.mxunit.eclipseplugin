@@ -3,7 +3,7 @@
 	<target name="genStubs">
 		<property name="local.wsdl" value="http://localhost/mxunit/framework/RemoteFacade.cfc?wsdl" />
 		<property name="local.obd.wsdl" value="http://localhost:8090/mxunit/framework/RemoteFacade.cfc?wsdl" />
-		<property name="generated.dir" location="generated" />
+		<property name="generated.dir" location="src" />
 		<property name="generated.obd.dir" location="${generated.dir}" />
 		<property name="package" value="org.mxunit.eclipseplugin.actions.bindings.generated" />
 		<property name="package.obd" value="${package}.bluedragon" />

@@ -1,13 +1,10 @@
 package org.mxunit.eclipseplugin.actions.bindings;
 
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import org.apache.axis.AxisFault;
-import org.apache.axis.description.OperationDesc;
-import org.apache.axis.description.ParameterDesc;
-import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
+import org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap;
 import org.mxunit.eclipseplugin.actions.util.StructMapConverter;
 
@@ -31,7 +28,7 @@ public class Custom_RemoteFacadeBlueDragonImpl extends	org.mxunit.eclipseplugin.
 	
 	
 	
-	public HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
+	/*public HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -61,6 +58,7 @@ public class Custom_RemoteFacadeBlueDragonImpl extends	org.mxunit.eclipseplugin.
         setRequestHeaders(_call);
         setAttachments(_call);
 		 try {        
+			 
 			 java.lang.Object _resp = _call.invoke(new java.lang.Object[] {componentName, methodNames, testRunKey});
 		
 		        if (_resp instanceof java.rmi.RemoteException) {
@@ -78,15 +76,15 @@ public class Custom_RemoteFacadeBlueDragonImpl extends	org.mxunit.eclipseplugin.
 		  } catch (org.apache.axis.AxisFault axisFaultException) {
 		  throw axisFaultException;
 		}
-    }
+    }*/
 
 	
-	/*
+	
 	public HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
        StructMap structMap = super.executeTestCase_internal(componentName, methodNames, testRunKey);
        HashMap<String, Object> converted = new HashMap<String, Object>();
        StructMapConverter converter = new StructMapConverter();
        converted = converter.convertToHashMap((StructMap) structMap);
        return converted;
-    }*/
+    }
 }
