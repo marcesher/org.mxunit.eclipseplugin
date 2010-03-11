@@ -332,6 +332,7 @@ public class MXUnitView extends ViewPart {
 		ToolBar compareToolbar = new ToolBar(middleBar,SWT.HORIZONTAL);
 		ToolBarManager toolBarManager = new ToolBarManager(compareToolbar);
 		resultCompareAction = new ResultCompareAction();
+		resultCompareAction.setText("Compare Actual with Expected Test Result");
 		resultCompareAction.setToolTipText("Compare Actual with Expected Test Result");
 		resultCompareAction.setImageDescriptor(ResourceManager.getImageDescriptor(ResourceManager.COMPARE));
 		resultCompareAction.setEnabled(false);
