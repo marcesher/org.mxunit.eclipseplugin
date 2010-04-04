@@ -4,13 +4,12 @@ package org.mxunit.eclipseplugin.views;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.eclipse.jface.viewers.LabelProvider;
+//import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
 import org.mxunit.eclipseplugin.model.ITest;
-import org.mxunit.eclipseplugin.model.TestElementType;
 import org.mxunit.eclipseplugin.model.TestStatus;
 
 public class TestListLabelProvider extends StyledCellLabelProvider {
