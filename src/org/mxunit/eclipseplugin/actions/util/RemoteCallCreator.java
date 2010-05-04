@@ -108,6 +108,11 @@ public class RemoteCallCreator {
 	public String getFacadeURL() {
 		return facadeURL;
 	}
+	
+	public String getFacadeURL(ITest testelement){
+		IResource resource = testelement.getResource();
+		return determineURL(resource);
+	}
 
 	public Exception getCurrentException() {
 		return currentException;
