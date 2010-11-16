@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.preferenceactions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;

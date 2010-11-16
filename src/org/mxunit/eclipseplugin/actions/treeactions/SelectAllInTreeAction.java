@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.treeactions;
 
 import org.eclipse.jface.action.Action;
 import org.mxunit.eclipseplugin.views.MXUnitView;

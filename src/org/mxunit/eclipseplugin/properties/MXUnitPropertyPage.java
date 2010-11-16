@@ -2,10 +2,14 @@ package org.mxunit.eclipseplugin.properties;
 
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -18,6 +22,8 @@ import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
+import org.mxunit.eclipseplugin.MXUnitPluginLog;
+import org.mxunit.eclipseplugin.actions.util.RemoteCallCreator;
 import org.mxunit.eclipseplugin.preferences.MXUnitPreferenceConstants;
 
 /**
@@ -37,6 +43,10 @@ public class MXUnitPropertyPage extends PropertyPage implements
 	private StringFieldEditor unameField;
 	//private StringFieldEditor pwField;
 	private Text pwText;
+
+	private Button testUrlButton;
+
+	private RemoteCallCreator fRemoteCallCreator;
 	
 	//labels
 	private static final String URL_LABEL = "  URL:";
@@ -60,11 +70,14 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		GridData data = new GridData(GridData.FILL,GridData.FILL,true,false);
 		data.grabExcessHorizontalSpace = true;
 		
+		fRemoteCallCreator = new RemoteCallCreator();
 		panel.setLayoutData(data);
 		
 		addFacadeURL(panel);	
 		addComponentRoot(panel);
 		addAuthGroup(panel);
+		testUrlButton = addButton(panel, "Test Facade URL",10,1);
+		testUrlButton.addSelectionListener(fTestButtonListener);
 		
 		return panel;
 	}
@@ -85,6 +98,40 @@ public class MXUnitPropertyPage extends PropertyPage implements
 			}
 		);
 	}
+
+	
+	/**
+	 * test the facade URL button listener
+	 */
+
+	private SelectionListener fTestButtonListener = new SelectionListener() {
+
+		public void widgetDefaultSelected(SelectionEvent e) {
+		}
+
+		public void widgetSelected(SelectionEvent e) {
+			String facadeUrl = facadeURLField.getStringValue();
+			String username = unameField.getStringValue();
+			String password = pwText.getText();
+			if(facadeUrl.length() < 4) {
+				MessageDialog
+				.openInformation(
+						null,
+						"No URL specified",
+				"Um, there's no custom facade URL to test here, bro!  Let me set the default for ya...");
+				facadeURLField.setStringValue( fRemoteCallCreator.determineURL( (IResource)getElement().getAdapter(IResource.class) ) );				
+				facadeURLField.setFocus();
+				return;
+			}
+			if (fRemoteCallCreator.canPingFacade(facadeUrl, username, password)) {
+				MessageDialog
+				.openInformation(
+						null,
+						"Ping facade URL Success",
+				"Woohoo!  The ping succeeded!");
+			}
+		}
+	};
 	
 	/**
 	 * add the facade URL field to the page
@@ -105,7 +152,8 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		facadeURLField.setStringValue( propManager.getURLPropertyValue( (IResource)getElement().getAdapter(IResource.class) ) );
 		
 		addBlankLabel(group);
-		addDescriptionLabel(group,"Use this field to override the facade URL preference for\nthis project only.\n\nIf you're simply pointing to MXUnit on a different port, you can\nend the URL at the port (http://localhost:8888, for example)");
+		String currentUrl = fRemoteCallCreator.determineURL( (IResource)getElement().getAdapter(IResource.class) );
+		addDescriptionLabel(group,currentUrl + "\n\nUse this field to override the facade URL preference for\nthis resource.\n\nIf you're simply pointing to MXUnit on a different port, you can\nend the URL at the port (http://localhost:8888, for example)");
 		addBlankLabel(group);
 		Link helpLink = new Link(group,SWT.NONE);
 		helpLink.setText("See <a>Help</a> for details\n");
@@ -185,7 +233,12 @@ public class MXUnitPropertyPage extends PropertyPage implements
 		label.setText(text);
 	}
 	
-	
+	protected Button addButton(Composite parent, String labelText, int indentation, int horizontalSpan) {
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText(labelText);
+		button.setFont(parent.getFont());
+		return button;
+	}	
 	/**
 	 * Store these suckers
 	 */

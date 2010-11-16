@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.treeactions;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.mxunit.eclipseplugin.actions.preferenceactions.HistoryChangeMaxEntriesAction;
 import org.mxunit.eclipseplugin.model.TestHistory;
 import org.mxunit.eclipseplugin.model.TestMethod;
 import org.mxunit.eclipseplugin.model.TestSuite;

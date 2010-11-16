@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.delegates;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
@@ -9,6 +9,9 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
+import org.mxunit.eclipseplugin.actions.TestLoadAction;
+import org.mxunit.eclipseplugin.actions.TestRunAction;
+import org.mxunit.eclipseplugin.actions.TestSuiteCreator;
 import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
@@ -20,8 +23,8 @@ import org.mxunit.eclipseplugin.views.MXUnitView;
 public final class RunSelectedResourceActionDelegate implements IViewActionDelegate {
 
 	private IResource[] selectedResources;
-	private LoadMethodsAction loadAction;
-	private RunTestsAction runAction;
+	private TestLoadAction loadAction;
+	private TestRunAction runAction;
 	
 	public void run(IAction action) {
 
@@ -35,11 +38,12 @@ public final class RunSelectedResourceActionDelegate implements IViewActionDeleg
             view.getTestsViewer().getTree().selectAll();      
             view.enableActions();
             
-            loadAction = new LoadMethodsAction(view);
-            runAction = new RunTestsAction(view);
+            loadAction = new TestLoadAction(view,true);
+            runAction = new TestRunAction(view);
             
-            loadAction.run();                               
-            runAction.run();
+            loadAction.run();     
+            System.out.println("hi!!!!");
+            //runAction.run();
 			
 		} catch (PartInitException e) {
 			MXUnitPluginLog.logError("Exception in RunSelectedResourceActionDelegate",e);

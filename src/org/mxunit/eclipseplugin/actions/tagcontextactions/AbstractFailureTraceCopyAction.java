@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.tagcontextactions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.dnd.Clipboard;

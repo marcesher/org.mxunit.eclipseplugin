@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.resultsactions;
 
 import org.eclipse.compare.CompareUI;
 import org.eclipse.jface.action.Action;

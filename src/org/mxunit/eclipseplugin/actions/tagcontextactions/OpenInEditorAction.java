@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.tagcontextactions;
 
 import java.util.HashMap;
 import java.util.Map;

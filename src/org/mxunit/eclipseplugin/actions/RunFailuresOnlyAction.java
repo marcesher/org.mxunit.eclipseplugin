@@ -4,7 +4,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
-public class RunFailuresOnlyAction extends RunTestsAction {
+public class RunFailuresOnlyAction extends TestRunAction {
 
 	private MXUnitView view;
 	private TreeHelper treeHelper;

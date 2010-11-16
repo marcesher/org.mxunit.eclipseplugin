@@ -7,13 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.map.CaseInsensitiveMap;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.TreeItem;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
-import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
-import org.mxunit.eclipseplugin.actions.util.RemoteCallCreator;
+import org.mxunit.eclipseplugin.actions.treeactions.FilterFailuresAction;
 import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestHistory;
@@ -23,19 +20,16 @@ import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
 
-public class RunTestsAction extends Action {
+public class TestRunAction extends BaseRemoteAction {
 
-    private MXUnitView view;     
     private TreeItem[] allTreeItems;   
     private ITest[] runnableMethods;
+    private ITest itemForURL;
     private Map<ITest, TreeItem> testItemsToTreeItemsMap;    
     private List<TreeItem> updatedSelectedTreeItemsList; 
     
-    private final RemoteCallCreator callCreator = new RemoteCallCreator();
-    private RemoteFacade facade;
 
-    private TreeHelper treeHelper;
-    public RunTestsAction(MXUnitView view) {
+    public TestRunAction(MXUnitView view) {
         this.view = view;
         MXUnitPlugin.getDefault().getPluginPreferences();
         treeHelper = new TreeHelper(view.getTestsViewer());
@@ -45,91 +39,53 @@ public class RunTestsAction extends Action {
         final long viewRunID = System.currentTimeMillis();
         view.setRunID(viewRunID);
         
-    	view.disableActions();
      	//our "model"
         runnableMethods = treeHelper.getRunnableMethods();
         
-        boolean runIt = verifyOKToRun();
-        
-        if(runIt){
-        	TestSuite currentSuite = (TestSuite) view.getTestsViewer().getInput();
-        	currentSuite.setStartTime(System.currentTimeMillis());
-        	TestHistory history = view.getTestHistory();
-        	history.addSuite(currentSuite);
-        	//first, get an array of all tree items so we can easily set the tree's 
-            //selected elements
-            allTreeItems = treeHelper.getAllTreeItems();
-            
-            //set up a map and list that will eventually be used for setting the input of the tree
-            testItemsToTreeItemsMap = new HashMap<ITest, TreeItem>();
-            updatedSelectedTreeItemsList = new ArrayList<TreeItem>();
-                        
-	        //deselect all so that we can update the selection as the tests complete
-	        view.getTestsViewer().getTree().deselectAll();  
-	        view.clearDetailsPanel();
-	       
-	        //create the map of testitems to treeitems
-	        for (int i = 0; i < allTreeItems.length; i++) {
-	            testItemsToTreeItemsMap.put((ITest) allTreeItems[i].getData(), allTreeItems[i]);
-	        } 
-	       
-	        final Thread t = new Thread() {
-	            public void run(){     
-	                runTests(viewRunID);
-	            }
-	        };
-	        t.start();
-        }else{
-        	view.enableActions();
+        if( runnableMethods.length == 0 ){
+        	view.writeToConsole("No runnable methods found");
+        	return;
         }
+        
+        itemForURL = runnableMethods[0];
+		facadeURL = callCreator.getFacadeURL(itemForURL);
+        boolean facadeOK = notifyOnEmptyFacade();
+		
+		if(!facadeOK) return;
+	
+		facade = callCreator.createFacade(itemForURL);
+	
+		view.disableActions();
+    	TestSuite currentSuite = (TestSuite) view.getTestsViewer().getInput();
+    	currentSuite.setStartTime(System.currentTimeMillis());
+    	TestHistory history = view.getTestHistory();
+    	history.addSuite(currentSuite);
+    	//first, get an array of all tree items so we can easily set the tree's 
+        //selected elements
+        allTreeItems = treeHelper.getAllTreeItems();
+        
+        //set up a map and list that will eventually be used for setting the input of the tree
+        testItemsToTreeItemsMap = new HashMap<ITest, TreeItem>();
+        updatedSelectedTreeItemsList = new ArrayList<TreeItem>();
+                    
+        //deselect all so that we can update the selection as the tests complete
+        view.getTestsViewer().getTree().deselectAll();  
+        view.clearDetailsPanel();
        
-    }
+        //create the map of testitems to treeitems
+        for (int i = 0; i < allTreeItems.length; i++) {
+            testItemsToTreeItemsMap.put((ITest) allTreeItems[i].getData(), allTreeItems[i]);
+        } 
+       
+        final Thread t = new Thread() {
+            public void run(){     
+                runTests(viewRunID);
+            }
+        };
+        t.start();
     
-    /**
-     * checks that:
-     * --runnable methods are present
-     * --the facade URL has been defined at either the preferences or project properties level
-     * --the facade URL is accessible
-     * 
-     * @return true if it's OK to run the methods
-     */
-    private boolean verifyOKToRun(){
-    	if(runnableMethods.length==0){
-    		MessageDialog
-            .openInformation(
-                    null,
-                    "No runnable methods",
-                    "No runnable methods have been selected");
-    		return false;
-    	}
-    	//set up the remote stuff
-    	facade = callCreator.createFacade(runnableMethods[0]);
-    	
-        //ensure we have a URL to run
-        if (callCreator.getFacadeURL() == null || callCreator.getFacadeURL().length() == 0) {
-            MessageDialog
-                    .openInformation(
-                            null,
-                            "MXUnit Remote Facade not defined",
-                            "You must define a remote facade URL either in the project's properties or in Window -- Preferences -- MXUnit");
-            return false;
-        }
-        
-        //make sure we can connect to the remote url
-        boolean pingResult = callCreator.runPing();    
-    	if(!pingResult){
-    		MessageDialog
-            .openInformation(
-                    null,
-                    "Unable to run ping method at facade URL " + callCreator.getFacadeURL(),
-                    "Could not connect to facade URL. \n\nTry running this in a browser: " + callCreator.getFacadeURL() + "&&method=ping");
-    		view.writeToConsole("Exception message trying to connect to url " + callCreator.getFacadeURL() + " is: " + callCreator.getCurrentException().getMessage());
-    		return false;
-    	} 
-        
-    	
-    	return true;
     }
+
 
     /**
      * runs the runnable test methods

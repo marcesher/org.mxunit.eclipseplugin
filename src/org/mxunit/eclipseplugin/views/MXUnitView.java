@@ -51,21 +51,21 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.part.ViewPart;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
-import org.mxunit.eclipseplugin.actions.BrowserAction;
-import org.mxunit.eclipseplugin.actions.ComponentSearchAction;
-import org.mxunit.eclipseplugin.actions.CopyExceptionMessageAction;
-import org.mxunit.eclipseplugin.actions.CopyTagContextAction;
-import org.mxunit.eclipseplugin.actions.FilterFailuresAction;
-import org.mxunit.eclipseplugin.actions.HistoryDropdownAction;
-import org.mxunit.eclipseplugin.actions.LoadMethodsAction;
-import org.mxunit.eclipseplugin.actions.OpenInEditorAction;
-import org.mxunit.eclipseplugin.actions.ResultCompareAction;
+import org.mxunit.eclipseplugin.actions.TestLoadAction;
 import org.mxunit.eclipseplugin.actions.RunFailuresOnlyAction;
-import org.mxunit.eclipseplugin.actions.RunTestsAction;
-import org.mxunit.eclipseplugin.actions.SelectAllInTreeAction;
+import org.mxunit.eclipseplugin.actions.TestRunAction;
 import org.mxunit.eclipseplugin.actions.SpoofChangeModelAction;
-import org.mxunit.eclipseplugin.actions.TimeoutChangePreferenceAction;
-import org.mxunit.eclipseplugin.actions.ToggleTreeItemsAction;
+import org.mxunit.eclipseplugin.actions.preferenceactions.TimeoutChangePreferenceAction;
+import org.mxunit.eclipseplugin.actions.resultsactions.BrowserAction;
+import org.mxunit.eclipseplugin.actions.resultsactions.ResultCompareAction;
+import org.mxunit.eclipseplugin.actions.searchactions.ComponentSearchAction;
+import org.mxunit.eclipseplugin.actions.tagcontextactions.CopyExceptionMessageAction;
+import org.mxunit.eclipseplugin.actions.tagcontextactions.CopyTagContextAction;
+import org.mxunit.eclipseplugin.actions.tagcontextactions.OpenInEditorAction;
+import org.mxunit.eclipseplugin.actions.treeactions.FilterFailuresAction;
+import org.mxunit.eclipseplugin.actions.treeactions.HistoryDropdownAction;
+import org.mxunit.eclipseplugin.actions.treeactions.SelectAllInTreeAction;
+import org.mxunit.eclipseplugin.actions.treeactions.ToggleTreeItemsAction;
 import org.mxunit.eclipseplugin.model.FailureTrace;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestElementType;
@@ -96,8 +96,8 @@ public class MXUnitView extends ViewPart {
 	private JUnitProgressBar progressBar;
 	private TestHistory history;
 
-    private LoadMethodsAction loadMethodsAction;
-	private RunTestsAction runTestsAction;
+    private TestLoadAction loadMethodsAction;
+	private TestRunAction runTestsAction;
 	private RunFailuresOnlyAction runFailuresOnlyAction;
 	private ToggleTreeItemsAction toggleTreeItemsAction;
 	private ComponentSearchAction componentSearchAction;
@@ -470,14 +470,14 @@ public class MXUnitView extends ViewPart {
 	 */
 	private void makeActions() {
         
-        loadMethodsAction = new LoadMethodsAction(this);
+        loadMethodsAction = new TestLoadAction(this,false);
         loadMethodsAction.setText("Load Methods");
         loadMethodsAction.setToolTipText("Load methods for Test (F5)");
         loadMethodsAction.setImageDescriptor(
                 ResourceManager.getImageDescriptor(ResourceManager.REFRESH)
         );        
         
-		runTestsAction = new RunTestsAction(this);
+		runTestsAction = new TestRunAction(this);
 		runTestsAction.setText("Run");
 		runTestsAction.setToolTipText("Run selected Tests (Enter)");		
 		runTestsAction.setImageDescriptor(
@@ -907,6 +907,7 @@ public class MXUnitView extends ViewPart {
 	}	
 	
 	public void setRunID(long ID){
+		System.out.println("Setting runid to " + ID);
 	    viewRunID = ID;
 	}
 	public long getRunID(){

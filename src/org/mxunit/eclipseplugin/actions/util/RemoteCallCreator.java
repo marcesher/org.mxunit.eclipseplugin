@@ -1,5 +1,8 @@
 package org.mxunit.eclipseplugin.actions.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.rmi.RemoteException;
 
 import javax.xml.rpc.ServiceException;
@@ -7,12 +10,12 @@ import javax.xml.rpc.ServiceException;
 import org.apache.axis.client.Stub;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Preferences;
+import org.eclipse.ui.PlatformUI;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
 import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
 import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
-import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.RemoteFacadeRegistry;
 import org.mxunit.eclipseplugin.model.RemoteServerType;
@@ -44,15 +47,18 @@ public class RemoteCallCreator {
 		prefs = MXUnitPlugin.getDefault().getPluginPreferences();
 		props = new MXUnitPropertyManager();
 	}
+	
+	public boolean canPingFacade(String facadeURL, String username, String password) {
+		initFacade(facadeURL,username,password);
+		return runPing();
+	}
 
-
-	public RemoteFacade createFacade(ITest testelement) {
-		IResource resource = testelement.getResource();
-		facadeURL = determineURL(resource);
-		if(resource != null){
-			username = props.getUsernamePropertyValue(resource.getProject());
-			password = props.getPasswordPropertyValue(resource.getProject());
-		}
+	private void initFacade(String facadeURL, String username, String password) {
+		RemoteFacade facade = null;
+		this.facadeURL = facadeURL;
+		this.username = username;
+		this.password = password;
+		int timeout = prefs.getInt(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT);
 		try {
 			Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
 			locator.setRemoteFacadeCfcEndpointAddress(facadeURL);
@@ -80,8 +86,8 @@ public class RemoteCallCreator {
             	setCredentials();	     
             }
             
-            ((Stub) facade).setTimeout(prefs.getInt(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT)*1000);
-			
+            ((Stub) facade).setTimeout(timeout*1000);			
+            
 		} catch (ServiceException e) {			
 			currentException = e;
 			MXUnitPluginLog.logError("ServiceException getting remote facade", e);
@@ -92,6 +98,18 @@ public class RemoteCallCreator {
 			currentException = e;
 			MXUnitPluginLog.logError("RemoteException calling getServerType", e);
 		}
+		this.facade = facade;
+	}
+
+
+	public RemoteFacade createFacade(ITest testelement) {
+		IResource resource = testelement.getResource();
+		facadeURL = determineURL(resource);
+		if(resource != null){
+			username = props.getUsernamePropertyValue(resource.getProject());
+			password = props.getPasswordPropertyValue(resource.getProject());
+		}
+		initFacade(facadeURL,username,password);
 		return facade;
 	}
 
@@ -118,17 +136,29 @@ public class RemoteCallCreator {
 		return currentException;
 	}
 
-	private String determineURL(IResource resource) {
+	public String determineURL(IResource resource) {
 		String urlToUse = prefs.getString(MXUnitPreferenceConstants.P_FACADEURL);
-		String projectFacadeURL = "";
-		
+		String resourceFacadeURL = "";
+		IResource resourceParent;
+
 		if(resource != null){
-			projectFacadeURL = props.getURLPropertyValue(resource.getProject());
+			// check for facadeUrl
+			resourceParent = resource;
+			while(resourceParent.getParent() != null) {
+				resourceFacadeURL = props.getURLPropertyValue(resourceParent);
+				if(resourceFacadeURL.length() > 0) {
+					break;
+				}
+				resourceParent = resourceParent.getParent();
+			}
+			if(resourceFacadeURL.length() < 1) {
+				resourceFacadeURL = props.getURLPropertyValue(resource.getProject());				
+			}
 		}else{
 			MXUnitPluginLog.logInfo("Resource is null... using preferences facadeURL");
 		}
-		if (projectFacadeURL != null && projectFacadeURL.length() > 0) {
-			urlToUse = projectFacadeURL;
+		if (resourceFacadeURL != null && resourceFacadeURL.length() > 0) {
+			urlToUse = resourceFacadeURL;
 		}
 		
 		//tiny little helper; see http://www.barneyb.com/barneyblog/2008/07/18/mx-unit-is-slick/ for the genesis of this little change
@@ -146,13 +176,44 @@ public class RemoteCallCreator {
 		return urlToUse;
 	}
 
+	public static String getStackTrace(Throwable aThrowable) {
+		final Writer result = new StringWriter();
+		final PrintWriter printWriter = new PrintWriter(result);
+		aThrowable.printStackTrace(printWriter);
+		return result.toString();
+	}
+
 	public boolean runPing() {
 		boolean ok = false;
 		try {
 			ok = facade.ping();
-		} catch (Exception e) {
+		} catch (org.apache.axis.AxisFault e) {
 			currentException = e;
-			MXUnitPluginLog.logError("Error running ping to URL " + facadeURL,e);
+
+			// pop open a browser to display server response
+			try{				
+				String html = getStackTrace(e);
+				int htmlStart = html.indexOf("faultDetail:");
+				int htmlEnd = html.lastIndexOf("{http://xml.apache.org/axis/}");
+				html = html.substring(htmlStart,htmlEnd);
+				// super cheese unescaping of xml
+				final String finalhtml = html.replaceAll("&amp;","&").replaceAll("&lt;","<").replaceAll("&gt;",">");
+				
+				PlatformUI.getWorkbench().getDisplay().syncExec(
+						new Runnable(){
+							public void run(){
+								new HTMLViewer().display(finalhtml);								
+							}
+						}
+				);
+				
+			} catch (Exception any) {
+			    MXUnitPluginLog.logError("Error displaying server response",any);
+			}
+
+		    MXUnitPluginLog.logError("Error running ping to URL " + facadeURL,e);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 		return ok;
 	}

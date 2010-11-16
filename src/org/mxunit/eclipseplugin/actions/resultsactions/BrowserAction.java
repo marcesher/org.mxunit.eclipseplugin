@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.resultsactions;
 
 import java.io.BufferedWriter;
 import java.io.File;

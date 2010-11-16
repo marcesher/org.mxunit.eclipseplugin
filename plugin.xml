@@ -57,7 +57,7 @@
             label="MXUnit ActionSet"
             visible="true">
          <action
-               class="org.mxunit.eclipseplugin.actions.OpenMXUnitViewActionDelegate"
+               class="org.mxunit.eclipseplugin.actions.delegates.OpenMXUnitViewActionDelegate"
                icon="icons/mxunit.png"
                id="org.mxunit.eclipseplugin.openMXUnitView"
                label="Open MXUnit View"
@@ -80,7 +80,7 @@
 	       label="Run MXUnit Test"
 	       icon="icons/mxunit.png"
 	       menubarPath="additions"
-	       class="org.mxunit.eclipseplugin.actions.RunSelectedResourceActionDelegate"	
+	       class="org.mxunit.eclipseplugin.actions.delegates.RunSelectedResourceActionDelegate"	
            definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction"
 	       enablesFor="+">
 	    </action>
@@ -95,7 +95,7 @@
 	       label="Run MXUnit Tests"
 	       icon="icons/mxunit.png"
 	       menubarPath="additions"
-	       class="org.mxunit.eclipseplugin.actions.RunSelectedResourceActionDelegate"	
+	       class="org.mxunit.eclipseplugin.actions.delegates.RunSelectedResourceActionDelegate"	
            definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction2"
 	       enablesFor="+">
 	    </action>

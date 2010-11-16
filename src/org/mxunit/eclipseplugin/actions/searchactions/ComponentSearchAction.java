@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.searchactions;
 
 
 import org.eclipse.core.resources.IResource;
@@ -8,6 +8,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
+import org.mxunit.eclipseplugin.actions.TestLoadAction;
+import org.mxunit.eclipseplugin.actions.TestSuiteCreator;
 import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
@@ -18,12 +20,12 @@ import org.mxunit.eclipseplugin.views.MXUnitView;
 public final class ComponentSearchAction extends Action {
 	
 	private MXUnitView view;
-	private LoadMethodsAction loadAction;
+	private TestLoadAction loadAction;
 	
 	
 	public ComponentSearchAction(MXUnitView view){
 		this.view = view;
-		loadAction = new LoadMethodsAction(view);
+		loadAction = new TestLoadAction(view,false);
 	}
 	
 	public void run(){						

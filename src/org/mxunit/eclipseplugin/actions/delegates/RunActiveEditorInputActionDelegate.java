@@ -1,4 +1,4 @@
-package org.mxunit.eclipseplugin.actions;
+package org.mxunit.eclipseplugin.actions.delegates;
 
 import java.io.File;
 
@@ -13,6 +13,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
+import org.mxunit.eclipseplugin.actions.TestLoadAction;
+import org.mxunit.eclipseplugin.actions.TestRunAction;
+import org.mxunit.eclipseplugin.actions.TestSuiteCreator;
 import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
@@ -25,8 +28,8 @@ public final class RunActiveEditorInputActionDelegate implements IEditorActionDe
 
 	private ITextEditor editor;
 
-	private LoadMethodsAction loadAction;
-	private RunTestsAction runAction;
+	private TestLoadAction loadAction;
+	private TestRunAction runAction;
 
 	public void run(IAction action) {
 		
@@ -50,11 +53,11 @@ public final class RunActiveEditorInputActionDelegate implements IEditorActionDe
 				view.getTestsViewer().getTree().selectAll();
 				view.enableActions();
 
-				loadAction = new LoadMethodsAction(view);
-				runAction = new RunTestsAction(view);
+				loadAction = new TestLoadAction(view,true);
+				//runAction = new TestRunAction(view);
 
 				loadAction.run();
-				runAction.run();
+				//runAction.run();
 			}
 
 		} catch (PartInitException e) {
