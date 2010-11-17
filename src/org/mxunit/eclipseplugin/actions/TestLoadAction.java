@@ -69,7 +69,7 @@ public final class TestLoadAction extends BaseRemoteAction {
 		//now get on with it
 		view.clearDetailsPanel();
 		selectedTests = treeHelper.getSelectedTestCases();
-		final Job loadMethodsJob = new Job("Loading Methods"){
+		final Job loadMethodsJob = new Job("Loading Tests"){
 			protected IStatus run(IProgressMonitor monitor){
 				monitor.beginTask("Loading methods", 100);
 				monitor.worked(5);

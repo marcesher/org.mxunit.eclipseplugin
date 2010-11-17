@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.map.CaseInsensitiveMap;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.swt.widgets.TreeItem;
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
@@ -82,38 +88,67 @@ public class TestRunAction extends BaseRemoteAction {
                 runTests(viewRunID);
             }
         };
-        t.start();
-    
+        t.start();    
     }
 
 
     /**
      * runs the runnable test methods
      */
-    private void runTests(long viewRunID) {    
+    private void runTests(final long viewRunID) {    
+    	final String testRunKey = startTestRun();
     	
-    	resetProgressBar();
-    	String testRunKey = startTestRun();
-        for (int i = 0; i < runnableMethods.length; i++) {
-            if(view.getRunID()!=viewRunID){
-                view.writeToConsole(".... Stopped.");
-                break;
-            }
-            //currentMethod = "";
-            ITest testItem = runnableMethods[i];
-            System.out.println("item is " + testItem.getName());  
-           
-            testItem.clearStatus();  
-            //do the deed
-            runTestMethod(testItem, viewRunID, testRunKey);            
-        }
-        
-        endTestRun(testRunKey);
-        ((TestSuite) view.getTestsViewer().getInput()).setEndTime(System.currentTimeMillis());
-        FilterFailuresAction filter = new FilterFailuresAction(view);
-        filter.run();
-        view.enableActions();
-        view.updateDetailsPanel();
+    	final Job runMethodsJob = new Job("Running Tests"){
+			protected IStatus run(IProgressMonitor monitor){
+				resetProgressBar();   	
+    	
+				monitor.beginTask("Running Tests", runnableMethods.length);
+				
+		        for (int i = 0; i < runnableMethods.length; i++) {
+		            if(view.getRunID()!=viewRunID){
+		                view.writeToConsole(".... Stopped.");
+		                break;
+		            }
+		            //currentMethod = "";
+		            ITest testItem = runnableMethods[i];
+		            System.out.println("item is " + testItem.getName());  
+		           
+		            testItem.clearStatus();  
+		            //do the deed
+		            runTestMethod(testItem, viewRunID, testRunKey);     
+		            monitor.worked(1);
+		            
+		            if( monitor.isCanceled() ){
+		            	view.getSite().getShell().getDisplay().syncExec(new Runnable() {
+							public void run() {
+								view.stop();
+							}
+		            	});
+		            	return new Status(IStatus.CANCEL,MXUnitView.ID,IStatus.OK,"Test run canceled",null);
+		            }
+		        }
+		        monitor.done();
+				return new Status(IStatus.OK,MXUnitView.ID,IStatus.OK,"Test run completed",null);
+			}
+		};		
+		
+		runMethodsJob.addJobChangeListener(new JobChangeAdapter(){
+			public void done(IJobChangeEvent event){
+				view.getSite().getShell().getDisplay().syncExec(new Runnable() {
+					public void run() {
+						view.enableActions();
+						view.updateDetailsPanel();
+						endTestRun(testRunKey);
+						((TestSuite) view.getTestsViewer().getInput()).setEndTime(System.currentTimeMillis());
+						FilterFailuresAction filter = new FilterFailuresAction(view);
+						filter.run();
+					}
+				});
+				
+			}
+		});
+		runMethodsJob.schedule();
+		
     }
     
     /**
