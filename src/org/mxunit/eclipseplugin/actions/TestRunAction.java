@@ -112,6 +112,8 @@ public class TestRunAction extends BaseRemoteAction {
 		            //currentMethod = "";
 		            ITest testItem = runnableMethods[i];
 		            System.out.println("item is " + testItem.getName());  
+		            
+		            setName("Running " + testItem.getName());
 		           
 		            testItem.clearStatus();  
 		            //do the deed
