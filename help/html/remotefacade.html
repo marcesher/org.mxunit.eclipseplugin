@@ -12,7 +12,10 @@
 
 
 <p>This plugin works by making soap (i.e. webservice) calls to a URL. By default, that URL is to a RemoteFacade.cfc that 
-comes bundled with the MXUnit framework. When you first installed the plugin, it made a reasonable attempt at 
+comes bundled with the MXUnit framework. This component acts as a "bridge" between Eclipse and ColdFusion by exposing methods which the plugin will use to communicate with ColdFusion.
+</p>
+<p><b>You do not put tests in the RemoteFacade!</b></p>
+<p>When you first installed the plugin, it made a reasonable attempt at 
 guessing the location of this Remote URL, but more than likely it guessed wrong... so you'll need to set it up correctly. </p>
 <h2>How</h2>
 <ol>
@@ -24,7 +27,11 @@ guessing the location of this Remote URL, but more than likely it guessed wrong.
 <p> There are times when your project won't be able to point to the URL you have configured in the global preferences:
 <ul>
   <li>You need custom remote functionality for the tests in a certain project. For example, you need the RemoteFacade.cfc to include a custom Application.cfm file for every test</li>
-  <li>You're testing components that use ColdFusion's built-in Hibernate ORM. In those cases, the components will not work correctly if they aren't run under the context of their Application.cfc. </li>
+  <li>Your tests need to run under the context of your project's Application.cfc:</li>
+  	<ul>  	
+	  <li>Your tests, or objects under test, access Application or Session scoped variables.</li>
+	  <li>You're testing components that use ColdFusion's built-in Hibernate ORM. </li>
+  	</ul>
   <li>You need some custom behavior to occur for <em>each test case</em> in a certain project</li>
 </ul>
 In these cases, you'll need to <a href="project-specific-remotefacade.html">override the RemoteFacade URL at the project level</a>.
