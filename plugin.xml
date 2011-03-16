@@ -121,5 +121,47 @@
             plugin="org.mxunit.eclipseplugin">
       </contexts>
    </extension>
+
+ <extension point="org.eclipse.debug.ui.launchShortcuts">
+  <shortcut
+     id="org.mxunit.eclipseplugin.Launcher"
+     modes="run,debug"
+     class="org.mxunit.eclipseplugin.launch.Launcher"
+     label="Run MXUnit Tests"
+     icon="icons/mxunit.png">
+         <contextualLaunch>
+           <enablement>
+             <with variable="selection">
+               <count value="1"/>
+               <iterate>
+                 <or>
+                   <instanceof value="org.eclipse.core.resources.IFolder" /> 
+                 </or>
+               </iterate>
+             </with>
+           </enablement>
+  		 </contextualLaunch>
+   </shortcut>
+  <shortcut
+     id="org.mxunit.eclipseplugin.Launcher"
+     modes="run,debug"
+     class="org.mxunit.eclipseplugin.launch.Launcher"
+     label="Run MXUnit Test"
+     icon="icons/mxunit.png">
+         <contextualLaunch>
+           <enablement>
+             <with variable="selection">
+               <count value="1"/>
+               <iterate>
+                 <or>
+                   <test property="org.eclipse.debug.ui.matchesPattern" value="Test*.cfc"/>
+                   <test property="org.eclipse.debug.ui.matchesPattern" value="*Test.cfc"/>
+                 </or>
+               </iterate>
+             </with>
+           </enablement>
+  		 </contextualLaunch>
+   </shortcut>
+ </extension>
    
 </plugin>
