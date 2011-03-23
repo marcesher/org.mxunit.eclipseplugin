@@ -64,7 +64,7 @@
                style="push"
                toolbarPath="normal/additions"
                tooltip="Open the MXUnit view"
-               helpContextId="mxunit_view"/>
+               helpContextId="mxunit_view" />
       </actionSet>
    </extension>
    
@@ -81,7 +81,7 @@
 	       icon="icons/mxunit.png"
 	       menubarPath="additions"
 	       class="org.mxunit.eclipseplugin.actions.delegates.RunSelectedResourceActionDelegate"	
-           definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction"
+           definitionId="marcrocks"
 	       enablesFor="+">
 	    </action>
 	 </objectContribution>	
@@ -96,7 +96,7 @@
 	       icon="icons/mxunit.png"
 	       menubarPath="additions"
 	       class="org.mxunit.eclipseplugin.actions.delegates.RunSelectedResourceActionDelegate"	
-           definitionId="org.mxunit.eclipseplugin.actions.RunSelectedResourceAction2"
+           definitionId="marcrocks"
 	       enablesFor="+">
 	    </action>
 	 </objectContribution>
@@ -124,7 +124,7 @@
 
  <extension point="org.eclipse.debug.ui.launchShortcuts">
   <shortcut
-     id="org.mxunit.eclipseplugin.Launcher"
+     id="org.mxunit.eclipseplugin.Launcher1"
      modes="run,debug"
      class="org.mxunit.eclipseplugin.launch.Launcher"
      label="Run MXUnit Tests"
@@ -143,7 +143,7 @@
   		 </contextualLaunch>
    </shortcut>
   <shortcut
-     id="org.mxunit.eclipseplugin.Launcher"
+     id="org.mxunit.eclipseplugin.Launcher2"
      modes="run,debug"
      class="org.mxunit.eclipseplugin.launch.Launcher"
      label="Run MXUnit Test"
@@ -163,5 +163,40 @@
   		 </contextualLaunch>
    </shortcut>
  </extension>
+
+<extension point="org.eclipse.ui.commands">
+	<command 
+		name="Launch MXUnit Test"
+		description="Launch MXUnit Test"
+		categoryId="org.eclipse.debug.ui.category.run"
+		id="org.mxunit.eclipseplugin.Launcher1.run">
+	</command>
+	
+ <command
+       id="marcrocks"
+       name="marcrocks">
+ </command>
+ 
+</extension>
+<extension
+      point="org.eclipse.ui.bindings">
+   <key
+         contextId="org.eclipse.ui.contexts.window"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="M3+M2+X M"
+         commandId="org.mxunit.eclipseplugin.Launcher1.run">
+   </key>
+   <key
+         contextId="org.eclipse.ui.contexts.window"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="M1+7"
+         commandId="marcrocks">
+   </key>
+   
+   
+   
+</extension>
+
+
    
 </plugin>

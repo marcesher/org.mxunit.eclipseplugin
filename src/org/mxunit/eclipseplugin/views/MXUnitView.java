@@ -610,6 +610,7 @@ public class MXUnitView extends ViewPart {
 	 *            the toolbar manager
 	 */
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(filterFailuresAction);
 		manager.add(new Separator());
 		manager.add(componentSearchAction);
