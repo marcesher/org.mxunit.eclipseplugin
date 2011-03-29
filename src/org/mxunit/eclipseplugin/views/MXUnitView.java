@@ -3,6 +3,7 @@ package org.mxunit.eclipseplugin.views;
 import java.io.IOException;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Preferences;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -11,6 +12,9 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.StringConverter;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -43,6 +47,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
@@ -78,7 +83,7 @@ import org.mxunit.eclipseplugin.preferences.MXUnitPreferenceConstants;
  * The view, baby.
  */
 
-public class MXUnitView extends ViewPart {
+public class MXUnitView extends ViewPart{
 
 	public static final String ID = "org.mxunit.eclipseplugin.views.MXUnitView";
 
@@ -224,6 +229,18 @@ public class MXUnitView extends ViewPart {
 		contributeToActionBars();
 		setHelpContextIDs();
 		
+		initPropertyChangeListener();
+	}
+
+	private void initPropertyChangeListener() {
+		IPropertyChangeListener listener = new IPropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent event) {
+				if(event.getProperty().startsWith("color")){
+					setProgressBarColors();
+				}
+			}
+		};
+		MXUnitPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener );		
 	}
 
 	/**
@@ -275,8 +292,15 @@ public class MXUnitView extends ViewPart {
 		composite.setLayout(layout);		
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
 		progressBar = new JUnitProgressBar(composite);
-		
+		setProgressBarColors();
 		return parent;		
+	}
+	
+	private void setProgressBarColors(){
+		Preferences prefs = MXUnitPlugin.getDefault().getPluginPreferences();
+		progressBar.setPassColor( StringConverter.asRGB(prefs.getString(MXUnitPreferenceConstants.P_COLOR_PASS)) );
+		progressBar.setFailColor( StringConverter.asRGB(prefs.getString(MXUnitPreferenceConstants.P_COLOR_FAIL)) );
+		progressBar.setStoppedColor( StringConverter.asRGB(prefs.getString(MXUnitPreferenceConstants.P_COLOR_STOPPED)) );
 	}
 
 	/**
@@ -914,5 +938,6 @@ public class MXUnitView extends ViewPart {
 	public long getRunID(){
 	    return viewRunID;
 	}
+
 	
 }

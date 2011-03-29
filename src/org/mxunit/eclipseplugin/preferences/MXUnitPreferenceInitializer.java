@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.graphics.Color;
 
 import org.mxunit.eclipseplugin.MXUnitPlugin;
 
@@ -25,7 +26,9 @@ public class MXUnitPreferenceInitializer extends AbstractPreferenceInitializer {
 				"http://localhost/mxunit/framework/RemoteFacade.cfc");
 		store.setDefault(MXUnitPreferenceConstants.P_MAX_HISTORY, 30);
 		store.setDefault(MXUnitPreferenceConstants.P_REMOTE_CALL_TIMEOUT, 30);
-
+		store.setDefault(MXUnitPreferenceConstants.P_COLOR_PASS, "95,191,95");
+		store.setDefault(MXUnitPreferenceConstants.P_COLOR_FAIL, "159,63,63");
+		store.setDefault(MXUnitPreferenceConstants.P_COLOR_STOPPED, "120,120,120");
 	}
 	
 	/**

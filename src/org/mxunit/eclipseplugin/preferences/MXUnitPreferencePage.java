@@ -1,5 +1,6 @@
 package org.mxunit.eclipseplugin.preferences;
 
+import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
@@ -47,6 +48,7 @@ public class MXUnitPreferencePage
 		addURLGroup(container);	
 		addTimeoutGroup(container);
 		addAuthGroup(container);
+		addColorGroup(container);
 	}
 
 
@@ -144,6 +146,20 @@ public class MXUnitPreferencePage
 		unameLabel.setText("Username and password for authentication mechanisms (basic, NTLM) can be set at the Project level only.\n" +
 				"In the Navigator, right-click on a project, select 'Properties', select 'MXUnit', and add your authentication\n" +
 				"credentials on that property page.");
+	}
+	
+	private void addColorGroup(Composite container){
+		Group colorGroup = new Group(container, SWT.NONE);
+		colorGroup.setText("Colors");
+		GridData gd = new GridData(GridData.FILL,GridData.FILL,true,false);	
+		gd.horizontalSpan = 2;
+		colorGroup.setLayoutData(gd);
+		colorGroup.setLayout(new GridLayout(3,false));
+		
+		addField(new ColorFieldEditor(MXUnitPreferenceConstants.P_COLOR_PASS, " &Pass:", colorGroup));
+		addField(new ColorFieldEditor(MXUnitPreferenceConstants.P_COLOR_FAIL, " &Fail:", colorGroup));
+		addField(new ColorFieldEditor(MXUnitPreferenceConstants.P_COLOR_STOPPED, " &Stopped:", colorGroup));
+		
 	}
 
 	/* (non-Javadoc)
