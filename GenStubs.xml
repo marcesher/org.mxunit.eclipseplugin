@@ -1,3 +1,4 @@
+
 <project name="GenStubs" basedir=".">
 
 	<target name="genStubs">

@@ -10,6 +10,7 @@ import org.mxunit.eclipseplugin.actions.listeners.ITestExecutionListener;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestCase;
 import org.mxunit.eclipseplugin.model.TestMethod;
+import org.mxunit.eclipseplugin.model.TestMethodDataProviderElement;
 
 /**
  * Responsible for loading and running tests for a given set of components
@@ -56,6 +57,9 @@ public class TestExecutor {
 				for (int j = 0; j < tmpresult.length; j++) {
 					TestMethod tm = new TestMethod();
 					tm.setName((String) tmpresult[j]);
+					
+					TestMethodDataProviderElement[] elements = {new TestMethodDataProviderElement(),new TestMethodDataProviderElement()};
+					tm.addDataProvider(elements);
 					tc.addMethod(tm);
 				}
 			

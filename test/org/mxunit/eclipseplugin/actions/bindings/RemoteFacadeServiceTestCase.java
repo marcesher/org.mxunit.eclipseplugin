@@ -8,12 +8,14 @@
 package org.mxunit.eclipseplugin.actions.bindings;
 
 import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.xml.rpc.ServiceException;
 
 import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
 import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
+import org.mxunit.eclipseplugin.actions.bindings.generated.TestMethodBean;
 import org.mxunit.eclipseplugin.model.RemoteServerType;
 
 import com.sun.corba.se.spi.activation.Locator;
@@ -28,7 +30,7 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
 	String username = "";
 	String password = "";
 	
-	Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
+	
 	RemoteFacade cfBinding;
 	RemoteFacade obdBinding;
 	
@@ -50,14 +52,19 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     }
     
     public void setUp(){
+    	Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
     	locator.setRemoteFacadeCfcEndpointAddress(serviceURL);
-    	try {
+    	Custom_RemoteFacadeServiceLocator obdlocator = new Custom_RemoteFacadeServiceLocator();
+    	obdlocator.setRemoteFacadeCfcEndpointAddress(obdServiceURL);
+    	obdlocator.setRemoteServerType(RemoteServerType.BLUEDRAGON);
+		try {
 			cfBinding = locator.getRemoteFacadeCfc();
+			obdBinding =  obdlocator.getRemoteFacadeCfc();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	obdBinding = locator.getBlueDragonBinding();
+    	
     } 
     
     
@@ -67,10 +74,27 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     	assertTrue(response);
     }
     
+    public void testPing_OBD() throws CFCInvocationException, RemoteException{
+    	boolean response = obdBinding.ping();
+    	assertTrue(response);
+    }
+    
+    public void testGetFrameworkVersion() throws CFCInvocationException, RemoteException {
+    	String version = cfBinding.getFrameworkVersion();
+    	Calendar date = cfBinding.getFrameworkDate();
+    	System.out.println(version);
+    	System.out.println(date);
+    }
+    
     public void testGetServerType() throws CFCInvocationException, RemoteException{
     	String type = cfBinding.getServerType();
     	System.out.println(type);
     	assertTrue(type.contains("ColdFusion"));
+    }
+    public void testGetServerType_OBD() throws CFCInvocationException, RemoteException{
+    	String type = obdBinding.getServerType();
+    	System.out.println(type);
+    	assertTrue(type.contains("BlueDragon"));
     }
    
     public void testExecuteTestCase() throws CFCInvocationException, RemoteException{
@@ -81,6 +105,21 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     public void testExecuteTestCase_OBD() throws CFCInvocationException, RemoteException{
     	HashMap results = obdBinding.executeTestCase(testCase, testMethod, "");
     	System.out.println(results);
+    }
+    
+    public void testGetComponentMethods() throws CFCInvocationException, RemoteException{
+    	Object[] methods = cfBinding.getComponentMethods("mxunit.plugindemotests.HodgePodgeTest");
+    	for (Object object : methods) {
+			System.out.println(object);
+		}
+    }
+    
+    public void testGetMethodsAsBeans() throws CFCInvocationException, RemoteException{
+    	Object[] beans = cfBinding.getComponentMethodsRich2();
+    	System.out.println(beans);
+    	for (Object object : beans) {
+			System.out.println(object);
+		}
     }
 
 }

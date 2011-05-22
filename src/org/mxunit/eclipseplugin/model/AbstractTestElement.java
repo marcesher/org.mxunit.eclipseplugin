@@ -74,7 +74,7 @@ public abstract class AbstractTestElement extends Observable implements ITest{
     }
     
     public boolean hasChildren(){
-    	return getChildren().length > 0;
+    	return getChildren() == null ? false : getChildren().length > 0;
     }
     
     public ITest[] getChildren(){

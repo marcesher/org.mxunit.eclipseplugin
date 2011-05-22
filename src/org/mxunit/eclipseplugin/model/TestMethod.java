@@ -20,7 +20,7 @@ public class TestMethod extends AbstractTestElement {
 	/** tag context array */
 	private Map[] tagcontext = new Map[0];
 	/** dataprovider array */
-	private TestMethodDataProviderElement[] dataProviders = new TestMethodDataProviderElement[0];
+	private TestMethodDataProviderElement[] dataProviders;
 	
 	/** the TestCase to which this method belongs */
 	private TestCase parent;
@@ -75,6 +75,13 @@ public class TestMethod extends AbstractTestElement {
 	
 	public TestMethodDataProviderElement[] getChildren(){
 		return dataProviders;
+	}
+	
+	public void addDataProvider( TestMethodDataProviderElement[] elements ){
+		dataProviders = elements;
+		for (TestMethodDataProviderElement testMethodDataProviderElement : elements) {
+			testMethodDataProviderElement.setParent(this);
+		}
 	}
 	
 	public void setStatusFromString(String statusString){

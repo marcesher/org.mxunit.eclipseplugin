@@ -29,6 +29,7 @@ public class Custom_RemoteFacadeServiceLocator extends	RemoteFacadeServiceLocato
          }
          return getRemoteFacadeCfc(endpoint);
      }
+    
     public RemoteFacade getRemoteFacadeCfc(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
         	RemoteFacadeCfcSoapBindingStub _stub = new Custom_RemoteFacadeImpl(portAddress, this);
@@ -54,13 +55,16 @@ public class Custom_RemoteFacadeServiceLocator extends	RemoteFacadeServiceLocato
     
     public Custom_RemoteFacadeBlueDragonImpl getRawBlueDragonBinding(java.net.URL portAddress){
     	try {
-    		Custom_RemoteFacadeBlueDragonImpl _bdstub;
+    		org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub _bdstub;
+    		Custom_RemoteFacadeBlueDragonImpl adapter = new Custom_RemoteFacadeBlueDragonImpl();
     		org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator
     			obdLocator = new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator();
-			_bdstub = new Custom_RemoteFacadeBlueDragonImpl(portAddress, obdLocator);
-			_bdstub.setPortName(getRemoteFacadeCfcWSDDServiceName());
 			
-			return _bdstub;
+    		
+    		_bdstub = new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub(portAddress, obdLocator);
+			_bdstub.setPortName(getRemoteFacadeCfcWSDDServiceName());
+			adapter.setBlueDragonStub(_bdstub);
+			return adapter;
 			
 		} catch (AxisFault e) {
 			return null;

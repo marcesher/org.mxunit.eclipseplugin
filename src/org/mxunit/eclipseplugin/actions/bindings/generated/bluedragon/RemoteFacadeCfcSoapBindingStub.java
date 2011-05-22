@@ -7,10 +7,6 @@
 
 package org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon;
 
-import java.util.HashMap;
-
-import org.mxunit.eclipseplugin.actions.util.StructMapConverter;
-
 public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub implements org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacade {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
@@ -20,8 +16,9 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[10];
+        _operations = new org.apache.axis.description.OperationDesc[11];
         _initOperationDesc1();
+        _initOperationDesc2();
     }
 
     private static void _initOperationDesc1(){
@@ -124,6 +121,20 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
         _operations[9] = oper;
+
+    }
+
+    private static void _initOperationDesc2(){
+        org.apache.axis.description.OperationDesc oper;
+        org.apache.axis.description.ParameterDesc param;
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getComponentMethodsRich2");
+        oper.setReturnType(new javax.xml.namespace.QName("http://mxunit/framework/RemoteFacade.cfc", "ArrayOf_xsd_anyType"));
+        oper.setReturnClass(java.lang.Object[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "getComponentMethodsRich2Return"));
+        oper.setStyle(org.apache.axis.constants.Style.RPC);
+        oper.setUse(org.apache.axis.constants.Use.ENCODED);
+        _operations[10] = oper;
 
     }
 
@@ -496,11 +507,7 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
 }
     }
 
-    public HashMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
-    	throw new RuntimeException("not implemented here");
-    	
-    }
-    public org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap executeTestCase_internal(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
+    public org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap executeTestCase(java.lang.String componentName, java.lang.String methodNames, java.lang.String testRunKey) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -545,6 +552,37 @@ public class RemoteFacadeCfcSoapBindingStub extends org.apache.axis.client.Stub 
         setRequestHeaders(_call);
         setAttachments(_call);
  try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {componentName});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.Object[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public java.lang.Object[] getComponentMethodsRich2() throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[10]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://framework.mxunit.na_svr", "getComponentMethodsRich2"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

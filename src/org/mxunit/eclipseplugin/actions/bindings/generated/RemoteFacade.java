@@ -18,4 +18,5 @@ public interface RemoteFacade extends java.rmi.Remote {
     public java.lang.String getFrameworkVersion() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
     public java.lang.Object[] getComponentMethods(java.lang.String componentName) throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
     public java.lang.String startTestRun() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
+    public java.lang.Object[] getComponentMethodsRich2() throws java.rmi.RemoteException, org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
 }

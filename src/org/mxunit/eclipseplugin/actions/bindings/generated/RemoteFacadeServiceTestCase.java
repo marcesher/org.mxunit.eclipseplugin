@@ -288,4 +288,31 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
             // TBD - validate results
     }
 
+    public void test11RemoteFacadeCfcGetComponentMethodsRich2() throws Exception {
+        org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeCfcSoapBindingStub binding;
+        try {
+            binding = (org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeCfcSoapBindingStub)
+                          new org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacadeServiceLocator().getRemoteFacadeCfc();
+        }
+        catch (javax.xml.rpc.ServiceException jre) {
+            if(jre.getLinkedCause()!=null)
+                jre.getLinkedCause().printStackTrace();
+            throw new junit.framework.AssertionFailedError("JAX-RPC ServiceException caught: " + jre);
+        }
+        assertNotNull("binding is null", binding);
+
+        // Time out after a minute
+        binding.setTimeout(60000);
+
+        // Test operation
+        try {
+            java.lang.Object[] value = null;
+            value = binding.getComponentMethodsRich2();
+        }
+        catch (org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException e1) {
+            throw new junit.framework.AssertionFailedError("CFCInvocationException Exception caught: " + e1);
+        }
+            // TBD - validate results
+    }
+
 }

@@ -1,5 +1,5 @@
 package org.mxunit.eclipseplugin.model;
 
 public enum TestElementType {
-	TESTSUITE, TESTCASE, TESTMETHOD;
+	TESTSUITE, TESTCASE, TESTMETHOD, TESTMETHODDATAPROVIDER;
 }

@@ -7,14 +7,6 @@
 
 package org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon;
 
-import java.rmi.RemoteException;
-import java.util.HashMap;
-
-import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeBlueDragonImpl;
-import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeServiceLocator;
-import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
-import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
-
 public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     public RemoteFacadeServiceTestCase(java.lang.String name) {
         super(name);
@@ -203,50 +195,26 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
     }
 
     public void test9RemoteFacadeCfcExecuteTestCase() throws Exception {
-        Custom_RemoteFacadeBlueDragonImpl binding;
+        org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub binding;
+        try {
+            binding = (org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub)
+                          new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator().getRemoteFacadeCfc();
+        }
+        catch (javax.xml.rpc.ServiceException jre) {
+            if(jre.getLinkedCause()!=null)
+                jre.getLinkedCause().printStackTrace();
+            throw new junit.framework.AssertionFailedError("JAX-RPC ServiceException caught: " + jre);
+        }
+        assertNotNull("binding is null", binding);
 
-            binding = (Custom_RemoteFacadeBlueDragonImpl) 
-            	new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator()
-            		.getRemoteFacadeCfc();
+        // Time out after a minute
+        binding.setTimeout(60000);
 
-        System.out.println(binding.getPortName());
-        System.out.println(binding);
-        
-        HashMap map = binding.executeTestCase("mxunit.PluginDemoTests.HodgePodgeTest", "testOK", "");
-        //System.out.println(map);
+        // Test operation
+        org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.StructMap value = null;
+        value = binding.executeTestCase(new java.lang.String(), new java.lang.String(), new java.lang.String());
+        // TBD - validate results
     }
-    
-    public void testCustomOBDBinding_3() throws CFCInvocationException, RemoteException{
-    	Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
-    	
-    	Custom_RemoteFacadeBlueDragonImpl binding = locator.getRawBlueDragonBinding();
-    	System.out.println(binding.getPortName());
-    	System.out.println(binding);
-    	 HashMap map = binding.executeTestCase("mxunit.PluginDemoTests.HodgePodgeTest", "testOK", "");
-         System.out.println(map);
-    }
-    
-    
-    
-    
-    public void testCustomOBDBinding() throws CFCInvocationException, RemoteException{
-    	Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
-    	RemoteFacade binding = locator.getBlueDragonBinding();
-    	System.out.println(((Custom_RemoteFacadeBlueDragonImpl)binding).getPortName());
-    	 HashMap map = binding.executeTestCase("mxunit.PluginDemoTests.HodgePodgeTest", "testOK", "");
-         System.out.println(map);
-    }
-    
-    public void testCustomOBDBinding_2() throws CFCInvocationException, RemoteException{
-    	Custom_RemoteFacadeServiceLocator locator = new Custom_RemoteFacadeServiceLocator();
-    	RemoteFacade binding = locator.getBlueDragonBinding();
-    	
-    	 HashMap map = binding.executeTestCase("mxunit.PluginDemoTests.HodgePodgeTest", "testOK", "");
-         System.out.println(map);
-    }
-    
-
-    
 
     public void test10RemoteFacadeCfcGetComponentMethods() throws Exception {
         org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub binding;
@@ -267,6 +235,28 @@ public class RemoteFacadeServiceTestCase extends junit.framework.TestCase {
         // Test operation
         java.lang.Object[] value = null;
         value = binding.getComponentMethods(new java.lang.String());
+        // TBD - validate results
+    }
+
+    public void test11RemoteFacadeCfcGetComponentMethodsRich2() throws Exception {
+        org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub binding;
+        try {
+            binding = (org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub)
+                          new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeServiceLocator().getRemoteFacadeCfc();
+        }
+        catch (javax.xml.rpc.ServiceException jre) {
+            if(jre.getLinkedCause()!=null)
+                jre.getLinkedCause().printStackTrace();
+            throw new junit.framework.AssertionFailedError("JAX-RPC ServiceException caught: " + jre);
+        }
+        assertNotNull("binding is null", binding);
+
+        // Time out after a minute
+        binding.setTimeout(60000);
+
+        // Test operation
+        java.lang.Object[] value = null;
+        value = binding.getComponentMethodsRich2();
         // TBD - validate results
     }
 

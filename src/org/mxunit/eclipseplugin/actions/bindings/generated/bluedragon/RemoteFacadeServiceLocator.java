@@ -7,8 +7,6 @@
 
 package org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon;
 
-import org.mxunit.eclipseplugin.actions.bindings.Custom_RemoteFacadeBlueDragonImpl;
-
 public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service implements org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeService {
 
 /**
@@ -59,7 +57,7 @@ public class RemoteFacadeServiceLocator extends org.apache.axis.client.Service i
 
     public org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacade getRemoteFacadeCfc(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub _stub = new Custom_RemoteFacadeBlueDragonImpl(portAddress, this);
+            org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub _stub = new org.mxunit.eclipseplugin.actions.bindings.generated.bluedragon.RemoteFacadeCfcSoapBindingStub(portAddress, this);
             _stub.setPortName(getRemoteFacadeCfcWSDDServiceName());
             return _stub;
         }
