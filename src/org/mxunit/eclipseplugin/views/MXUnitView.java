@@ -100,6 +100,7 @@ public class MXUnitView extends ViewPart{
 	
 	private JUnitProgressBar progressBar;
 	private TestHistory history;
+	private TestListNameSorter sorter;
 
     private TestLoadAction loadMethodsAction;
 	private TestRunAction runTestsAction;
@@ -133,7 +134,7 @@ public class MXUnitView extends ViewPart{
 	    //initializeConsole();
 	    history = new TestHistory();
 	    history.setMaxEntries( MXUnitPlugin.getDefault().getPluginPreferences().getInt(MXUnitPreferenceConstants.P_MAX_HISTORY) );
-	   
+	    sorter = new TestListNameSorter();
     }
 	
 	/**
@@ -237,10 +238,12 @@ public class MXUnitView extends ViewPart{
 			public void propertyChange(PropertyChangeEvent event) {
 				if(event.getProperty().startsWith("color")){
 					setProgressBarColors();
+				} else if(event.getProperty().equals("testOrdering")){
+					sorter.setSortMethodsAlphabetically(MXUnitPlugin.getDefault().getPluginPreferences().getBoolean(MXUnitPreferenceConstants.P_TEST_ORDERING));
 				}
 			}
 		};
-		MXUnitPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener );		
+		MXUnitPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(listener);		
 	}
 
 	/**
@@ -320,9 +323,11 @@ public class MXUnitView extends ViewPart{
 		testsViewer = new TreeViewer(testsPanel, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL);
 		// new DrillDownAdapter(testsViewer);
+		
+		sorter.setSortMethodsAlphabetically(MXUnitPlugin.getDefault().getPluginPreferences().getBoolean(MXUnitPreferenceConstants.P_TEST_ORDERING));
 		testsViewer.setContentProvider(new TestListContentProvider());
 		testsViewer.setLabelProvider(new TestListLabelProvider());
-		testsViewer.setSorter(new TestListNameSorter());
+		testsViewer.setSorter(sorter);
 		testsViewer
 				.addSelectionChangedListener(new ISelectionChangedListener() {
 					public void selectionChanged(SelectionChangedEvent event) {	

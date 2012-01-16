@@ -1,5 +1,6 @@
 package org.mxunit.eclipseplugin.preferences;
 
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
@@ -49,6 +50,7 @@ public class MXUnitPreferencePage
 		addTimeoutGroup(container);
 		addAuthGroup(container);
 		addColorGroup(container);
+		addTestOrderingGroup(container);
 	}
 
 
@@ -153,6 +155,7 @@ public class MXUnitPreferencePage
 		colorGroup.setText("Colors");
 		GridData gd = new GridData(GridData.FILL,GridData.FILL,true,false);	
 		gd.horizontalSpan = 2;
+		
 		colorGroup.setLayoutData(gd);
 		colorGroup.setLayout(new GridLayout(3,false));
 		
@@ -160,6 +163,19 @@ public class MXUnitPreferencePage
 		addField(new ColorFieldEditor(MXUnitPreferenceConstants.P_COLOR_FAIL, " &Fail:", colorGroup));
 		addField(new ColorFieldEditor(MXUnitPreferenceConstants.P_COLOR_STOPPED, " &Stopped:", colorGroup));
 		
+	}
+	
+	private void addTestOrderingGroup(Composite container){
+		Group testOrderingGroup = new Group(container, SWT.NONE);
+		testOrderingGroup.setText("Test Ordering");
+		GridData gd = new GridData(GridData.FILL,GridData.FILL,true,false);	
+		gd.horizontalSpan = 2;
+		testOrderingGroup.setLayoutData(gd);
+		GridLayout layout = new GridLayout(3, false);
+		layout.marginLeft = 5;
+		testOrderingGroup.setLayout(layout);
+		
+		addField(new BooleanFieldEditor(MXUnitPreferenceConstants.P_TEST_ORDERING, " &Alphabetize Test Methods", testOrderingGroup));
 	}
 
 	/* (non-Javadoc)

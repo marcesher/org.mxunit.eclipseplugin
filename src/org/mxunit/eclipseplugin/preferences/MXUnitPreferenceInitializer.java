@@ -29,6 +29,7 @@ public class MXUnitPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(MXUnitPreferenceConstants.P_COLOR_PASS, "95,191,95");
 		store.setDefault(MXUnitPreferenceConstants.P_COLOR_FAIL, "159,63,63");
 		store.setDefault(MXUnitPreferenceConstants.P_COLOR_STOPPED, "120,120,120");
+		store.setDefault(MXUnitPreferenceConstants.P_TEST_ORDERING, true);
 	}
 	
 	/**

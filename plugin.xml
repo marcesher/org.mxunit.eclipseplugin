@@ -34,7 +34,21 @@
       <page
             class="org.mxunit.eclipseplugin.preferences.MXUnitPreferencePage"
             id="org.mxunit.eclipseplugin.preferences.MXUnitPreferencePage"
-            name="MXUnit"/>
+            name="MXUnit">
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordTest">
+         </keywordReference>
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordFacade">
+         </keywordReference>
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordWebroot">
+         </keywordReference>
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordURL">
+         </keywordReference>
+      </page>
+             
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
@@ -48,7 +62,20 @@
             icon="icons/mxunit.png"
             id="org.mxunit.eclipseplugin.MXUnitPropertyPage"
             name="MXUnit Properties"
-            objectClass="org.eclipse.core.resources.IResource"/>
+            objectClass="org.eclipse.core.resources.IResource">
+      	 <keywordReference
+               id="org.mxunit.eclipseplugin.keywordFacade">
+         </keywordReference>
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordComponent">
+         </keywordReference>
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordURL">
+         </keywordReference>
+         <keywordReference
+               id="org.mxunit.eclipseplugin.keywordTest">
+         </keywordReference>      
+      </page>
    </extension>
    <extension
          point="org.eclipse.ui.actionSets">
@@ -196,7 +223,28 @@
    
    
 </extension>
-
-
+ <extension
+      point="org.eclipse.ui.keywords">
+      <keyword
+            id="org.mxunit.eclipseplugin.keywordTest"
+            label="test">
+      </keyword>
+      <keyword
+            id="org.mxunit.eclipseplugin.keywordComponent"
+            label="component">
+      </keyword>
+      <keyword
+            id="org.mxunit.eclipseplugin.keywordFacade"
+            label="facade">
+      </keyword>
+      <keyword
+            id="org.mxunit.eclipseplugin.keywordWebroot"
+            label="webroot">
+      </keyword>
+      <keyword
+            id="org.mxunit.eclipseplugin.keywordURL"
+            label="url">
+      </keyword>
+   </extension>
    
 </plugin>

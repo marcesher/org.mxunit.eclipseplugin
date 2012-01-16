@@ -58,8 +58,8 @@ public class TestExecutor {
 					TestMethod tm = new TestMethod();
 					tm.setName((String) tmpresult[j]);
 					
-					TestMethodDataProviderElement[] elements = {new TestMethodDataProviderElement(),new TestMethodDataProviderElement()};
-					tm.addDataProvider(elements);
+					/*TestMethodDataProviderElement[] elements = {new TestMethodDataProviderElement(),new TestMethodDataProviderElement()};
+					tm.addDataProvider(elements);*/
 					tc.addMethod(tm);
 				}
 			

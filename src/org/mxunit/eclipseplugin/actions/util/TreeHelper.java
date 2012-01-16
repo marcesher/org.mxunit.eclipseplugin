@@ -60,7 +60,7 @@ public class TreeHelper {
 				}
 			}
 		}
-		Collections.sort(tmpList,new TestCaseComparator());
+		//Collections.sort(tmpList,new TestCaseComparator());
 		return tmpList.toArray(new ITest[0]);
 	}
 	
@@ -111,7 +111,7 @@ public class TreeHelper {
 				}		
 			}
 		}		
-		Collections.sort(finalList,new TestCaseComparator());
+		//Collections.sort(finalList,new TestCaseComparator());
 		return finalList.toArray(new ITest[0]);
 	}
 	
