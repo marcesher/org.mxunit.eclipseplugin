@@ -1,28 +1,14 @@
 package org.mxunit.eclipseplugin.actions;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.TreeItem;
-import org.mxunit.eclipseplugin.MXUnitPluginLog;
-import org.mxunit.eclipseplugin.actions.bindings.generated.CFCInvocationException;
-import org.mxunit.eclipseplugin.actions.bindings.generated.RemoteFacade;
 import org.mxunit.eclipseplugin.actions.listeners.LoadTestsExecutionListener;
-import org.mxunit.eclipseplugin.actions.util.RemoteCallCreator;
-import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.ITest;
-import org.mxunit.eclipseplugin.model.TestCase;
-import org.mxunit.eclipseplugin.model.TestMethod;
-import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
 /**
@@ -32,18 +18,20 @@ import org.mxunit.eclipseplugin.views.MXUnitView;
  */
 public final class TestLoadAction extends BaseRemoteAction {
 
-
 	private TreeItem[] items;
 	private ITest[] selectedTests;
 	private ITest itemForURL;
-	final private boolean runTests;
+	private boolean runTests;
 	public  boolean isFinished = false;
 	
 	
 	public TestLoadAction(MXUnitView view, boolean runAfterLoading) {
 		this.view = view;
 		this.runTests = runAfterLoading;
-		treeHelper = new TreeHelper(view.getTestsViewer());
+	}
+	
+	public void setRunTests( boolean runTests ){
+		this.runTests = runTests;
 	}
 	
 
@@ -105,8 +93,9 @@ public final class TestLoadAction extends BaseRemoteAction {
 						view.getTestsViewer().expandAll();
 						
 						if( runTests ){
-							TestRunAction runAction = new TestRunAction(view);
+							TestRunAction runAction = view.getTestRunAction();
 							runAction.run();
+							runTests = false;
 						}
 					}
 				});

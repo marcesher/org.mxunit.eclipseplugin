@@ -14,10 +14,8 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.swt.widgets.TreeItem;
-import org.mxunit.eclipseplugin.MXUnitPlugin;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
 import org.mxunit.eclipseplugin.actions.treeactions.FilterFailuresAction;
-import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.ITest;
 import org.mxunit.eclipseplugin.model.TestHistory;
 import org.mxunit.eclipseplugin.model.TestMethod;
@@ -37,8 +35,7 @@ public class TestRunAction extends BaseRemoteAction {
 
     public TestRunAction(MXUnitView view) {
         this.view = view;
-        MXUnitPlugin.getDefault().getPluginPreferences();
-        treeHelper = new TreeHelper(view.getTestsViewer());
+        //MXUnitPlugin.getDefault().getPluginPreferences();
     }
 
     public void run() {     

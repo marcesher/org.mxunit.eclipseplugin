@@ -7,7 +7,7 @@ import org.mxunit.eclipseplugin.model.TestElementType;
 
 public class TestListNameSorter extends ViewerSorter {
 	
-	boolean sortMethodsAlphabetically = false;
+	boolean sortMethodsAlphabetically = true;
 	
 	public void setSortMethodsAlphabetically( boolean sortEm ){
 		this.sortMethodsAlphabetically = sortEm;

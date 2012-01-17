@@ -53,9 +53,8 @@ public final class RunActiveEditorInputActionDelegate implements IEditorActionDe
 				view.getTestsViewer().getTree().selectAll();
 				view.enableActions();
 
-				loadAction = new TestLoadAction(view,true);
-				//runAction = new TestRunAction(view);
-
+				loadAction = view.getTestLoadAction();
+				loadAction.setRunTests(true);
 				loadAction.run();
 				//runAction.run();
 			}

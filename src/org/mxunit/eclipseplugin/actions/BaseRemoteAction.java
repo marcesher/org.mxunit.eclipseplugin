@@ -18,6 +18,11 @@ public abstract class BaseRemoteAction extends Action {
 	protected RemoteFacade facade = null;
 	protected String facadeURL = null;
 	protected TreeHelper treeHelper = null;
+	
+	public void setTreeHelper(TreeHelper treeHelper){
+		System.out.println("setting TreeHelper in " + this.getClass().getCanonicalName());
+		this.treeHelper = treeHelper;
+	}
 
 
 	/**

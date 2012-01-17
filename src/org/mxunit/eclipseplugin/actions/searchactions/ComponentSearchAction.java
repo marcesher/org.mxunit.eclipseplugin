@@ -10,6 +10,7 @@ import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 import org.mxunit.eclipseplugin.MXUnitPluginLog;
 import org.mxunit.eclipseplugin.actions.TestLoadAction;
 import org.mxunit.eclipseplugin.actions.TestSuiteCreator;
+import org.mxunit.eclipseplugin.actions.util.TreeHelper;
 import org.mxunit.eclipseplugin.model.TestSuite;
 import org.mxunit.eclipseplugin.views.MXUnitView;
 
@@ -23,10 +24,11 @@ public final class ComponentSearchAction extends Action {
 	private TestLoadAction loadAction;
 	
 	
-	public ComponentSearchAction(MXUnitView view){
+	public ComponentSearchAction(MXUnitView view, TestLoadAction loadAction){
 		this.view = view;
-		loadAction = new TestLoadAction(view,false);
+		this.loadAction = loadAction;
 	}
+	
 	
 	public void run(){						
 		

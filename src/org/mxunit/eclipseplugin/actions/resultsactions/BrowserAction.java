@@ -26,11 +26,16 @@ import org.mxunit.eclipseplugin.views.MXUnitView;
  *
  */
 public final class BrowserAction extends Action {
+	
 	private MXUnitView view;	
 	private TreeHelper treeHelper;
+	
 	public BrowserAction(MXUnitView view){
 		this.view = view;
-		treeHelper = new TreeHelper(view.getTestsViewer());
+	}
+	
+	public void setTreeHelper(TreeHelper treeHelper){
+		this.treeHelper = treeHelper;
 	}
 	
 	public void run(){

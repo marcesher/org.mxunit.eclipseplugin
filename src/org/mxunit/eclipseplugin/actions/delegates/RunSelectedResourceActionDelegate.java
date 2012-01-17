@@ -38,9 +38,11 @@ public final class RunSelectedResourceActionDelegate implements IViewActionDeleg
             view.getTestsViewer().getTree().selectAll();      
             view.enableActions();
             
-            loadAction = new TestLoadAction(view,true);
-            runAction = new TestRunAction(view);
-            
+           /* loadAction = new TestLoadAction(view,true);
+            runAction = new TestRunAction(view);*/
+            loadAction = view.getTestLoadAction();
+            runAction = view.getTestRunAction();
+            loadAction.setRunTests(true);
             loadAction.run();     
             System.out.println("hi!!!!");
             //runAction.run();

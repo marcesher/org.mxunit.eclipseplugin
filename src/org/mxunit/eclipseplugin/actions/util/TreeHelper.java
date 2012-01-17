@@ -15,9 +15,14 @@ import org.mxunit.eclipseplugin.model.TestStatus;
 public class TreeHelper {
 	
 	TreeViewer treeViewer;
+	boolean sortMethodsAlphabetically = true;
 	
 	public TreeHelper(TreeViewer treeViewer){
 		this.treeViewer = treeViewer;
+	}
+	
+	public void setSortMethodsAlphabetically( boolean sortEm ){
+		this.sortMethodsAlphabetically = sortEm;
 	}
 	
 	
@@ -60,7 +65,7 @@ public class TreeHelper {
 				}
 			}
 		}
-		//Collections.sort(tmpList,new TestCaseComparator());
+		sortTestList(tmpList);
 		return tmpList.toArray(new ITest[0]);
 	}
 	
@@ -111,7 +116,7 @@ public class TreeHelper {
 				}		
 			}
 		}		
-		//Collections.sort(finalList,new TestCaseComparator());
+		sortTestList(finalList);
 		return finalList.toArray(new ITest[0]);
 	}
 	
@@ -128,6 +133,15 @@ public class TreeHelper {
 		
 		failures.trimToSize();
 		return failures.toArray(new TreeItem[0]);
+	}
+	
+
+	private void sortTestList(ArrayList<ITest> testList) {
+		if(sortMethodsAlphabetically){
+			System.out.println("Sorting test methods");
+			Collections.sort(testList,new TestCaseComparator());
+		}
+		
 	}
 
 }
