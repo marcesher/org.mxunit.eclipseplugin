@@ -3,9 +3,9 @@ package org.mxunit.eclipseplugin.actions;
 import junit.framework.TestCase;
 
 public class RawInvokerTest extends TestCase {
-    RawInvoker invoker = new RawInvoker();
+    RawInvoker invoker;
     public void setUp(){
-        RawInvoker invoker = new RawInvoker();
+        invoker = new RawInvoker();
     }
     
     public void testInitializeCall(){
